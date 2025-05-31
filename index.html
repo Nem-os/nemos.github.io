@@ -42,7 +42,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-end;
-      padding-right: 2.5rem;
+      padding-right: 120px;
       gap: 1.5rem;
     }
 
@@ -95,14 +95,32 @@
 </head>
 <body>
   <div class="code">
-&lt;html lang=\"it\"&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;it&quot;&gt;
 &lt;head&gt;
-  &lt;meta charset=\"UTF-8\" /&gt;
-  &lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
   &lt;title&gt;Nem.Os&lt;/title&gt;
+  &lt;link href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+  &lt;style&gt;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #ffffff;
+      font-family: 'IBM Plex Mono', monospace;
+      color: #111;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+    }
+  &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  codice del sito visibile qui
+  &lt;div class=&quot;code&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;center&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;right&quot;&gt;...&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
   </div>
@@ -134,7 +152,7 @@
         <!-- Pupilla -->
         <div class="cell empty"></div>
         <div class="cell empty"></div>
-        <div class="cell empty"></div>
+        <div class="cell filled"></div>
         <div class="cell empty"></div>
         <div class="cell empty"></div>
 
@@ -146,7 +164,7 @@
 
         <div class="cell empty"></div>
         <div class="cell empty"></div>
-        <div class="cell empty"></div>
+        <div class="cell filled"></div>
         <div class="cell empty"></div>
         <div class="cell empty"></div>
       </div>
@@ -177,11 +195,11 @@
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
 
-      targetXBase = dx * 0.02;
-      targetYBase = dy * 0.02;
+      targetXBase = dx * 0.03;
+      targetYBase = dy * 0.03;
 
-      targetXOverlay = dx * 0.06;
-      targetYOverlay = dy * 0.02;
+      targetXOverlay = dx * 0.09;
+      targetYOverlay = dy * 0.03;
 
       mouseActive = true;
     });
