@@ -19,40 +19,37 @@
       font-family: 'IBM Plex Mono', monospace;
       color: #111;
       overflow: hidden;
-      display: flex;
-      flex-direction: row;
+      position: relative;
     }
 
     .code {
       width: 40%;
-      background: #ffffff;
       padding: 2rem;
       font-size: clamp(0.6rem, 0.9vw, 1rem);
       white-space: pre-wrap;
       line-height: 1.4;
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
       z-index: 10;
-    }
-
-    .center {
-      width: 20%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1s;
     }
 
     .right {
       width: 40%;
+      position: absolute;
+      top: 50%;
+      right: 120px;
+      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-end;
-      padding-right: 120px;
       gap: 1.5rem;
-      position: relative;
       z-index: 10;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.5s;
     }
 
     .right a {
@@ -62,10 +59,24 @@
       letter-spacing: 0.05em;
     }
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .eye-wrapper {
-      position: relative;
-      width: 54vw; /* aumentato dell'80% */
-      max-width: 1080px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80vw;
+      max-width: 1600px;
       aspect-ratio: 5 / 3;
       z-index: 1;
     }
@@ -126,47 +137,45 @@
 &lt;/html&gt;
   </div>
 
-  <div class="center">
-    <div class="eye-wrapper">
-      <div id="eye-base" class="eye-grid">
-        <div class="cell empty"></div>
-        <div class="cell filled"></div>
-        <div class="cell filled"></div>
-        <div class="cell filled"></div>
-        <div class="cell filled"></div>
+  <div class="eye-wrapper">
+    <div id="eye-base" class="eye-grid">
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
 
-        <div class="cell filled"></div>
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
-        <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
 
-        <div class="cell empty"></div>
-        <div class="cell filled"></div>
-        <div class="cell filled"></div>
-        <div class="cell filled"></div>
-        <div class="cell empty"></div>
-      </div>
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
+    </div>
 
-      <div id="eye-overlay" class="eye-grid">
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
-        <div class="cell filled"></div>
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
+    <div id="eye-overlay" class="eye-grid">
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
 
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
-        <div class="cell filled"></div>
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
 
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
-        <div class="cell filled"></div>
-        <div class="cell empty"></div>
-        <div class="cell empty"></div>
-      </div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
     </div>
   </div>
 
@@ -195,10 +204,10 @@
       const dy = e.clientY - centerY;
 
       targetXBase = dx * 0.07;
-      targetYBase = dy * 0.09; // aumentato y base
+      targetYBase = dy * 0.15;
 
       targetXOverlay = dx * 0.135;
-      targetYOverlay = dy * 0.09; // aumentato y overlay
+      targetYOverlay = dy * 0.15;
 
       mouseActive = true;
     });
@@ -231,4 +240,3 @@
   </script>
 </body>
 </html>
-
