@@ -29,11 +29,25 @@
     }
 
     .center {
-      width: 20%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+  <div class="eye-grid">
+  <div class="cell empty"></div>
+  <div class="cell filled"></div>
+  <div class="cell filled"></div>
+  <div class="cell filled"></div>
+  <div class="cell filled"></div>
+
+  <div class="cell filled"></div>
+  <div class="cell empty"></div>
+  <div class="cell filled"></div>
+  <div class="cell empty"></div>
+  <div class="cell filled"></div>
+
+  <div class="cell empty"></div>
+  <div class="cell filled"></div>
+  <div class="cell filled"></div>
+  <div class="cell filled"></div>
+  <div class="cell empty"></div>
+</div>
     }
 
     .right {
@@ -71,6 +85,29 @@
       background: #fff;
     }
   </style>
+  .eye-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 40px);
+  grid-template-rows: repeat(3, 40px);
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  transform: translate(0px, 0px);
+  transition: transform 0.05s linear;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+}
+
+.filled {
+  background-color: #e4002b;
+}
+
+.empty {
+  background-color: transparent;
+}
 </head>
 <body>
   <div class="code">
