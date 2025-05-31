@@ -96,12 +96,12 @@
 <body>
   <div class="code">
 &lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;it&quot;&gt;
+&lt;html lang="it"&gt;
 &lt;head&gt;
-  &lt;meta charset=&quot;UTF-8&quot;&gt;
-  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Nem.Os&lt;/title&gt;
-  &lt;link href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"&gt;
   &lt;style&gt;
     html, body {
       margin: 0;
@@ -114,6 +114,125 @@
       overflow: hidden;
       display: flex;
       flex-direction: row;
+    }
+
+    .code {
+      width: 40%;
+      background: #ffffff;
+      padding: 2rem;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+
+    .center {
+      width: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .right {
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding-right: 120px;
+      gap: 1.5rem;
+    }
+
+    .right a {
+      font-size: 1.6rem;
+      text-decoration: none;
+      color: #111;
+      letter-spacing: 0.05em;
+    }
+
+    .eye-wrapper {
+      position: relative;
+      width: 600px;
+      height: 360px;
+    }
+
+    .eye-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 120px);
+      grid-template-rows: repeat(3, 120px);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .cell {
+      width: 120px;
+      height: 120px;
+    }
+
+    .filled {
+      background-color: #e65152;
+    }
+
+    .empty {
+      background-color: transparent;
+    }
+
+    #eye-base {
+      transition: transform 0.05s linear;
+      z-index: 1;
+    }
+
+    #eye-overlay {
+      transition: transform 0.05s linear;
+      z-index: 2;
+      pointer-events: none;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="code"&gt;
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang="it"&gt;
+    &lt;head&gt;
+      &lt;meta charset="UTF-8"&gt;
+      &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+      &lt;title&gt;Nem.Os&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      codice del sito visibile qui
+    &lt;/body&gt;
+    &lt;/html&gt;
+  &lt;/div&gt;
+
+  &lt;div class="center"&gt;
+    &lt;div class="eye-wrapper"&gt;
+      &lt;div id="eye-base" class="eye-grid"&gt;
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div id="eye-overlay" class="eye-grid"&gt;
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+        &lt;div class="cell empty"&gt;&lt;/div&gt;
+        &lt;div class="cell filled"&gt;&lt;/div&gt;
+        &lt;div class="cell empty"&g
+
     }
   &lt;/style&gt;
 &lt;/head&gt;
