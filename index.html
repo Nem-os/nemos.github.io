@@ -52,10 +52,10 @@
     }
     .eye-wrapper {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 55%;
+      left: 55%;
       transform: translate(-50%, -50%);
-      width: 100vw;
+      width: 120vw;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
       z-index: 1;
@@ -132,8 +132,8 @@
         targets = targets.map(t => ({x: t.x * 0.98, y: t.y * 0.98}));
       }
       for (let i = 0; i < layers.length; i++) {
-        currents[i].x += (targets[i].x - currents[i].x) * 0.98;
-        currents[i].y += (targets[i].y - currents[i].y) * 0.98;
+        currents[i].x += (targets[i].x - currents[i].x) * 0.15;
+        currents[i].y += (targets[i].y - currents[i].y) * 0.15;
         layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
       }
       requestAnimationFrame(animate);
