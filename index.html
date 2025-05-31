@@ -10,97 +10,99 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: #f7f7f7;
+      width: 100%;
+      background: #ffffff;
       font-family: 'IBM Plex Mono', monospace;
       color: #111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       overflow: hidden;
+      display: flex;
     }
 
-    .container {
-      text-align: left;
-      max-width: 600px;
-      padding: 20px;
+    .code {
+      width: 33.3%;
+      background: #f7f7f7;
+      padding: 2rem;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
     }
 
-    h1 {
-      font-size: 2.8rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin: 0 0 20px;
-    }
-
-    #eye {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-    }
-
-    .iris {
-      width: 50px;
-      height: 50px;
-      background: #000;
-      border-radius: 50%;
+    .center {
+      width: 33.3%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
     }
 
-    #pupil {
-      width: 20px;
-      height: 20px;
-      background: #e4002b;
-      border-radius: 50%;
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      transition: top 0.1s, left 0.1s;
+    .right {
+      width: 33.3%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 2rem;
+      gap: 1.5rem;
     }
 
-    a {
-      color: #e4002b;
+    .right a {
+      font-size: 1.5rem;
       text-decoration: none;
+      color: #111;
+    }
+
+    .eye {
+      width: 200px;
+      height: 100px;
+      background: #e4002b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .eye div {
+      width: 60px;
+      height: 60px;
+      background: white;
     }
   </style>
 </head>
 <body>
-
-<div id="eye">
-  <div class="iris">
-    <div id="pupil"></div>
+  <div class="code">
+&lt;html lang="it"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+&lt;title&gt;Nem.Os&lt;/title&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"&gt;
+...
   </div>
-</div>
 
-<div class="container">
-  <h1>NEM.OS</h1>
-  <p>Studio sistemico di product design.<br>
-    Ogni oggetto è parte. Ogni forma ha un contesto.<br>
-    Non progettiamo icone, ma presenze silenziose.<br>
-    Non firmiamo: strutturiamo.</p>
-  <p><em>Progetto in produzione / 2025</em><br>
-  <a href="mailto:hello@nem.os">hello@nem.os</a></p>
-</div>
+  <div class="center">
+    <div id="eye" class="eye">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 
-<script>
-  const pupil = document.getElementById('pupil');
-  const iris = document.querySelector('.iris');
+  <div class="right">
+    <a href="#">PROJECTS</a>
+    <a href="#">ABOUT US</a>
+    <a href="#">CONTACTS</a>
+  </div>
 
-  document.addEventListener('mousemove', (e) => {
-    const rect = iris.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const dx = e.clientX - centerX;
-    const dy = e.clientY - centerY;
-    const angle = Math.atan2(dy, dx);
-    const radius = 12;
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
-    pupil.style.left = `${15 + x}px`;
-    pupil.s
+  <script>
+    const eye = document.getElementById('eye');
+    let posX = window.innerWidth / 2;
+    let posY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', (e) => {
+      const dx = e.clientX - posX;
+      const dy = e.clientY - posY;
+      posX += dx * 0.08; // elastic movement
+      posY += dy * 0.08;
+      eye.style.transform = `translate(${posX - window.innerWidth / 2}px, ${posY - window.innerHeight / 2}px)`;
+    });
+  </script>
+</body>
+</html>
