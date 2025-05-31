@@ -132,8 +132,8 @@
         targets = targets.map(t => ({x: t.x * 0.9, y: t.y * 0.9}));
       }
       for (let i = 0; i < layers.length; i++) {
-        currents[i].x += (targets[i].x - currents[i].x) * 0.2;
-        currents[i].y += (targets[i].y - currents[i].y) * 0.2;
+        currents[i].x += (targets[i].x - currents[i].x) * 1;
+        currents[i].y += (targets[i].y - currents[i].y) * 1;
         layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
       }
       requestAnimationFrame(animate);
