@@ -29,25 +29,11 @@
     }
 
     .center {
-  <div class="eye-grid">
-  <div class="cell empty"></div>
-  <div class="cell filled"></div>
-  <div class="cell filled"></div>
-  <div class="cell filled"></div>
-  <div class="cell filled"></div>
-
-  <div class="cell filled"></div>
-  <div class="cell empty"></div>
-  <div class="cell filled"></div>
-  <div class="cell empty"></div>
-  <div class="cell filled"></div>
-
-  <div class="cell empty"></div>
-  <div class="cell filled"></div>
-  <div class="cell filled"></div>
-  <div class="cell filled"></div>
-  <div class="cell empty"></div>
-</div>
+      width: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
 
     .right {
@@ -67,47 +53,30 @@
       letter-spacing: 0.05em;
     }
 
-    #eye {
-      position: relative;
-      width: 300px;
-      height: 150px;
-      background: #e4002b;
-      display: flex;
+    .eye-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 40px);
+      grid-template-rows: repeat(3, 40px);
+      gap: 2px;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 30px;
+      transform: translate(0px, 0px);
       transition: transform 0.05s linear;
     }
 
-    .eye-box {
-      width: 100px;
-      height: 100px;
-      background: #fff;
+    .cell {
+      width: 40px;
+      height: 40px;
+    }
+
+    .filled {
+      background-color: #e4002b;
+    }
+
+    .empty {
+      background-color: transparent;
     }
   </style>
-  .eye-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 40px);
-  grid-template-rows: repeat(3, 40px);
-  gap: 2px;
-  justify-content: center;
-  align-items: center;
-  transform: translate(0px, 0px);
-  transition: transform 0.05s linear;
-}
-
-.cell {
-  width: 40px;
-  height: 40px;
-}
-
-.filled {
-  background-color: #e4002b;
-}
-
-.empty {
-  background-color: transparent;
-}
 </head>
 <body>
   <div class="code">
@@ -135,9 +104,24 @@
   </div>
 
   <div class="center">
-    <div id="eye">
-      <div class="eye-box" id="eye-left"></div>
-      <div class="eye-box" id="eye-right"></div>
+    <div id="eye" class="eye-grid">
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+
+      <div class="cell empty"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell filled"></div>
+      <div class="cell empty"></div>
     </div>
   </div>
 
