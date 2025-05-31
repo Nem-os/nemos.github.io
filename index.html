@@ -142,14 +142,57 @@
     animate();
 
     const codeText = `<!DOCTYPE html>
-<html lang=\"it\">
+<html lang="it">
 <head>
-  <meta charset=\"UTF-8\" />
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
-  <title>Nem.Os</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello.World</title>
+
+  <style>
+    /* unknown */
+    :root {
+      --bg: #fff;
+      --fg: #111;
+      --accent: #e65152;
+    }
+
+    * {
+      margin: 20;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'IBM Plex Mono', monospace;
+      overflow: hidden;
+    }
+
+    .eye {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .layer {
+      mix-blend-mode: normal;
+    }
+  </style>
 </head>
+
 <body>
-  codice del sito visibile qui
+  <!-- Nem.Os: non un nome, un'interfaccia -->
+  <div id="eye-system">
+    <div class="layer layer-1"></div>
+    <div class="layer layer-2"></div>
+    <div class="pupil"></div>
+  </div>
+
+  <nav id="main-menu">
+    <a href="/projects">projects</a>
+    <a href="/about">about us</a>
+    <a href="/contacts">contacts</a>
+  </nav>
 </body>
 </html>`;
 
