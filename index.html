@@ -1,103 +1,12 @@
-@@ -0,0 +1,102 @@
-<!DOCTYPE html>Add commentMore actions
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nem.Os Studio</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #f8f8f8;
-      font-family: 'IBM Plex Mono', monospace;
-      color: #111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .container {
-      text-align: left;
-      max-width: 600px;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin: 0;
-    }
-
-    p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    #eye {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-    }
-
-    #pupil {
-      width: 20px;
-      height: 20px;
-      background: #e4002b;
-      border-radius: 50%;
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      transition: top 0.1s, left 0.1s;
-    }
-
-    .iris {
-      width: 50px;
-      height: 50px;
-      background: #000;
-      border-radius: 50%;
-      position: relative;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nem.Os</title>
 </head>
 <body>
-
-<div id="eye">
-  <div class="iris">
-    <div id="pupil"></div>
-  </div>
-</div>
-
-<div class="container">
   <h1>NEM.OS</h1>
-  <p>Studio sistemico di product design.<br>
-    Ogni oggetto è parte. Ogni forma ha un contesto.<br>
-    Non progettiamo icone, ma presenze silenziose.<br>
-    Non firmiamo: strutturiamo.</p>
-  <p><em>Progetto in produzione / 2025</em><br>
-  <a href="mailto:hello@nem.os">hello@nem.os</a></p>
-</div>
-
-<script>
-  const pupil = document.getElementById('pupil');
-  const iris = document.querySelector('.iris');
-
-  document.addEventListener('mousemove', (e) => {
-    const rect = iris.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const dx = e.clientX - centerX;
-    const dy = e.clientY - centerY;
-    const angle = Math.atan2(dy, dx);
-    const radius = 12; // max distance pupil can move
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
-    pupil.style.left = `${15 + x}px`;
-    pupil.style.top = `${15 + y}px`;
-  });
-</script>
-
+  <p>Sito attivo. Versione test.</p>
 </body>
 </html>
