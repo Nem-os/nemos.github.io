@@ -53,15 +53,19 @@
       letter-spacing: 0.05em;
     }
 
+    .eye-wrapper {
+      position: relative;
+      width: 600px;
+      height: 360px;
+    }
+
     .eye-grid {
       display: grid;
       grid-template-columns: repeat(5, 120px);
       grid-template-rows: repeat(3, 120px);
-      gap: 0;
-      justify-content: center;
-      align-items: center;
-      transform: translate(0px, 0px);
-      transition: transform 0.05s linear;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     .cell {
@@ -76,64 +80,76 @@
     .empty {
       background-color: transparent;
     }
+
+    #eye-base {
+      transition: transform 0.05s linear;
+      z-index: 1;
+    }
+
+    #eye-overlay {
+      transition: transform 0.05s linear;
+      z-index: 2;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
   <div class="code">
-&lt;html lang="it"&gt;
+&lt;html lang=\"it\"&gt;
 &lt;head&gt;
-  &lt;meta charset="UTF-8" /&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;meta charset=\"UTF-8\" /&gt;
+  &lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;
   &lt;title&gt;Nem.Os&lt;/title&gt;
-  &lt;link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"&gt;
-  &lt;style&gt;
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #F7F7F7;
-      font-family: 'IBM Plex Mono', monospace;
-      color: #111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-  &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;div class="code"&gt;
-    codice del sito visibile qui
-  &lt;/div&gt;
-  &lt;div class="center"&gt;
-    struttura dinamica dell’occhio
-  &lt;/div&gt;
-  &lt;div class="right"&gt;
-    menu navigazione
-  &lt;/div&gt;
+  codice del sito visibile qui
 &lt;/body&gt;
 &lt;/html&gt;
   </div>
 
   <div class="center">
-    <div id="eye" class="eye-grid">
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
+    <div class="eye-wrapper">
+      <div id="eye-base" class="eye-grid">
+        <!-- Griglia occhio base -->
+        <div class="cell empty"></div>
+        <div class="cell filled"></div>
+        <div class="cell filled"></div>
+        <div class="cell filled"></div>
+        <div class="cell filled"></div>
 
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
+        <div class="cell filled"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell filled"></div>
 
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell filled"></div>
+        <div class="cell filled"></div>
+        <div class="cell filled"></div>
+        <div class="cell empty"></div>
+      </div>
+
+      <div id="eye-overlay" class="eye-grid">
+        <!-- Pupilla -->
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell filled"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+        <div class="cell empty"></div>
+      </div>
     </div>
   </div>
 
@@ -144,20 +160,29 @@
   </div>
 
   <script>
-    const eye = document.getElementById('eye');
+    const eyeBase = document.getElementById('eye-base');
+    const eyeOverlay = document.getElementById('eye-overlay');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-    let currentX = 0;
-    let currentY = 0;
-    let targetX = 0;
-    let targetY = 0;
+
+    let currentXBase = 0, currentYBase = 0;
+    let targetXBase = 0, targetYBase = 0;
+
+    let currentXOverlay = 0, currentYOverlay = 0;
+    let targetXOverlay = 0, targetYOverlay = 0;
+
     let mouseActive = false;
 
     document.addEventListener('mousemove', (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      targetX = dx * 0.02;
-      targetY = dy * 0.02;
+
+      targetXBase = dx * 0.02;
+      targetYBase = dy * 0.02;
+
+      targetXOverlay = dx * 0.06;
+      targetYOverlay = dy * 0.02;
+
       mouseActive = true;
     });
 
@@ -167,12 +192,21 @@
 
     function animate() {
       if (!mouseActive) {
-        targetX *= 0.90;
-        targetY *= 0.90;
+        targetXBase *= 0.9;
+        targetYBase *= 0.9;
+        targetXOverlay *= 0.9;
+        targetYOverlay *= 0.9;
       }
-      currentX += (targetX - currentX) * 0.2;
-      currentY += (targetY - currentY) * 0.2;
-      eye.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+      currentXBase += (targetXBase - currentXBase) * 0.2;
+      currentYBase += (targetYBase - currentYBase) * 0.2;
+
+      currentXOverlay += (targetXOverlay - currentXOverlay) * 0.2;
+      currentYOverlay += (targetYOverlay - currentYOverlay) * 0.2;
+
+      eyeBase.style.transform = `translate(${currentXBase}px, ${currentYBase}px)`;
+      eyeOverlay.style.transform = `translate(${currentXOverlay}px, ${currentYOverlay}px)`;
+
       requestAnimationFrame(animate);
     }
 
