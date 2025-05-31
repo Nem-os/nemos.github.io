@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nem.Os</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -16,18 +16,20 @@
       color: #111;
       overflow: hidden;
       display: flex;
+      flex-direction: row;
     }
 
     .code {
-      width: 33.3%;
-      background: #f7f7f7;
+      width: 40%;
+      background: #ffffff;
       padding: 2rem;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       white-space: pre-wrap;
+      line-height: 1.4;
     }
 
     .center {
-      width: 33.3%;
+      width: 20%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -35,35 +37,37 @@
     }
 
     .right {
-      width: 33.3%;
+      width: 40%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      padding-left: 2rem;
+      padding: 2rem;
       gap: 1.5rem;
     }
 
     .right a {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       text-decoration: none;
       color: #111;
+      letter-spacing: 0.05em;
     }
 
-    .eye {
-      width: 200px;
-      height: 100px;
+    #eye {
+      position: relative;
+      width: 240px;
+      height: 120px;
       background: #e4002b;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       padding: 0 20px;
     }
 
-    .eye div {
-      width: 60px;
-      height: 60px;
-      background: white;
+    .eye-box {
+      width: 80px;
+      height: 80px;
+      background: #fff;
     }
   </style>
 </head>
@@ -71,17 +75,31 @@
   <div class="code">
 &lt;html lang="it"&gt;
 &lt;head&gt;
-&lt;meta charset="UTF-8" /&gt;
-&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
-&lt;title&gt;Nem.Os&lt;/title&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"&gt;
-...
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Nem.Os&lt;/title&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"&gt;
+  &lt;style&gt;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #F7F7F7;
+      font-family: 'IBM Plex Mono', monospace;
+      color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
   </div>
 
   <div class="center">
-    <div id="eye" class="eye">
-      <div></div>
-      <div></div>
+    <div id="eye">
+      <div class="eye-box" id="eye-left"></div>
+      <div class="eye-box" id="eye-right"></div>
     </div>
   </div>
 
@@ -93,15 +111,15 @@
 
   <script>
     const eye = document.getElementById('eye');
-    let posX = window.innerWidth / 2;
-    let posY = window.innerHeight / 2;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
 
     document.addEventListener('mousemove', (e) => {
-      const dx = e.clientX - posX;
-      const dy = e.clientY - posY;
-      posX += dx * 0.08; // elastic movement
-      posY += dy * 0.08;
-      eye.style.transform = `translate(${posX - window.innerWidth / 2}px, ${posY - window.innerHeight / 2}px)`;
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      const offsetX = dx * 0.02; // movimento limitato
+      const offsetY = dy * 0.02;
+      eye.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     });
   </script>
 </body>
