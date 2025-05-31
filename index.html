@@ -52,8 +52,8 @@
     }
     .eye-wrapper {
       position: absolute;
-      top: 65%;
-      left: 55%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
       width: 100vw;
       aspect-ratio: 5 / 3;
@@ -129,11 +129,11 @@
 
     function animate() {
       if (!mouseActive) {
-        targets = targets.map(t => ({x: t.x * 0.96, y: t.y * 0.96}));
+        targets = targets.map(t => ({x: t.x * 0.98, y: t.y * 0.98}));
       }
       for (let i = 0; i < layers.length; i++) {
-        currents[i].x += (targets[i].x - currents[i].x) * 0.8;
-        currents[i].y += (targets[i].y - currents[i].y) * 0.8;
+        currents[i].x += (targets[i].x - currents[i].x) * 0.98;
+        currents[i].y += (targets[i].y - currents[i].y) * 0.98;
         layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
       }
       requestAnimationFrame(animate);
