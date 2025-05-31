@@ -55,9 +55,9 @@
       top: 55%;
       left: 55%;
       transform: translate(-50%, -50%);
-      width: 120vw;
+      width: 140vw;
       aspect-ratio: 5 / 3;
-      max-width: 1200px;
+      max-width: 1400px;
       z-index: 1;
     }
     .layer {
@@ -117,9 +117,9 @@
     document.addEventListener('mousemove', (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      targets[0] = {x: dx * 0.07, y: dy * 0.18};
-      targets[1] = {x: dx * 0.07, y: dy * 0.18};
-      targets[2] = {x: dx * 0.22, y: dy * 0.18};
+      targets[0] = {x: dx * 0.07, y: dy * 0.25};
+      targets[1] = {x: dx * 0.07, y: dy * 0.25};
+      targets[2] = {x: dx * 0.22, y: dy * 0.25};
       mouseActive = true;
     });
 
