@@ -30,6 +30,8 @@
       font-size: clamp(0.6rem, 0.9vw, 1rem);
       white-space: pre-wrap;
       line-height: 1.4;
+      position: relative;
+      z-index: 10;
     }
 
     .center {
@@ -38,6 +40,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      z-index: 1;
     }
 
     .right {
@@ -48,6 +51,8 @@
       align-items: flex-end;
       padding-right: 120px;
       gap: 1.5rem;
+      position: relative;
+      z-index: 10;
     }
 
     .right a {
@@ -59,9 +64,10 @@
 
     .eye-wrapper {
       position: relative;
-      width: 40vw;
-      max-width: 800px;
+      width: 54vw; /* aumentato dell'80% */
+      max-width: 1080px;
       aspect-ratio: 5 / 3;
+      z-index: 1;
     }
 
     .eye-grid {
@@ -188,11 +194,11 @@
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
 
-      targetXBase = dx * 0.07;  // aumento x base
-      targetYBase = dy * 0.0675; // aumento y base del 50%
+      targetXBase = dx * 0.07;
+      targetYBase = dy * 0.09; // aumentato y base
 
-      targetXOverlay = dx * 0.135; // pupilla invariata x
-      targetYOverlay = dy * 0.0675; // aumento y overlay del 50%
+      targetXOverlay = dx * 0.135;
+      targetYOverlay = dy * 0.09; // aumentato y overlay
 
       mouseActive = true;
     });
@@ -209,11 +215,11 @@
         targetYOverlay *= 0.9;
       }
 
-      currentXBase += (targetXBase - currentXBase) * 0.8;
-      currentYBase += (targetYBase - currentYBase) * 0.8;
+      currentXBase += (targetXBase - currentXBase) * 0.2;
+      currentYBase += (targetYBase - currentYBase) * 0.2;
 
-      currentXOverlay += (targetXOverlay - currentXOverlay) * 0.8;
-      currentYOverlay += (targetYOverlay - currentYOverlay) * 0.8;
+      currentXOverlay += (targetXOverlay - currentXOverlay) * 0.2;
+      currentYOverlay += (targetYOverlay - currentYOverlay) * 0.2;
 
       eyeBase.style.transform = `translate(${currentXBase}px, ${currentYBase}px)`;
       eyeOverlay.style.transform = `translate(${currentXOverlay}px, ${currentYOverlay}px)`;
@@ -225,3 +231,4 @@
   </script>
 </body>
 </html>
+
