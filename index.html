@@ -32,8 +32,7 @@
       top: 0;
       left: 0;
       z-index: 10;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards 1s;
+      font-family: 'IBM Plex Mono', monospace;
     }
 
     .right {
@@ -48,8 +47,7 @@
       align-items: flex-end;
       gap: 1.5rem;
       z-index: 10;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards 1.5s;
+      font-family: 'IBM Plex Mono', monospace;
     }
 
     .right a {
@@ -59,24 +57,13 @@
       letter-spacing: 0.05em;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .eye-wrapper {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 80vw;
-      max-width: 1600px;
+      width: 60vw; /* 25% più piccolo rispetto a 80vw */
+      max-width: 1200px;
       aspect-ratio: 5 / 3;
       z-index: 1;
     }
@@ -123,19 +110,7 @@
   </style>
 </head>
 <body>
-  <div class="code">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="it"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-  &lt;title&gt;Nem.Os&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  codice del sito visibile qui
-&lt;/body&gt;
-&lt;/html&gt;
-  </div>
+  <div class="code" id="codeBlock"></div>
 
   <div class="eye-wrapper">
     <div id="eye-base" class="eye-grid">
@@ -180,9 +155,9 @@
   </div>
 
   <div class="right">
-    <a href="#">PROJECTS</a>
-    <a href="#">ABOUT US</a>
-    <a href="#">CONTACTS</a>
+    <a id="projectLink"></a>
+    <a id="aboutLink"></a>
+    <a id="contactLink"></a>
   </div>
 
   <script>
@@ -204,10 +179,10 @@
       const dy = e.clientY - centerY;
 
       targetXBase = dx * 0.07;
-      targetYBase = dy * 0.15;
+      targetYBase = dy * 0.18;
 
       targetXOverlay = dx * 0.135;
-      targetYOverlay = dy * 0.15;
+      targetYOverlay = dy * 0.18;
 
       mouseActive = true;
     });
@@ -237,6 +212,43 @@
     }
 
     animate();
+
+    // Typing effect for code and menu
+    const codeText = `<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nem.Os</title>
+</head>
+<body>
+  codice del sito visibile qui
+</body>
+</html>`;
+
+    const menuLines = ["PROJECTS", "ABOUT US", "CONTACTS"];
+
+    let i = 0;
+    function typeCode() {
+      if (i <= codeText.length) {
+        document.getElementById("codeBlock").innerText = codeText.substring(0, i);
+        i++;
+        setTimeout(typeCode, 8);
+      }
+    }
+
+    let j = 0;
+    function typeMenu() {
+      menuLines.forEach((line, index) => {
+        const target = document.getElementById(index === 0 ? "projectLink" : index === 1 ? "aboutLink" : "contactLink");
+        target.innerText = line.substring(0, j);
+      });
+      j++;
+      if (j <= menuLines[0].length) setTimeout(typeMenu, 50);
+    }
+
+    setTimeout(typeCode, 1000);
+    setTimeout(typeMenu, 1800);
   </script>
 </body>
 </html>
