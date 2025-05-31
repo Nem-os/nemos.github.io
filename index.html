@@ -9,7 +9,6 @@
     * {
       box-sizing: border-box;
     }
-
     html, body {
       margin: 0;
       padding: 0;
@@ -21,7 +20,6 @@
       overflow: hidden;
       position: relative;
     }
-
     .code {
       width: 40%;
       padding: 2rem;
@@ -32,9 +30,7 @@
       top: 0;
       left: 0;
       z-index: 10;
-      font-family: 'IBM Plex Mono', monospace;
     }
-
     .right {
       width: 40%;
       position: absolute;
@@ -47,16 +43,13 @@
       align-items: flex-end;
       gap: 1.5rem;
       z-index: 10;
-      font-family: 'IBM Plex Mono', monospace;
     }
-
     .right a {
       font-size: clamp(1.2rem, 1.6vw, 2rem);
       text-decoration: none;
       color: #111;
       letter-spacing: 0.05em;
     }
-
     .eye-wrapper {
       position: absolute;
       top: 50%;
@@ -66,41 +59,17 @@
       max-width: 1200px;
       aspect-ratio: 5 / 3;
       z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
-
-    .eye-shape, .pupil-shape {
+    .layer {
       position: absolute;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(3, 1fr);
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      gap: 0;
     }
-
-    .eye-shape div, .pupil-shape div {
-      width: 100%;
-      height: 100%;
-      background-color: transparent;
-    }
-
-    .eye-shape .filled {
+    .rect {
+      position: absolute;
       background-color: #e65152;
-    }
-
-    .pupil-shape .filled {
-      background-color: #e65152;
-    }
-
-    #eyeBase {
-      z-index: 1;
-    }
-
-    #eyePupil {
-      z-index: 2;
     }
   </style>
 </head>
@@ -108,44 +77,19 @@
   <div class="code" id="codeBlock"></div>
 
   <div class="eye-wrapper">
-    <div id="eyeBase" class="eye-shape">
-      <div class="empty"></div>
-      <div class="filled"></div>
-      <div class="filled"></div>
-      <div class="filled"></div>
-      <div class="filled"></div>
-
-      <div class="filled"></div>
-      <div class="empty"></div>
-      <div class="empty"></div>
-      <div class="empty"></div>
-      <div class="filled"></div>
-
-      <div class="empty"></div>
-      <div class="filled"></div>
-      <div class="filled"></div>
-      <div class="filled"></div>
-      <div class="empty"></div>
+    <!-- Layer 1 - Occhio -->
+    <div id="layer1" class="layer" style="z-index: 1;">
+      <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
-
-    <div id="eyePupil" class="pupil-shape">
-      <div class="empty"></div>
-      <div class="empty"></div>
-      <div class="filled"></div>
-      <div class="empty"></div>
-      <div class="empty"></div>
-
-      <div class="empty"></div>
-      <div class="empty"></div>
-      <div class="filled"></div>
-      <div class="empty"></div>
-      <div class="empty"></div>
-
-      <div class="empty"></div>
-      <div class="empty"></div>
-      <div class="filled"></div>
-      <div class="empty"></div>
-      <div class="empty"></div>
+    <!-- Layer 2 - Occhio destro -->
+    <div id="layer2" class="layer" style="z-index: 2;">
+      <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 66.66%;"></div>
+    </div>
+    <!-- Layer 3 - Pupilla -->
+    <div id="layer3" class="layer" style="z-index: 3;">
+      <div class="rect" style="top: 0%; left: 40%; width: 20%; height: 100%;"></div>
     </div>
   </div>
 
@@ -156,29 +100,24 @@
   </div>
 
   <script>
-    const eyeBase = document.getElementById('eyeBase');
-    const eyePupil = document.getElementById('eyePupil');
+    const layers = [
+      document.getElementById('layer1'),
+      document.getElementById('layer2'),
+      document.getElementById('layer3')
+    ];
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
-    let currentXBase = 0, currentYBase = 0;
-    let targetXBase = 0, targetYBase = 0;
-
-    let currentXPupil = 0, currentYPupil = 0;
-    let targetXPupil = 0, targetYPupil = 0;
-
+    let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+    let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let mouseActive = false;
 
     document.addEventListener('mousemove', (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-
-      targetXBase = dx * 0.07;
-      targetYBase = dy * 0.18;
-
-      targetXPupil = dx * 0.135;
-      targetYPupil = dy * 0.18;
-
+      targets[0] = {x: dx * 0.07, y: dy * 0.18};
+      targets[1] = {x: dx * 0.07, y: dy * 0.18};
+      targets[2] = {x: dx * 0.135, y: dy * 0.18};
       mouseActive = true;
     });
 
@@ -188,27 +127,18 @@
 
     function animate() {
       if (!mouseActive) {
-        targetXBase *= 0.9;
-        targetYBase *= 0.9;
-        targetXPupil *= 0.9;
-        targetYPupil *= 0.9;
+        targets = targets.map(t => ({x: t.x * 0.9, y: t.y * 0.9}));
       }
-
-      currentXBase += (targetXBase - currentXBase) * 0.2;
-      currentYBase += (targetYBase - currentYBase) * 0.2;
-
-      currentXPupil += (targetXPupil - currentXPupil) * 0.2;
-      currentYPupil += (targetYPupil - currentYPupil) * 0.2;
-
-      eyeBase.style.transform = `translate(${currentXBase}px, ${currentYBase}px)`;
-      eyePupil.style.transform = `translate(${currentXPupil}px, ${currentYPupil}px)`;
-
+      for (let i = 0; i < layers.length; i++) {
+        currents[i].x += (targets[i].x - currents[i].x) * 0.2;
+        currents[i].y += (targets[i].y - currents[i].y) * 0.2;
+        layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
+      }
       requestAnimationFrame(animate);
     }
 
     animate();
 
-    // Typing effect
     const codeText = `<!DOCTYPE html>
 <html lang="it">
 <head>
