@@ -59,8 +59,8 @@
 
     .eye-wrapper {
       position: relative;
-      width: 30vw;
-      max-width: 600px;
+      width: 40vw;
+      max-width: 800px;
       aspect-ratio: 5 / 3;
     }
 
@@ -188,11 +188,11 @@
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
 
-      targetXBase = dx * 0.045;
-      targetYBase = dy * 0.045;
+      targetXBase = dx * 0.07;  // aumento x base
+      targetYBase = dy * 0.0675; // aumento y base del 50%
 
-      targetXOverlay = dx * 0.135;
-      targetYOverlay = dy * 0.045;
+      targetXOverlay = dx * 0.135; // pupilla invariata x
+      targetYOverlay = dy * 0.0675; // aumento y overlay del 50%
 
       mouseActive = true;
     });
@@ -209,11 +209,11 @@
         targetYOverlay *= 0.9;
       }
 
-      currentXBase += (targetXBase - currentXBase) * 0.2;
-      currentYBase += (targetYBase - currentYBase) * 0.2;
+      currentXBase += (targetXBase - currentXBase) * 0.8;
+      currentYBase += (targetYBase - currentYBase) * 0.8;
 
-      currentXOverlay += (targetXOverlay - currentXOverlay) * 0.2;
-      currentYOverlay += (targetYOverlay - currentYOverlay) * 0.2;
+      currentXOverlay += (targetXOverlay - currentXOverlay) * 0.8;
+      currentYOverlay += (targetYOverlay - currentYOverlay) * 0.8;
 
       eyeBase.style.transform = `translate(${currentXBase}px, ${currentYBase}px)`;
       eyeOverlay.style.transform = `translate(${currentXOverlay}px, ${currentYOverlay}px)`;
