@@ -55,8 +55,8 @@
 
     .eye-grid {
       display: grid;
-      grid-template-columns: repeat(5, 80px);
-      grid-template-rows: repeat(3, 80px);
+      grid-template-columns: repeat(5, 120px);
+      grid-template-rows: repeat(3, 120px);
       gap: 0;
       justify-content: center;
       align-items: center;
@@ -65,12 +65,12 @@
     }
 
     .cell {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
     }
 
     .filled {
-      background-color: #e4002b;
+      background-color: #e65152;
     }
 
     .empty {
@@ -167,11 +167,11 @@
 
     function animate() {
       if (!mouseActive) {
-        targetX *= 0.95;
-        targetY *= 0.95;
+        targetX *= 0.90;
+        targetY *= 0.90;
       }
-      currentX += (targetX - currentX) * 0.1;
-      currentY += (targetY - currentY) * 0.1;
+      currentX += (targetX - currentX) * 0.2;
+      currentY += (targetY - currentY) * 0.2;
       eye.style.transform = `translate(${currentX}px, ${currentY}px)`;
       requestAnimationFrame(animate);
     }
