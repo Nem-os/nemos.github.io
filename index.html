@@ -62,50 +62,45 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 60vw; /* 25% più piccolo rispetto a 80vw */
+      width: 60vw;
       max-width: 1200px;
       aspect-ratio: 5 / 3;
       z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .eye-grid {
+    .eye-shape, .pupil-shape {
+      position: absolute;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(3, 1fr);
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       gap: 0;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
     }
 
-    .cell {
+    .eye-shape div, .pupil-shape div {
       width: 100%;
       height: 100%;
-      background-clip: content-box;
-      transform: translateZ(0);
-    }
-
-    .filled {
-      background-color: #e65152;
-    }
-
-    .empty {
       background-color: transparent;
     }
 
-    #eye-base {
-      transition: transform 0.05s linear;
+    .eye-shape .filled {
+      background-color: #e65152;
+    }
+
+    .pupil-shape .filled {
+      background-color: #e65152;
+    }
+
+    #eyeBase {
       z-index: 1;
     }
 
-    #eye-overlay {
-      transition: transform 0.05s linear;
+    #eyePupil {
       z-index: 2;
-      pointer-events: none;
     }
   </style>
 </head>
@@ -113,44 +108,44 @@
   <div class="code" id="codeBlock"></div>
 
   <div class="eye-wrapper">
-    <div id="eye-base" class="eye-grid">
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
+    <div id="eyeBase" class="eye-shape">
+      <div class="empty"></div>
+      <div class="filled"></div>
+      <div class="filled"></div>
+      <div class="filled"></div>
+      <div class="filled"></div>
 
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
+      <div class="filled"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="filled"></div>
 
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
+      <div class="empty"></div>
+      <div class="filled"></div>
+      <div class="filled"></div>
+      <div class="filled"></div>
+      <div class="empty"></div>
     </div>
 
-    <div id="eye-overlay" class="eye-grid">
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
+    <div id="eyePupil" class="pupil-shape">
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="filled"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
 
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="filled"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
 
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell filled"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="filled"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
     </div>
   </div>
 
@@ -161,16 +156,16 @@
   </div>
 
   <script>
-    const eyeBase = document.getElementById('eye-base');
-    const eyeOverlay = document.getElementById('eye-overlay');
+    const eyeBase = document.getElementById('eyeBase');
+    const eyePupil = document.getElementById('eyePupil');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
     let currentXBase = 0, currentYBase = 0;
     let targetXBase = 0, targetYBase = 0;
 
-    let currentXOverlay = 0, currentYOverlay = 0;
-    let targetXOverlay = 0, targetYOverlay = 0;
+    let currentXPupil = 0, currentYPupil = 0;
+    let targetXPupil = 0, targetYPupil = 0;
 
     let mouseActive = false;
 
@@ -181,8 +176,8 @@
       targetXBase = dx * 0.07;
       targetYBase = dy * 0.18;
 
-      targetXOverlay = dx * 0.135;
-      targetYOverlay = dy * 0.18;
+      targetXPupil = dx * 0.135;
+      targetYPupil = dy * 0.18;
 
       mouseActive = true;
     });
@@ -195,25 +190,25 @@
       if (!mouseActive) {
         targetXBase *= 0.9;
         targetYBase *= 0.9;
-        targetXOverlay *= 0.9;
-        targetYOverlay *= 0.9;
+        targetXPupil *= 0.9;
+        targetYPupil *= 0.9;
       }
 
       currentXBase += (targetXBase - currentXBase) * 0.2;
       currentYBase += (targetYBase - currentYBase) * 0.2;
 
-      currentXOverlay += (targetXOverlay - currentXOverlay) * 0.2;
-      currentYOverlay += (targetYOverlay - currentYOverlay) * 0.2;
+      currentXPupil += (targetXPupil - currentXPupil) * 0.2;
+      currentYPupil += (targetYPupil - currentYPupil) * 0.2;
 
       eyeBase.style.transform = `translate(${currentXBase}px, ${currentYBase}px)`;
-      eyeOverlay.style.transform = `translate(${currentXOverlay}px, ${currentYOverlay}px)`;
+      eyePupil.style.transform = `translate(${currentXPupil}px, ${currentYPupil}px)`;
 
       requestAnimationFrame(animate);
     }
 
     animate();
 
-    // Typing effect for code and menu
+    // Typing effect
     const codeText = `<!DOCTYPE html>
 <html lang="it">
 <head>
@@ -227,7 +222,6 @@
 </html>`;
 
     const menuLines = ["PROJECTS", "ABOUT US", "CONTACTS"];
-
     let i = 0;
     function typeCode() {
       if (i <= codeText.length) {
