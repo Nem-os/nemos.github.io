@@ -82,21 +82,21 @@
       content: ">";
     }
 
-    @media (max-width: 768px) {
-      .menu {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        gap: 30vh;
-        font-size: 2rem;
-        white-space: nowrap;
-      }
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: calc(50vh - 1rem - 25vh); /* Centra ABOUT US */
+    gap: 25vh; /* Maggiore distanza tra le voci */
+    font-size: 2rem;
+    white-space: nowrap;
+  }
 
-      .eye-wrapper {
-        transform: translate(-50%, -50%) scale(0.8);
-      }
-    }
+  .eye-wrapper {
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+}
   </style>
 </head>
 <body>
