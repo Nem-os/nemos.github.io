@@ -30,7 +30,6 @@
       justify-content: center;
       align-items: center;
       gap: 2rem;
-      flex-wrap: wrap;
       z-index: 10;
       visibility: hidden;
     }
@@ -40,16 +39,15 @@
       color: #111;
       letter-spacing: 0.05em;
       transition: all 0.25s ease-in-out;
-    }
-    .menu-center a:hover {
-      transform: scale(1.05);
+      display: inline-block;
+      white-space: nowrap;
     }
     .menu-center a::before {
       content: "<";
       transition: content 0.2s;
     }
     .menu-center a::after {
-      content: "/>";
+      content: ">";
       transition: content 0.2s;
     }
     .menu-center a:hover::before {
@@ -60,8 +58,8 @@
     }
     .eye-wrapper {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 55%;
+      left: 55%;
       transform: translate(-50%, -50%);
       width: 120vw;
       aspect-ratio: 5 / 3;
@@ -78,6 +76,13 @@
     .rect {
       position: absolute;
       background-color: #e65152;
+    }
+
+    @media (max-width: 768px) {
+      .menu-center {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
     }
   </style>
 </head>
@@ -122,14 +127,25 @@
       };
     }
 
-    document.addEventListener('mousemove', (e) => {
+    function setTargetFromCoords(x, y) {
       const {x: centerX, y: centerY} = updateCenter();
-      const dx = e.clientX - centerX;
-      const dy = e.clientY - centerY;
+      const dx = x - centerX;
+      const dy = y - centerY;
       targets[0] = {x: dx * 0.07, y: dy * 0.18};
       targets[1] = {x: dx * 0.07, y: dy * 0.18};
       targets[2] = {x: dx * 0.135, y: dy * 0.18};
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      setTargetFromCoords(e.clientX, e.clientY);
       mouseActive = true;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        setTargetFromCoords(e.touches[0].clientX, e.touches[0].clientY);
+        mouseActive = true;
+      }
     });
 
     document.addEventListener('mouseleave', () => {
@@ -150,7 +166,7 @@
 
     animate();
 
-    const menuLines = ["<projects />", "<about-us />", "<contacts />"];
+    const menuLines = ["projects", "about-us", "contacts"];
     let j = 0;
     function typeMenu() {
       const menu = document.getElementById("menu");
