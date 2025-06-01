@@ -47,15 +47,20 @@
 
     .menu {
       position: absolute;
+      z-index: 10;
+      display: flex;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 10;
-      display: flex;
       flex-direction: row;
       gap: 15vw;
       font-size: clamp(1.6rem, 2.2vw, 2.5rem);
       color: #111;
+      visibility: hidden;
+    }
+
+    .menu.show {
+      visibility: visible;
     }
 
     .menu a {
@@ -81,15 +86,12 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        height: 100vh;
-        gap: 22vh;
-        font-size: 1.8rem;
+        gap: 25vh;
+        font-size: 2rem;
       }
 
       .eye-wrapper {
-        transform: translate(-50%, -50%) scale(0.85);
+        transform: translate(-50%, -50%) scale(0.8);
       }
     }
   </style>
@@ -113,7 +115,7 @@
     </div>
   </div>
 
-  <div class="menu">
+  <div class="menu" id="menu">
     <a id="projectLink"></a>
     <a id="aboutLink"></a>
     <a id="contactLink"></a>
@@ -125,23 +127,16 @@
       document.getElementById('layer2'),
       document.getElementById('layer3')
     ];
-
-    const menuItems = [
-      { id: "projectLink", text: "projects" },
-      { id: "aboutLink", text: "about us" },
-      { id: "contactLink", text: "contacts" }
-    ];
-
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
     let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let mouseActive = false;
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
 
     function updateTargets(dx, dy) {
-      targets[0] = {x: dx * 0.20, y: dy * 0.22};
-      targets[1] = {x: dx * 0.20, y: dy * 0.22};
-      targets[2] = {x: dx * 0.38, y: dy * 0.22};
+      targets[0] = {x: dx * 0.17, y: dy * 0.22};
+      targets[1] = {x: dx * 0.17, y: dy * 0.22};
+      targets[2] = {x: dx * 0.30, y: dy * 0.22};
     }
 
     document.addEventListener('mousemove', (e) => {
@@ -177,22 +172,34 @@
       requestAnimationFrame(animate);
     }
 
+    animate();
+
+    // TEXT ANIMATION
+    const menuItems = [
+      { id: "projectLink", text: "projects" },
+      { id: "aboutLink", text: "about us" },
+      { id: "contactLink", text: "contacts" }
+    ];
+
     function typeMenuText() {
-      let pos = 0;
       const maxLength = Math.max(...menuItems.map(item => item.text.length));
-      function step() {
+      let i = 0;
+      const interval = setInterval(() => {
         menuItems.forEach(item => {
-          const target = document.getElementById(item.id);
-          target.innerText = item.text.substring(0, pos);
+          const el = document.getElementById(item.id);
+          el.textContent = item.text.substring(0, i);
         });
-        pos++;
-        if (pos <= maxLength) setTimeout(step, 50);
-      }
-      step();
+        if (i === maxLength) {
+          clearInterval(interval);
+        }
+        i++;
+      }, 50);
     }
 
-    animate();
-    setTimeout(typeMenuText, 1200);
+    setTimeout(() => {
+      document.getElementById("menu").classList.add("show");
+      typeMenuText();
+    }, 1000);
   </script>
 </body>
 </html>
