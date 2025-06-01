@@ -93,10 +93,6 @@
       height: 0 !important;
     }
 
-    .spacer {
-      height: 100vh;
-    }
-
     .overlay {
       position: fixed;
       top: 0;
@@ -119,6 +115,7 @@
       min-height: 100vh;
       padding: 10vh 8vw;
       max-width: 700px;
+      margin: 0 auto;
     }
 
     .section h2 {
@@ -148,11 +145,11 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <div class="spacer"></div>
+  <div class="spacer" style="height: 100vh;"></div>
 
   <div class="section" id="about">
     <h2>About</h2>
-    <p>Nem.Os is a personal studio—an anonymous and collective identity—born from someone who has seen design up close, but always from behind.</p>
+    <p>It is a personal studio—an anonymous and collective identity—born from someone who has seen design up close, but always from behind.</p>
     <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
     <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
     <p>In an environment where a name alone legitimizes the object, he felt a growing distance between his own design thinking—rooted in coherence, necessity, and simplicity—and the approximation disguised as genius that permeates parts of the system.</p>
@@ -238,7 +235,7 @@
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // SHOW OVERLAY WHEN ABOUT SECTION IS VISIBLE
+    // Show overlay when About section is visible
     window.addEventListener('scroll', () => {
       const aboutTop = aboutSection.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
