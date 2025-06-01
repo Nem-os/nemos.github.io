@@ -30,7 +30,6 @@
       aspect-ratio: 5 / 3;
       max-width: 1200px;
       z-index: 1;
-      transition: transform 0.15s ease-out;
     }
 
     .layer {
@@ -92,7 +91,7 @@
   </style>
 </head>
 <body>
-  <div class="eye-wrapper" id="eyeWrapper">
+  <div class="eye-wrapper">
     <!-- Occhio base -->
     <div id="layer1" class="layer" style="z-index: 1;">
       <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
@@ -106,10 +105,21 @@
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
 
-    <!-- Layer chiusura clic -->
-    <div id="click-layer" class="layer" style="z-index: 1000; display: none;">
+    <!-- Layer battito -->
+    <div id="blink-layer" class="layer" style="z-index: 999; display: none;">
+      <!-- Riga 2: (1,0,0,0,1) -->
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
       <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <!-- Riga 3: (0,1,1,1,0) -->
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+    </div>
+
+    <!-- Layer extra occhio cliccato -->
+    <div id="click-layer" class="layer" style="z-index: 1000; display: none;">
+      <!-- Riga 2: (1,0,0,0,1) -->
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <!-- Riga 3: (0,1,1,1,0) -->
       <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
   </div>
@@ -121,41 +131,47 @@
   </div>
 
   <script>
-    const eyeWrapper = document.getElementById('eyeWrapper');
-    const layer3 = document.getElementById('layer3');
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+    let centerX = window.innerWidth / 2;
+    let centerY = window.innerHeight / 2;
 
-    let target = {x: 0, y: 0};
-    let current = {x: 0, y: 0};
-    let pupilTarget = {x: 0, y: 0};
-    let pupilCurrent = {x: 0, y: 0};
+    window.addEventListener('resize', () => {
+      centerX = window.innerWidth / 2;
+      centerY = window.innerHeight / 2;
+    });
+
+    const layers = [
+      document.getElementById('layer1'),
+      document.getElementById('layer2'),
+      document.getElementById('layer3')
+    ];
+
+    let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+    let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let mouseActive = false;
     let justBlinked = false;
+
+    function updateTargets(dx, dy) {
+      targets[0] = {x: dx * 0.17, y: dy * 0.22};
+      targets[1] = {x: dx * 0.17, y: dy * 0.22};
+      targets[2] = {x: dx * 0.30, y: dy * 0.22};
+    }
 
     document.addEventListener('mousemove', (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = {x: dx * 0.17, y: dy * 0.22};
-      pupilTarget = {x: dx * 0.3, y: dy * 0.3};
+      updateTargets(dx, dy);
       mouseActive = true;
     });
 
     function animate() {
       if (!mouseActive && !justBlinked) {
-        target.x *= 0.98;
-        target.y *= 0.98;
-        pupilTarget.x *= 0.98;
-        pupilTarget.y *= 0.98;
+        targets = targets.map(t => ({x: t.x * 0.98, y: t.y * 0.98}));
       }
-      current.x += (target.x - current.x) * 0.15;
-      current.y += (target.y - current.y) * 0.15;
-      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
-
-      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupilCurrent.y += (pupilTarget.y - pupilCurrent.y) * 0.2;
-      layer3.style.transform = `translate(${pupilCurrent.x}px, ${pupilCurrent.y}px)`;
-
+      for (let i = 0; i < layers.length; i++) {
+        currents[i].x += (targets[i].x - currents[i].x) * 0.15;
+        currents[i].y += (targets[i].y - currents[i].y) * 0.15;
+        layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
+      }
       requestAnimationFrame(animate);
     }
 
@@ -163,15 +179,14 @@
 
     function blink() {
       justBlinked = true;
-      const clickLayer = document.getElementById('click-layer');
-      const allLayers = document.querySelectorAll('.eye-wrapper .layer:not(#click-layer)');
-
-      allLayers.forEach(layer => layer.style.visibility = 'hidden');
-      clickLayer.style.display = 'block';
+      const blinkLayer = document.getElementById('click-layer');
+      const normalRects = document.querySelectorAll('.rect:not(#click-layer .rect)');
+      normalRects.forEach(el => el.style.visibility = 'hidden');
+      blinkLayer.style.display = 'block';
 
       setTimeout(() => {
-        clickLayer.style.display = 'none';
-        allLayers.forEach(layer => layer.style.visibility = 'visible');
+        blinkLayer.style.display = 'none';
+        normalRects.forEach(el => el.style.visibility = 'visible');
         justBlinked = false;
       }, 150);
     }
