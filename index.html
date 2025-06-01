@@ -22,7 +22,6 @@
       touch-action: none;
     }
 
-    /* OCCHIO */
     .eye-wrapper {
       position: absolute;
       top: 50%;
@@ -94,7 +93,6 @@
       height: 0 !important;
     }
 
-    /* HEADER ORIZZONTALE */
     .site-header {
       position: absolute;
       top: 5vh;
@@ -102,6 +100,7 @@
       width: 90vw;
       display: flex;
       justify-content: flex-end;
+      align-items: center;
       z-index: 10;
     }
 
@@ -126,6 +125,45 @@
     .menu a:hover {
       transform: scale(1.12);
     }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .hamburger div {
+      width: 30px;
+      height: 2px;
+      background: #111;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .menu {
+        flex-direction: column;
+        position: absolute;
+        top: 10vh;
+        right: 5vw;
+        background: #fff;
+        padding: 2vh 2vw;
+        gap: 2vh;
+        font-size: 1.8rem;
+        border: 1px solid #111;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        align-items: flex-end;
+      }
+
+      .hamburger {
+        display: flex;
+        position: absolute;
+        top: 5vh;
+        right: 5vw;
+      }
+    }
   </style>
 </head>
 <body>
@@ -140,8 +178,11 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <!-- HEADER CON MENU -->
+  <!-- HEADER + HAMBURGER -->
   <header class="site-header">
+    <div class="hamburger" id="hamburger">
+      <div></div><div></div><div></div>
+    </div>
     <nav class="menu" id="menu">
       <a id="aboutLink" href="about.html"></a>
       <a id="projectLink" href="projects.html"></a>
@@ -214,7 +255,7 @@
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // TYPING SEQUENZIALE
+    // MENU DIGITAZIONE
     const menuItems = [
       { id: "aboutLink", text: "about-us" },
       { id: "projectLink", text: "projects" },
@@ -223,25 +264,42 @@
 
     function typeMenuTextSequentially(index = 0) {
       if (index >= menuItems.length) return;
-
       const { id, text } = menuItems[index];
       const el = document.getElementById(id);
       let i = 0;
-
       const interval = setInterval(() => {
         el.textContent = `<${text.substring(0, i)}>`;
         i++;
         if (i > text.length) {
           clearInterval(interval);
-          typeMenuTextSequentially(index + 1); // avvia il successivo
+          typeMenuTextSequentially(index + 1);
         }
       }, 70);
     }
 
-    setTimeout(() => {
-      document.getElementById("menu").classList.add("show");
-      typeMenuTextSequentially();
-    }, 1000);
+    // GESTIONE RESPONSIVE
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("menu");
+
+    if (isMobile) {
+      hamburger.addEventListener("click", () => {
+        const menuVisible = menu.classList.toggle("show");
+        if (menuVisible) {
+          typeMenuTextSequentially();
+        } else {
+          // Reset
+          menuItems.forEach(item => {
+            document.getElementById(item.id).textContent = "";
+          });
+        }
+      });
+    } else {
+      setTimeout(() => {
+        menu.classList.add("show");
+        typeMenuTextSequentially();
+      }, 1000);
+    }
   </script>
 </body>
 </html>
