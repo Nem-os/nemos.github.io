@@ -19,6 +19,7 @@
       height: 100vh;
       width: 100vw;
       position: relative;
+      touch-action: none;
     }
 
     .eye-wrapper {
@@ -30,7 +31,6 @@
       aspect-ratio: 5 / 3;
       max-width: 1200px;
       z-index: 1;
-      transition: transform 0.15s ease-out;
     }
 
     .layer {
@@ -43,8 +43,13 @@
 
     .rect {
       position: absolute;
-      background-color: #e65152;
+      transition: height 0.2s ease;
     }
+
+    .layer1 .rect { background-color: #e65152; }
+    .layer2 .rect { background-color: #e65152; }
+    .layer3 .rect { background-color: white; }
+    .pupil .rect { background-color: #111; }
 
     .menu {
       position: absolute;
@@ -74,43 +79,30 @@
     .menu a:hover {
       transform: scale(1.12);
     }
-
-    @media (max-width: 768px) {
-      .menu {
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%) translateY(-50%);
-        align-items: center;
-        gap: 20vh;
-        font-size: 2.4rem;
-      }
-
-      .eye-wrapper {
-        transform: translate(-50%, -50%) scale(0.65);
-      }
-    }
   </style>
 </head>
 <body>
   <div class="eye-wrapper" id="eyeWrapper">
-    <!-- Occhio base -->
-    <div id="layer1" class="layer" style="z-index: 1;">
-      <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
+    <!-- Layer 1: occhio esterno -->
+    <div class="layer layer1">
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
       <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
-    </div>
-    <div id="layer2" class="layer" style="z-index: 2;">
-      <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 66.66%;"></div>
-    </div>
-    <div id="layer3" class="layer" style="z-index: 3;">
-      <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
 
-    <!-- Layer chiusura clic -->
-    <div id="click-layer" class="layer" style="z-index: 1000; display: none;">
-      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+    <!-- Layer 2: retina rossa -->
+    <div class="layer layer2">
+      <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 20%; width: 64%; height: 33.33%;"></div>
+    </div>
+
+    <!-- Layer 3: parte bianca -->
+    <div class="layer layer3">
+      <div class="rect" style="top: 33.33%; left: 20%; width: 60%; height: 33.33%;"></div>
+    </div>
+
+    <!-- Pupilla -->
+    <div class="layer pupil" id="layerPupil">
+      <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
   </div>
 
@@ -122,14 +114,14 @@
 
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
-    const layer3 = document.getElementById('layer3');
+    const pupilLayer = document.getElementById('layerPupil');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
     let target = {x: 0, y: 0};
     let current = {x: 0, y: 0};
-    let pupilTarget = {x: 0, y: 0};
-    let pupilCurrent = {x: 0, y: 0};
+    let pupilTarget = {x: 0};
+    let pupilCurrent = {x: 0};
     let mouseActive = false;
     let justBlinked = false;
 
@@ -137,8 +129,30 @@
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
       target = {x: dx * 0.17, y: dy * 0.22};
-      pupilTarget = {x: dx * 0.25, y: 0};
+      pupilTarget = {x: dx * 0.25};
       mouseActive = true;
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        target = {x: dx * 0.17, y: dy * 0.35};
+        pupilTarget = {x: dx * 0.25};
+        mouseActive = true;
+      }
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        target = {x: dx * 0.17, y: dy * 0.35};
+        pupilTarget = {x: dx * 0.25};
+        mouseActive = true;
+      }
     });
 
     function animate() {
@@ -152,8 +166,7 @@
       eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
 
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupilCurrent.y = 0;
-      layer3.style.transform = `translate(${pupilCurrent.x}px, ${pupilCurrent.y}px)`;
+      pupilLayer.style.transform = `translate(${pupilCurrent.x}px, 0)`;
 
       requestAnimationFrame(animate);
     }
@@ -162,17 +175,24 @@
 
     function blink() {
       justBlinked = true;
-      const clickLayer = document.getElementById('click-layer');
-      const allLayers = document.querySelectorAll('.eye-wrapper .layer:not(#click-layer)');
+      const layer2Rects = document.querySelectorAll('.layer2 .rect');
+      const layer3Rects = document.querySelectorAll('.layer3 .rect');
+      const pupilRects = document.querySelectorAll('.pupil .rect');
 
-      allLayers.forEach(layer => layer.style.visibility = 'hidden');
-      clickLayer.style.display = 'block';
+      // Salva le altezze originali
+      const originalHeights = [];
+      [...layer2Rects, ...layer3Rects, ...pupilRects].forEach(rect => {
+        originalHeights.push(rect.style.height);
+        rect.dataset.originalHeight = rect.style.height;
+        rect.style.height = '0';
+      });
 
       setTimeout(() => {
-        clickLayer.style.display = 'none';
-        allLayers.forEach(layer => layer.style.visibility = 'visible');
+        [...layer2Rects, ...layer3Rects, ...pupilRects].forEach(rect => {
+          rect.style.height = rect.dataset.originalHeight;
+        });
         justBlinked = false;
-      }, 150);
+      }, 200);
     }
 
     document.addEventListener('click', () => blink());
