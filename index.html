@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nem.Os Mobile</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <title>Nem.Os</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -93,16 +93,32 @@
       height: 0 !important;
     }
 
-    .section {
-      min-height: 100vh;
-      padding: 10vh 8vw;
-      background: rgba(255, 255, 255, 0.5);
-      position: relative;
-      z-index: 1;
+    .spacer {
+      height: 100vh;
     }
 
-    .section:not(:last-child) {
-      border-bottom: 1px solid #ccc;
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 1;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .section {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      padding: 10vh 8vw;
+      max-width: 700px;
     }
 
     .section h2 {
@@ -113,12 +129,13 @@
     .section p {
       font-size: 1rem;
       line-height: 1.6;
+      margin-bottom: 1rem;
+      text-align: left;
     }
   </style>
 </head>
 <body>
 
-  <!-- OCCHIO -->
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
@@ -129,30 +146,37 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <!-- SEZIONI -->
+  <div class="overlay" id="overlay"></div>
+
+  <div class="spacer"></div>
+
   <div class="section" id="about">
     <h2>About</h2>
-    <p><strong>Nem.Os</strong> è uno studio personale, un’identità anonima e collettiva, nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
-    <p>Ha firmato col silenzio mobili presentati al Fuorisalone, sviluppato elementi per spazi di brand iconici, accompagnato idee che hanno avuto eco museale. Ma quel lavoro, spesso, lo ha vissuto come un paradosso: la sensazione di costruire cose senza senso per chi non deve mai giustificare nulla.</p>
-    <p>Con Nem.Os, inizia una nuova traiettoria: autonoma, silenziosa, radicale. Un design che non chiede più il permesso, che non cerca l’oggetto speciale, ma quello giusto.</p>
+    <p>Nem.Os is a personal studio—an anonymous and collective identity—born from someone who has seen design up close, but always from behind.</p>
+    <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+    <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+    <p>In an environment where a name alone legitimizes the object, he felt a growing distance between his own design thinking—rooted in coherence, necessity, and simplicity—and the approximation disguised as genius that permeates parts of the system.</p>
+    <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
   </div>
 
   <div class="section" id="projects">
     <h2>Projects</h2>
-    <p>[Qui compariranno i progetti di Nem.Os: prodotti, oggetti, installazioni, spazi, collaborazioni.]</p>
-    <p>In costruzione: selezione curata, minima, necessaria.</p>
+    <p>Selected works will appear here soon. The focus is not on quantity, but on coherence and clarity. Each project is chosen for its necessity, not its prestige.</p>
   </div>
 
   <div class="section" id="contacts">
     <h2>Contacts</h2>
+    <p>If the work resonates, if the values align, feel free to get in touch:</p>
     <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
     <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
   </div>
 
-  <!-- SCRIPT -->
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
     const pupil = document.getElementById('pupil');
+    const overlay = document.getElementById('overlay');
+    const aboutSection = document.getElementById('about');
+
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
@@ -213,6 +237,15 @@
     setInterval(() => {
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
+
+    // SHOW OVERLAY WHEN ABOUT SECTION IS VISIBLE
+    window.addEventListener('scroll', () => {
+      const aboutTop = aboutSection.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      if (aboutTop < windowHeight) {
+        overlay.classList.add('active');
+      }
+    });
   </script>
 </body>
 </html>
