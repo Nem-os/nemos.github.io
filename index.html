@@ -34,7 +34,7 @@
 
     .layer {
       position: absolute;
-      transition: height 0.1s ease;
+      transition: height 0.2s ease;
       will-change: height;
       backface-visibility: hidden;
       transform-origin: bottom;
@@ -81,7 +81,7 @@
       left: 40%;
       width: 20%;
       height: 80%;
-      transition: height 0.17s ease;
+      transition: height 0.2s ease;
       will-change: height;
       backface-visibility: hidden;
       transform-origin: top;
@@ -182,10 +182,10 @@
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
-      eyeWrapper.style.transform = translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px));
+      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
 
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupil.style.transform = translateX(${pupilCurrent.x}px);
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
 
       requestAnimationFrame(animate);
     }
@@ -218,7 +218,7 @@
       const interval = setInterval(() => {
         menuItems.forEach(item => {
           const el = document.getElementById(item.id);
-          el.textContent = <${item.text.substring(0, i)}>;
+          el.textContent = `<${item.text.substring(0, i)}>`;
         });
         if (i === maxLength) clearInterval(interval);
         i++;
