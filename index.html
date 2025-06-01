@@ -48,23 +48,12 @@
       mouseActive = true;
     });
 
-    document.addEventListener('touchstart', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const dx = touch.clientX - centerX;
-        const dy = touch.clientY - centerY;
-        target = {x: dx * 0.17, y: dy * 0.35};
-        pupilTarget = {x: dx * 0.25, y: 0};
-        mouseActive = true;
-      }
-    });
-
     document.addEventListener('touchmove', (e) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = {x: dx * 0.17, y: dy * 0.35};
+        target = {x: dx * 0.17, y: dy * 0.35}; // più y su mobile
         pupilTarget = {x: dx * 0.25, y: 0};
         mouseActive = true;
       }
@@ -93,6 +82,7 @@
       justBlinked = true;
       const clickLayer = document.getElementById('click-layer');
       const allLayers = document.querySelectorAll('.eye-wrapper .layer:not(#click-layer)');
+
       allLayers.forEach(layer => layer.style.visibility = 'hidden');
       clickLayer.style.display = 'block';
 
