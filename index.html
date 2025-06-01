@@ -45,16 +45,14 @@
       background-color: #e65152;
     }
 
-    .eyelid {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .blink-bar {
+      display: none;
+      top: 33.33%;
+      left: 0%;
       width: 100%;
-      height: 0%;
-      background-color: #ffffff;
+      height: 33.33%;
+      background-color: #e65152;
       z-index: 1000;
-      transition: height 0.15s ease-in-out;
-      pointer-events: none;
     }
 
     .menu {
@@ -117,7 +115,8 @@
     </div>
     <div id="layer3" class="layer" style="z-index: 3;">
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
-      <div class="eyelid"></div>
+      <!-- rettangolo centrale che appare durante il battito -->
+      <div class="rect blink-bar"></div>
     </div>
   </div>
 
@@ -190,7 +189,6 @@
     const typeSound = document.getElementById('typeSound');
     let userInteracted = false;
 
-    // Unlock audio context on first user interaction
     window.addEventListener('click', () => { userInteracted = true; });
     window.addEventListener('touchstart', () => { userInteracted = true; });
 
@@ -217,21 +215,22 @@
       typeMenuText();
     }, 1000);
 
-    // Funzione per il battito di palpebra
+    // BATTITO: mostra riga centrale, nasconde le altre
     function blink() {
-      const eyelid = document.querySelector('.eyelid');
-      if (!eyelid) return;
+      const rects = document.querySelectorAll('.rect:not(.blink-bar)');
+      const blinkBar = document.querySelector('.blink-bar');
 
-      // Chiude l'occhio
-      eyelid.style.height = "33.33%";
+      if (!blinkBar) return;
+
+      rects.forEach(r => r.style.visibility = 'hidden');
+      blinkBar.style.display = 'block';
 
       setTimeout(() => {
-        // Riapre l'occhio
-        eyelid.style.height = "0%";
-      }, 150); // tempo in cui resta chiuso
+        blinkBar.style.display = 'none';
+        rects.forEach(r => r.style.visibility = 'visible');
+      }, 150);
     }
 
-    // Innesca il battito ogni 10-15 secondi circa, randomizzato
     setInterval(() => {
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
