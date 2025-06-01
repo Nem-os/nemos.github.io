@@ -43,7 +43,10 @@
 
     .rect {
       position: absolute;
-      transition: all 0.2s ease;
+      transform-origin: top;
+      transition: transform 0.2s ease;
+      will-change: transform;
+      backface-visibility: hidden;
     }
 
     .layer1 .rect, .layer3 .rect, .pupil .rect {
@@ -83,54 +86,45 @@
       transform: scale(1.12);
     }
 
-    .blinked .layer1 .rect {
-      top: calc(var(--top) + var(--height));
-      height: 0 !important;
-    }
-
-    .blinked .layer2 .rect {
-      top: calc(var(--top) + var(--height));
-      height: 0 !important;
-    }
-
+    .blinked .layer1 .rect,
+    .blinked .layer2 .rect,
     .blinked .pupil .rect {
-      top: calc(var(--top) + var(--height));
-      height: 0 !important;
+      transform: scaleY(0);
     }
   </style>
 </head>
 <body>
   <div class="eye-wrapper" id="eyeWrapper">
-    <!-- Layer 1 - rosso -->
+    <!-- Layer 1 -->
     <div class="layer layer1">
       <!-- Riga 1 -->
-      <div class="rect" style="--top: 0%; --height: 33.33%; top: 0%; left: 20%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 0%; --height: 33.33%; top: 0%; left: 40%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 0%; --height: 33.33%; top: 0%; left: 60%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 0%; --height: 33.33%; top: 0%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 0%; left: 20%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 0%; left: 40%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 0%; left: 60%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 33.33%;"></div>
       <!-- Riga 2 -->
-      <div class="rect" style="--top: 33.33%; --height: 33.33%; top: 33.33%; left: 20%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 33.33%; --height: 33.33%; top: 33.33%; left: 40%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 33.33%; --height: 33.33%; top: 33.33%; left: 60%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 33.33%; --height: 33.33%; top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 20%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 40%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 60%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
     </div>
 
-    <!-- Layer 2 - bianco -->
+    <!-- Layer 2 -->
     <div class="layer layer2">
-      <div class="rect" style="--top: 33.33%; --height: 33.33%; top: 33.33%; left: 20%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 33.33%; --height: 33.33%; top: 33.33%; left: 40%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="--top: 33.33%; --height: 33.33%; top: 33.33%; left: 60%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 20%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 40%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 60%; width: 20%; height: 33.33%;"></div>
     </div>
 
-    <!-- Layer 3 - rosso (non animato) -->
+    <!-- Layer 3 -->
     <div class="layer layer3">
-      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div> <!-- quadrato -->
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div> <!-- rettangolo -->
     </div>
 
-    <!-- Layer 4 - pupilla -->
+    <!-- Layer 4 (pupilla) -->
     <div class="layer pupil" id="layerPupil">
-      <div class="rect" style="--top: 10%; --height: 80%; top: 10%; left: 40%; width: 20%; height: 80%;"></div>
+      <div class="rect" style="top: 10%; left: 40%; width: 20%; height: 80%;"></div>
     </div>
   </div>
 
@@ -146,18 +140,18 @@
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
-    let target = {x: 0, y: 0};
-    let current = {x: 0, y: 0};
-    let pupilTarget = {x: 0};
-    let pupilCurrent = {x: 0};
+    let target = { x: 0, y: 0 };
+    let current = { x: 0, y: 0 };
+    let pupilTarget = { x: 0 };
+    let pupilCurrent = { x: 0 };
     let mouseActive = false;
     let justBlinked = false;
 
     document.addEventListener('mousemove', (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = {x: dx * 0.17, y: dy * 0.22};
-      pupilTarget = {x: dx * 0.25};
+      target = { x: dx * 0.17, y: dy * 0.22 };
+      pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
     });
 
@@ -166,8 +160,8 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = {x: dx * 0.17, y: dy * 0.35};
-        pupilTarget = {x: dx * 0.25};
+        target = { x: dx * 0.17, y: dy * 0.35 };
+        pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
     });
