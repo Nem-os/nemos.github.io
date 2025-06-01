@@ -37,21 +37,21 @@
       transition: height 0.2s ease;
       will-change: height;
       backface-visibility: hidden;
-      top: auto;
+      transform-origin: bottom;
     }
 
     .layer1 {
       background-color: #e65152;
+      bottom: 33.33%;
       left: 20%;
-      bottom: 0%;
       width: 64%;
       height: 66.66%;
     }
 
     .layer2 {
       background-color: white;
+      bottom: 33.33%;
       left: 28%;
-      bottom: 0%;
       width: 44%;
       height: 33.33%;
     }
@@ -77,13 +77,14 @@
     .pupil {
       background-color: #e65152;
       position: absolute;
+      top: 10%;
       left: 40%;
-      bottom: 10%;
       width: 20%;
       height: 80%;
       transition: height 0.2s ease;
       will-change: height;
       backface-visibility: hidden;
+      transform-origin: bottom;
     }
 
     .blinked .layer1,
