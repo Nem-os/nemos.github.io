@@ -57,6 +57,7 @@
       font-size: clamp(1.6rem, 2.2vw, 2.5rem);
       color: #111;
       visibility: hidden;
+      white-space: nowrap;
     }
 
     .menu.show {
@@ -86,8 +87,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 25vh;
+        height: 100vh;
+        gap: 30vh;
         font-size: 2rem;
+        white-space: nowrap;
       }
 
       .eye-wrapper {
@@ -129,6 +132,7 @@
     ];
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
+
     let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let mouseActive = false;
