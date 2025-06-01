@@ -197,6 +197,12 @@
         display: block;
       }
     }
+
+    @media screen and (min-width: 769px) {
+      .mobile-overlay {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -253,6 +259,8 @@
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlayText");
     const closeBtn = document.getElementById("closeOverlay");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+    const aboutSection = document.getElementById("mobile-about");
 
     const content = {
       about: `
@@ -278,14 +286,15 @@
       overlay.classList.remove("active");
     });
 
-    const mobileOverlay = document.getElementById("mobileOverlay");
-    const aboutSection = document.getElementById("mobile-about");
-
     function checkMobileOverlay() {
-      const top = aboutSection.getBoundingClientRect().top;
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      if (top < viewportHeight * 0.5) {
-        mobileOverlay.classList.add("active");
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        const top = aboutSection.getBoundingClientRect().top;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        if (top < viewportHeight * 0.5) {
+          mobileOverlay.classList.add("active");
+        } else {
+          mobileOverlay.classList.remove("active");
+        }
       } else {
         mobileOverlay.classList.remove("active");
       }
@@ -294,6 +303,7 @@
     window.addEventListener("scroll", checkMobileOverlay);
     window.addEventListener("load", checkMobileOverlay);
 
+    // Eye movement logic
     const eyeWrapper = document.getElementById("eyeWrapper");
     const pupil = document.getElementById("pupil");
     const centerX = window.innerWidth / 2;
@@ -305,7 +315,7 @@
     let mouseActive = false;
     let justBlinked = false;
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
       target = { x: dx * 0.17, y: dy * 0.22 };
@@ -313,7 +323,7 @@
       mouseActive = true;
     });
 
-    document.addEventListener('touchmove', (e) => {
+    document.addEventListener("touchmove", (e) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
@@ -342,15 +352,17 @@
 
     function blink() {
       justBlinked = true;
-      eyeWrapper.classList.add('blinked');
+      eyeWrapper.classList.add("blinked");
       setTimeout(() => {
-        eyeWrapper.classList.remove('blinked');
+        eyeWrapper.classList.remove("blinked");
         justBlinked = false;
       }, 200);
     }
 
-    document.addEventListener('click', () => blink());
-    setInterval(() => { if (document.hasFocus()) blink(); }, 10000 + Math.random() * 5000);
+    document.addEventListener("click", () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
   </script>
 </body>
 </html>
