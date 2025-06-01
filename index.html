@@ -1,3 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nem.Os</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'IBM Plex Mono', monospace;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+    .eye-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120vw;
+      aspect-ratio: 5 / 3;
+      max-width: 1200px;
+      z-index: 1;
+      transition: transform 0.15s ease-out;
+    }
+
+    .layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .rect {
+      position: absolute;
+      background-color: #e65152;
+    }
+
+    .menu {
+      position: absolute;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      gap: 12vh;
+      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
+      color: #111;
+      visibility: hidden;
+    }
+
+    .menu.show {
+      visibility: visible;
+    }
+
+    .menu a {
+      color: #111;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+
+    .menu a:hover {
+      transform: scale(1.12);
+    }
+
+    @media (max-width: 768px) {
+      .menu {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateY(-50%);
+        align-items: center;
+        gap: 20vh;
+        font-size: 2.4rem;
+      }
+
+      .eye-wrapper {
+        transform: translate(-50%, -50%) scale(0.65);
+      }
+    }
+  </style>
+</head>
 <body>
   <div class="eye-wrapper" id="eyeWrapper">
     <!-- Occhio base -->
@@ -46,17 +139,6 @@
       target = {x: dx * 0.17, y: dy * 0.22};
       pupilTarget = {x: dx * 0.25, y: 0};
       mouseActive = true;
-    });
-
-    document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const dx = touch.clientX - centerX;
-        const dy = touch.clientY - centerY;
-        target = {x: dx * 0.17, y: dy * 0.35}; // più y su mobile
-        pupilTarget = {x: dx * 0.25, y: 0};
-        mouseActive = true;
-      }
     });
 
     function animate() {
@@ -126,3 +208,4 @@
     }, 1000);
   </script>
 </body>
+</html>
