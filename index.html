@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
@@ -94,11 +93,13 @@
       background: rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(8px);
       z-index: 1;
-      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
     }
 
     .overlay.active {
-      display: block;
+      opacity: 1;
     }
 
     .section {
@@ -126,8 +127,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Eye Graphic -->
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
@@ -138,13 +137,9 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <!-- Overlay (blur + white) -->
   <div class="overlay" id="overlay"></div>
-
-  <!-- Spacer to allow scroll -->
   <div class="spacer"></div>
 
-  <!-- About Section -->
   <div class="section" id="about">
     <h2>About</h2>
     <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
@@ -154,13 +149,11 @@
     <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
   </div>
 
-  <!-- Projects Section -->
   <div class="section" id="projects">
     <h2>Projects</h2>
     <p>Selected works will appear here soon. The focus is not on quantity, but on coherence and clarity. Each project is chosen for its necessity, not its prestige.</p>
   </div>
 
-  <!-- Contacts Section -->
   <div class="section" id="contacts">
     <h2>Contacts</h2>
     <p>If the work resonates, if the values align, feel free to get in touch:</p>
@@ -185,7 +178,6 @@
     const pupil = document.getElementById('pupil');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-
     let target = { x: 0, y: 0 };
     let current = { x: 0, y: 0 };
     let pupilTarget = { x: 0 };
@@ -199,17 +191,6 @@
       target = { x: dx * 0.17, y: dy * 0.22 };
       pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
-    });
-
-    document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const dx = touch.clientX - centerX;
-        const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.35 };
-        pupilTarget = { x: dx * 0.25 };
-        mouseActive = true;
-      }
     });
 
     function animate() {
@@ -238,9 +219,7 @@
     }
 
     document.addEventListener('click', () => blink());
-    setInterval(() => {
-      if (document.hasFocus()) blink();
-    }, 10000 + Math.random() * 5000);
+    setInterval(() => { if (document.hasFocus()) blink(); }, 10000 + Math.random() * 5000);
   </script>
 </body>
 </html>
