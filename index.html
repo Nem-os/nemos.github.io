@@ -30,6 +30,7 @@
       aspect-ratio: 5 / 3;
       max-width: 1200px;
       z-index: 1;
+      transition: transform 0.15s ease-out;
     }
 
     .layer {
@@ -38,7 +39,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      transition: opacity 0.2s ease-in-out;
     }
 
     .rect {
@@ -107,7 +107,7 @@
     </div>
 
     <!-- Layer chiusura clic -->
-    <div id="click-layer" class="layer" style="z-index: 1000; display: none; opacity: 0;">
+    <div id="click-layer" class="layer" style="z-index: 1000; display: none;">
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
       <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
       <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
@@ -123,13 +123,8 @@
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
     const layer3 = document.getElementById('layer3');
-    let centerX = window.innerWidth / 2;
-    let centerY = window.innerHeight / 2;
-
-    window.addEventListener('resize', () => {
-      centerX = window.innerWidth / 2;
-      centerY = window.innerHeight / 2;
-    });
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
 
     let target = {x: 0, y: 0};
     let current = {x: 0, y: 0};
@@ -171,18 +166,14 @@
       const clickLayer = document.getElementById('click-layer');
       const allLayers = document.querySelectorAll('.eye-wrapper .layer:not(#click-layer)');
 
-      allLayers.forEach(layer => layer.style.opacity = '0');
+      allLayers.forEach(layer => layer.style.visibility = 'hidden');
       clickLayer.style.display = 'block';
-      clickLayer.style.opacity = '1';
 
       setTimeout(() => {
-        clickLayer.style.opacity = '0';
-        setTimeout(() => {
-          clickLayer.style.display = 'none';
-          allLayers.forEach(layer => layer.style.opacity = '1');
-          justBlinked = false;
-        }, 150);
-      }, 200);
+        clickLayer.style.display = 'none';
+        allLayers.forEach(layer => layer.style.visibility = 'visible');
+        justBlinked = false;
+      }, 150);
     }
 
     document.addEventListener('click', () => blink());
