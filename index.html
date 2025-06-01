@@ -45,16 +45,6 @@
       background-color: #e65152;
     }
 
-    .blink-bar {
-      display: none;
-      top: 33.33%;
-      left: 0%;
-      width: 100%;
-      height: 33.33%;
-      background-color: #e65152;
-      z-index: 1000;
-    }
-
     .menu {
       position: absolute;
       z-index: 10;
@@ -105,6 +95,7 @@
   <audio id="typeSound" src="type.mp3" preload="auto"></audio>
 
   <div class="eye-wrapper">
+    <!-- Livelli normali -->
     <div id="layer1" class="layer" style="z-index: 1;">
       <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
@@ -115,8 +106,16 @@
     </div>
     <div id="layer3" class="layer" style="z-index: 3;">
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
-      <!-- rettangolo centrale che appare durante il battito -->
-      <div class="rect blink-bar"></div>
+    </div>
+
+    <!-- Layer battito -->
+    <div id="blink-layer" class="layer" style="z-index: 999; display: none;">
+      <!-- Riga 1 -->
+      <div class="rect" style="top: 0%; left: 20%; width: 80%; height: 33.33%;"></div>
+      <!-- Riga 2 -->
+      <div class="rect" style="top: 33.33%; left: 0%; width: 100%; height: 33.33%;"></div>
+      <!-- Riga 3 -->
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
   </div>
 
@@ -215,25 +214,30 @@
       typeMenuText();
     }, 1000);
 
-    // BATTITO: mostra riga centrale, nasconde le altre
+    // Funzione battito
     function blink() {
-      const rects = document.querySelectorAll('.rect:not(.blink-bar)');
-      const blinkBar = document.querySelector('.blink-bar');
+      const normalRects = document.querySelectorAll('.rect:not(#blink-layer .rect)');
+      const blinkLayer = document.getElementById('blink-layer');
 
-      if (!blinkBar) return;
-
-      rects.forEach(r => r.style.visibility = 'hidden');
-      blinkBar.style.display = 'block';
+      normalRects.forEach(el => el.style.visibility = 'hidden');
+      blinkLayer.style.display = 'block';
 
       setTimeout(() => {
-        blinkBar.style.display = 'none';
-        rects.forEach(r => r.style.visibility = 'visible');
+        blinkLayer.style.display = 'none';
+        normalRects.forEach(el => el.style.visibility = 'visible');
       }, 150);
     }
 
+    // Battito automatico
     setInterval(() => {
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
+
+    // Battito su click area occhio (ma non menu)
+    document.querySelector('.eye-wrapper').addEventListener('click', (e) => {
+      if (e.target.closest('.menu') || e.target.tagName === 'A') return;
+      blink();
+    });
   </script>
 </body>
 </html>
