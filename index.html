@@ -1,200 +1,194 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nem.Os</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    html, body {
+    * { box-sizing: border-box; }
+
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      width: 100%;
-      background: #ffffff;
+      background: #fff;
       font-family: 'IBM Plex Mono', monospace;
       color: #111;
+      height: 100vh;
       overflow: hidden;
-      position: relative;
-      touch-action: none;
-    }
-    .menu-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
       align-items: center;
-      gap: 8rem;
-      z-index: 10;
-      visibility: hidden;
-      padding: 0 5vw;
+      justify-content: center;
     }
-    .menu-center a {
-      font-size: clamp(1.5rem, 4vw, 4rem);
-      text-decoration: none;
-      color: #111;
-      letter-spacing: 0.05em;
-      transition: transform 0.2s ease, color 0.2s ease;
-      display: inline-block;
-      white-space: nowrap;
-      position: relative;
-    }
-    .menu-center a::before {
-      content: "<";
-      transition: content 0.2s;
-    }
-    .menu-center a::after {
-      content: ">";
-      transition: content 0.2s;
-    }
-    .menu-center a:hover::before {
-      content: ">";
-    }
-    .menu-center a:hover::after {
-      content: "<";
-    }
-    .menu-center a::after,
-    .menu-center a::before {
-      padding: 0 0.2rem;
-    }
-    .menu-center a:hover {
-      transform: scale(1.08);
-    }
+
     .eye-wrapper {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 120vw;
-      aspect-ratio: 5 / 3;
-      max-width: 1200px;
-      z-index: 1;
+      width: 90vw;
+      max-width: 1000px;
+      aspect-ratio: 5/3;
+      position: relative;
+      margin-bottom: 4vh;
     }
-    .layer {
+
+    .eye-layer {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
+      background: none;
     }
-    .rect {
+
+    .eye-layer div {
       position: absolute;
       background-color: #e65152;
     }
 
+    /* Struttura dell’occhio */
+    .l1-r1 { top: 0%; left: 20%; width: 64%; height: 33.33%; }
+    .l1-r2 { top: 33.33%; left: 0%; width: 20%; height: 33.33%; }
+    .l1-r3 { top: 66.66%; left: 20%; width: 60%; height: 33.33%; }
+
+    .l2-r1 { top: 0%; left: 80%; width: 20%; height: 66.66%; }
+
+    .pupil { top: 0%; left: 40%; width: 20%; height: 90%; }
+
+    .menu {
+      display: flex;
+      gap: 5vw;
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      opacity: 0;
+      z-index: 10;
+    }
+
+    .menu a {
+      color: #111;
+      text-decoration: none;
+      transition: transform 0.25s ease, color 0.25s;
+    }
+
+    .menu a:hover {
+      transform: scale(1.1);
+    }
+
     @media (max-width: 768px) {
-      .menu-center {
+      .eye-wrapper {
+        transform: scale(0.9);
+      }
+
+      .menu {
         flex-direction: column;
-        top: 50%;
-        transform: translateY(-50%);
-        gap: 15vh;
-        padding-top: 0;
-        height: 100%;
+        gap: 10vh;
+        font-size: 1.6rem;
         justify-content: center;
+        align-items: center;
       }
     }
   </style>
 </head>
 <body>
-  <div class="eye-wrapper">
-    <!-- Layer 1 - Occhio sinistro -->
-    <div id="layer1" class="layer" style="z-index: 1;">
-      <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
-      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+  <!-- Eye -->
+  <div class="eye-wrapper" id="eyeWrapper">
+    <div class="eye-layer" id="layer1">
+      <div class="l1-r1"></div>
+      <div class="l1-r2"></div>
+      <div class="l1-r3"></div>
     </div>
-    <!-- Layer 2 - Occhio destro -->
-    <div id="layer2" class="layer" style="z-index: 2;">
-      <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 66.66%;"></div>
+    <div class="eye-layer" id="layer2">
+      <div class="l2-r1"></div>
     </div>
-    <!-- Layer 3 - Pupilla -->
-    <div id="layer3" class="layer" style="z-index: 3; background: none;">
-      <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 90%;"></div>
+    <div class="eye-layer" id="layer3">
+      <div class="pupil"></div>
     </div>
   </div>
 
-  <div class="menu-center" id="menu">
-    <a id="projectLink"></a>
-    <a id="aboutLink"></a>
-    <a id="contactLink"></a>
+  <!-- Menu -->
+  <div class="menu" id="menu">
+    <a href="#" data-label="projects"></a>
+    <a href="#" data-label="about-us"></a>
+    <a href="#" data-label="contacts"></a>
   </div>
 
   <script>
+    // Movement logic
     const layers = [
       document.getElementById('layer1'),
       document.getElementById('layer2'),
       document.getElementById('layer3')
     ];
-    let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
-    let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+    let current = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+    let target = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let mouseActive = false;
 
-    function updateCenter() {
-      return {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2
-      };
-    }
+    const center = () => {
+      const w = window.innerWidth / 2;
+      const h = window.innerHeight / 2;
+      return { x: w, y: h };
+    };
 
-    function setTargetFromCoords(x, y) {
-      const {x: centerX, y: centerY} = updateCenter();
-      const dx = x - centerX;
-      const dy = y - centerY;
-      targets[0] = {x: dx * 0.15, y: dy * 0.22};
-      targets[1] = {x: dx * 0.15, y: dy * 0.22};
-      targets[2] = {x: dx * 0.28, y: dy * 0.22};
-    }
+    const move = (dx, dy) => {
+      target[0] = {x: dx * 0.07, y: dy * 0.15};
+      target[1] = {x: dx * 0.07, y: dy * 0.15};
+      target[2] = {x: dx * 0.13, y: dy * 0.15};
+    };
 
-    document.addEventListener('mousemove', (e) => {
-      setTargetFromCoords(e.clientX, e.clientY);
+    document.addEventListener('mousemove', e => {
+      const { x, y } = center();
+      move(e.clientX - x, e.clientY - y);
       mouseActive = true;
     });
 
-    document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        setTargetFromCoords(e.touches[0].clientX, e.touches[0].clientY);
+    document.addEventListener('touchmove', e => {
+      const touch = e.touches[0];
+      if (touch) {
+        const { x, y } = center();
+        move(touch.clientX - x, touch.clientY - y);
         mouseActive = true;
       }
-    }, { passive: false });
+    }, { passive: true });
 
-    document.addEventListener('mouseleave', () => {
-      mouseActive = false;
-    });
+    document.addEventListener('mouseleave', () => { mouseActive = false; });
+    document.addEventListener('touchend', () => { mouseActive = false; });
 
-    function animate() {
+    const animate = () => {
       if (!mouseActive) {
-        targets = targets.map(t => ({x: t.x * 0.98, y: t.y * 0.98}));
+        target = target.map(t => ({x: t.x * 0.96, y: t.y * 0.96}));
       }
-      for (let i = 0; i < layers.length; i++) {
-        currents[i].x += (targets[i].x - currents[i].x) * 0.15;
-        currents[i].y += (targets[i].y - currents[i].y) * 0.15;
-        layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
-      }
+      layers.forEach((layer, i) => {
+        current[i].x += (target[i].x - current[i].x) * 0.1;
+        current[i].y += (target[i].y - current[i].y) * 0.1;
+        layer.style.transform = `translate(${current[i].x}px, ${current[i].y}px)`;
+      });
       requestAnimationFrame(animate);
-    }
-
+    };
     animate();
 
-    const menuLines = ["projects", "about-us", "contacts"];
+    // Typing effect
+    const menuLabels = ["<projects>", "<about-us>", "<contacts>"];
+    const menuLinks = document.querySelectorAll('.menu a');
     let j = 0;
     function typeMenu() {
-      const menu = document.getElementById("menu");
-      menu.style.visibility = 'visible';
-      menuLines.forEach((line, index) => {
-        const target = document.getElementById(index === 0 ? "projectLink" : index === 1 ? "aboutLink" : "contactLink");
-        target.innerText = line.substring(0, j);
+      menuLinks.forEach((link, idx) => {
+        link.innerText = menuLabels[idx].substring(0, j);
       });
       j++;
-      if (j <= menuLines[0].length) setTimeout(typeMenu, 50);
+      if (j <= menuLabels[0].length) {
+        setTimeout(typeMenu, 50);
+      } else {
+        document.getElementById("menu").style.opacity = 1;
+      }
     }
+    setTimeout(typeMenu, 1200);
 
-    setTimeout(typeMenu, 2000);
+    // Hover effect (invert symbols)
+    menuLinks.forEach(link => {
+      const label = link.dataset.label;
+      link.addEventListener("mouseenter", () => {
+        link.innerText = `>${label}<`;
+      });
+      link.addEventListener("mouseleave", () => {
+        link.innerText = `<${label}>`;
+      });
+    });
   </script>
 </body>
 </html>
