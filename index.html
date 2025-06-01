@@ -45,6 +45,18 @@
       background-color: #e65152;
     }
 
+    .eyelid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background-color: #ffffff;
+      z-index: 1000;
+      transition: height 0.15s ease-in-out;
+      pointer-events: none;
+    }
+
     .menu {
       position: absolute;
       z-index: 10;
@@ -105,6 +117,7 @@
     </div>
     <div id="layer3" class="layer" style="z-index: 3;">
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
+      <div class="eyelid"></div>
     </div>
   </div>
 
@@ -203,6 +216,25 @@
       document.getElementById("menu").classList.add("show");
       typeMenuText();
     }, 1000);
+
+    // Funzione per il battito di palpebra
+    function blink() {
+      const eyelid = document.querySelector('.eyelid');
+      if (!eyelid) return;
+
+      // Chiude l'occhio
+      eyelid.style.height = "33.33%";
+
+      setTimeout(() => {
+        // Riapre l'occhio
+        eyelid.style.height = "0%";
+      }, 150); // tempo in cui resta chiuso
+    }
+
+    // Innesca il battito ogni 10-15 secondi circa, randomizzato
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
   </script>
 </body>
 </html>
