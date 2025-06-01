@@ -48,16 +48,17 @@
     .menu {
       position: absolute;
       z-index: 10;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       display: flex;
       flex-direction: row;
-      gap: 15vw;
+      justify-content: flex-end;
+      align-items: center;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      gap: 5vw;
       font-size: clamp(1.6rem, 2.2vw, 2.5rem);
       color: #111;
       visibility: hidden;
-      white-space: nowrap;
     }
 
     .menu.show {
@@ -68,33 +69,23 @@
       color: #111;
       text-decoration: none;
       transition: transform 0.2s ease;
+      display: inline-block;
     }
 
     .menu a:hover {
-      transform: scale(1.1);
-    }
-
-    .menu a::before {
-      content: "<";
-    }
-
-    .menu a::after {
-      content: ">";
+      transform: scale(1.12);
     }
 
     @media (max-width: 768px) {
       .menu {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
-        gap: 25vh;
+        align-items: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        gap: 22vh;
         font-size: 2.2rem;
-        white-space: nowrap;
       }
 
       .eye-wrapper {
@@ -104,6 +95,8 @@
   </style>
 </head>
 <body>
+
+  <audio id="typeSound" src="type.mp3" preload="auto"></audio>
 
   <div class="eye-wrapper">
     <!-- Layer 1 -->
@@ -182,7 +175,8 @@
 
     animate();
 
-    // TEXT ANIMATION
+    const typeSound = document.getElementById('typeSound');
+
     const menuItems = [
       { id: "projectLink", text: "projects" },
       { id: "aboutLink", text: "about us" },
@@ -195,19 +189,22 @@
       const interval = setInterval(() => {
         menuItems.forEach(item => {
           const el = document.getElementById(item.id);
-          el.textContent = item.text.substring(0, i);
+          const prevText = el.textContent;
+          el.textContent = `<${item.text.substring(0, i)}>`;
+          if (el.textContent !== prevText && i > 0) {
+            typeSound.currentTime = 0;
+            typeSound.play();
+          }
         });
-        if (i >= maxLength) clearInterval(interval);
+        if (i === maxLength) clearInterval(interval);
         i++;
       }, 50);
     }
 
-const isMobile = window.innerWidth <= 768;
-
-setTimeout(() => {
-  document.getElementById("menu").classList.add("show");
-  typeMenuText();
-}, isMobile ? 1800 : 1000);
+    setTimeout(() => {
+      document.getElementById("menu").classList.add("show");
+      typeMenuText();
+    }, 1000);
   </script>
 </body>
 </html>
