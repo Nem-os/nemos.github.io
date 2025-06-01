@@ -83,7 +83,7 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
-        gap: 10vh;
+        gap: 25vh;
         font-size: 1.8rem;
       }
 
@@ -133,9 +133,9 @@
     document.addEventListener('mousemove', (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      targets[0] = {x: dx * 0.07, y: dy * 0.18};
-      targets[1] = {x: dx * 0.07, y: dy * 0.18};
-      targets[2] = {x: dx * 0.135, y: dy * 0.18};
+      targets[0] = {x: dx * 0.17, y: dy * 0.22};
+      targets[1] = {x: dx * 0.17, y: dy * 0.22};
+      targets[2] = {x: dx * 0.30, y: dy * 0.22};
       mouseActive = true;
     });
 
@@ -144,9 +144,9 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        targets[0] = {x: dx * 0.07, y: dy * 0.18};
-        targets[1] = {x: dx * 0.07, y: dy * 0.18};
-        targets[2] = {x: dx * 0.135, y: dy * 0.18};
+        targets[0] = {x: dx * 0.17, y: dy * 0.22};
+        targets[1] = {x: dx * 0.17, y: dy * 0.22};
+        targets[2] = {x: dx * 0.30, y: dy * 0.22};
         mouseActive = true;
       }
     });
