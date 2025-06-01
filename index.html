@@ -32,27 +32,22 @@
       max-width: 1200px;
     }
 
-    .rect {
+    .layer {
       position: absolute;
-      will-change: height;
       transition: height 0.2s ease;
+      will-change: height;
       backface-visibility: hidden;
       transform-origin: top;
     }
 
-    /* LAYER 1 — rosso (4x2) */
     .layer1 {
       background-color: #e65152;
-    }
-
-    .layer1 {
       top: 0%;
       left: 20%;
       width: 64%;
       height: 66.66%;
     }
 
-    /* LAYER 2 — bianco (3x1) */
     .layer2 {
       background-color: white;
       top: 33.33%;
@@ -61,30 +56,35 @@
       height: 33.33%;
     }
 
-    /* LAYER 3 — rosso statico */
-    .layer3 .quad {
+    .layer3 .rect1 {
       background-color: #e65152;
+      position: absolute;
       top: 33.33%;
       left: 0%;
       width: 20%;
       height: 33.33%;
     }
 
-    .layer3 .rect {
+    .layer3 .rect2 {
       background-color: #e65152;
+      position: absolute;
       top: 66.66%;
       left: 20%;
       width: 60%;
       height: 33.33%;
     }
 
-    /* PUPILLA */
     .pupil {
       background-color: #e65152;
+      position: absolute;
       top: 10%;
       left: 40%;
       width: 20%;
       height: 80%;
+      transition: height 0.2s ease;
+      will-change: height;
+      backface-visibility: hidden;
+      transform-origin: top;
     }
 
     .blinked .layer1,
@@ -125,20 +125,15 @@
 </head>
 <body>
   <div class="eye-wrapper" id="eyeWrapper">
-    <!-- Layer 1: rettangolo rosso (4x2) -->
-    <div class="rect layer1"></div>
+    <div class="layer layer1"></div>
+    <div class="layer layer2"></div>
 
-    <!-- Layer 2: rettangolo bianco (3x1) -->
-    <div class="rect layer2"></div>
-
-    <!-- Layer 3: quadrato + rettangolo (statici) -->
     <div class="layer3">
-      <div class="rect quad"></div>
-      <div class="rect rect"></div>
+      <div class="rect1"></div>
+      <div class="rect2"></div>
     </div>
 
-    <!-- Pupilla -->
-    <div class="rect pupil" id="pupilRect"></div>
+    <div class="pupil" id="pupil"></div>
   </div>
 
   <div class="menu" id="menu">
@@ -149,7 +144,7 @@
 
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
-    const pupilRect = document.getElementById('pupilRect');
+    const pupil = document.getElementById('pupil');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
@@ -190,7 +185,7 @@
       eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
 
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupilRect.style.transform = `translateX(${pupilCurrent.x}px)`;
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
 
       requestAnimationFrame(animate);
     }
