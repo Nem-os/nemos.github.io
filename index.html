@@ -152,8 +152,8 @@
       current.y += (target.y - current.y) * 0.15;
       eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
 
-      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupilCurrent.y += (pupilTarget.y - pupilCurrent.y) * 0.2;
+      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.15;
+      pupilCurrent.y += (pupilTarget.y - pupilCurrent.y) * 0.15;
       layer3.style.transform = `translate(${pupilCurrent.x}px, ${pupilCurrent.y}px)`;
 
       requestAnimationFrame(animate);
