@@ -171,11 +171,13 @@
   <script>
     const overlay = document.getElementById('overlay');
     const about = document.getElementById('about');
+    let overlayShown = false;
 
     window.addEventListener('scroll', () => {
       const top = about.getBoundingClientRect().top;
-      if (top < window.innerHeight) {
+      if (!overlayShown && top < window.innerHeight * 0.5) {
         overlay.classList.add('active');
+        overlayShown = true;
       }
     });
 
@@ -236,7 +238,9 @@
     }
 
     document.addEventListener('click', () => blink());
-    setInterval(() => { if (document.hasFocus()) blink(); }, 10000 + Math.random() * 5000);
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
   </script>
 </body>
 </html>
