@@ -27,64 +27,66 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90vw;
+      width: 90vmin;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(3, 1fr);
     }
 
-    .layer {
-      position: absolute;
+    .layer1,
+    .layer2,
+    .pupil {
       transition: height 0.1s ease;
-      will-change: height;
-      backface-visibility: hidden;
-      transform-origin: bottom;
+      overflow: hidden;
     }
 
     .layer1 {
       background-color: #e65152;
-      bottom: 33.33%;
-      left: 20%;
-      width: 80%;
-      height: 66.66%;
+      grid-column: 2 / 6;
+      grid-row: 1 / 3;
+      align-self: end;
+      height: 100%;
     }
 
     .layer2 {
       background-color: white;
-      bottom: 33.33%;
-      left: 20%;
-      width: 60%;
-      height: 33.33%;
+      grid-column: 2 / 5;
+      grid-row: 2 / 3;
+      align-self: end;
+      height: 100%;
     }
 
     .layer3 .rect1 {
       background-color: #e65152;
-      position: absolute;
-      top: 33.33%;
-      left: 0%;
-      width: 20%;
-      height: 33.33%;
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
     }
 
     .layer3 .rect2 {
       background-color: #e65152;
-      position: absolute;
-      top: 66.66%;
-      left: 20%;
-      width: 60%;
-      height: 33.33%;
+      grid-column: 2 / 5;
+      grid-row: 3 / 4;
+    }
+
+    .layer3 {
+      display: contents;
+    }
+
+    .rect1,
+    .rect2 {
+      width: 100%;
+      height: 100%;
     }
 
     .pupil {
       background-color: #e65152;
-      position: absolute;
-      bottom: 0;
-      left: 40%;
-      width: 20%;
+      grid-column: 3 / 4;
+      grid-row: 1 / 4;
+      align-self: end;
       height: 80%;
       transition: height 0.17s ease;
-      will-change: height;
-      backface-visibility: hidden;
-      transform-origin: top;
     }
 
     .blinked .layer1,
