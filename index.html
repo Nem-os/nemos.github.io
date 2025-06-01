@@ -126,7 +126,6 @@
       transform: scale(1.12);
     }
 
-    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -141,7 +140,6 @@
       background: #111;
     }
 
-    /* Mobile Styles */
     @media (max-width: 768px) {
       .menu {
         flex-direction: column;
@@ -164,10 +162,44 @@
         right: 5vw;
       }
     }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      z-index: 50;
+    }
+
+    .overlay-content {
+      position: relative;
+      max-width: 700px;
+      margin: 10vh auto;
+      padding: 4vh 5vw;
+      color: #111;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1rem;
+      line-height: 1.6;
+      background: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: #111;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <!-- OCCHIO -->
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
@@ -178,19 +210,24 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <!-- HEADER + HAMBURGER -->
   <header class="site-header">
     <div class="hamburger" id="hamburger">
       <div></div><div></div><div></div>
     </div>
     <nav class="menu" id="menu">
-      <a id="aboutLink" href="about.html"></a>
-      <a id="projectLink" href="projects.html"></a>
-      <a id="contactLink" href="contacts.html"></a>
+      <a id="aboutLink" href="#"></a>
+      <a id="projectLink" href="#"></a>
+      <a id="contactLink" href="#"></a>
     </nav>
   </header>
 
-  <!-- SCRIPT -->
+  <div id="overlay" class="overlay">
+    <div class="overlay-content">
+      <button class="close-btn" id="closeOverlay">&times;</button>
+      <div id="overlayText"></div>
+    </div>
+  </div>
+
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
     const pupil = document.getElementById('pupil');
@@ -255,7 +292,6 @@
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // MENU DIGITAZIONE
     const menuItems = [
       { id: "aboutLink", text: "about-us" },
       { id: "projectLink", text: "projects" },
@@ -277,7 +313,6 @@
       }, 70);
     }
 
-    // GESTIONE RESPONSIVE
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const hamburger = document.getElementById("hamburger");
     const menu = document.getElementById("menu");
@@ -288,7 +323,6 @@
         if (menuVisible) {
           typeMenuTextSequentially();
         } else {
-          // Reset
           menuItems.forEach(item => {
             document.getElementById(item.id).textContent = "";
           });
@@ -300,6 +334,17 @@
         typeMenuTextSequentially();
       }, 1000);
     }
-  </script>
-</body>
-</html>
+
+    const overlay = document.getElementById("overlay");
+    const overlayText = document.getElementById("overlayText");
+    const closeBtn = document.getElementById("closeOverlay");
+
+    const texts = {
+      about: `
+        <p><strong>Nem.Os</strong> è uno studio personale, un’identità anonima e collettiva, nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
+        <p>Dietro Nem.Os c'è un progettista giovane, con un passato da sviluppatore per marchi e nomi di rilievo nel mondo del design e del lusso internazionale. Ha collaborato a progetti per eventi, installazioni, showroom e retail di altissimo profilo in Italia, in Europa e negli Stati Uniti.</p>
+        <p>Ha firmato col silenzio mobili presentati al Fuorisalone, sviluppato elementi per spazi di brand iconici, accompagnato idee che hanno avuto eco museale. Ma quel lavoro, spesso, lo ha vissuto come un paradosso:</p>
+        <p>la sensazione di costruire cose senza senso per chi non deve mai giustificare nulla.</p>
+        <p>In un ambiente dove il nome basta a legittimare l’oggetto, ha sentito crescere una distanza tra il proprio pensiero progettuale — radicato in coerenza, necessità e semplicità — e l’approssimazione mascherata da genio che permea parte del sistema.</p>
+        <p>Con Nem.Os, inizia una nuova traiettoria: autonoma, silenziosa, radicale.</p>
+        <p>Un design che non chiede più il perme
