@@ -22,13 +22,17 @@
     }
     .menu-center {
       position: absolute;
-      bottom: 10vh;
-      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 2rem;
       flex-wrap: wrap;
       z-index: 10;
+      visibility: hidden;
     }
     .menu-center a {
       font-size: clamp(1.2rem, 2.5vw, 2.5rem);
@@ -42,13 +46,11 @@
     }
     .menu-center a::before {
       content: "<";
-      opacity: 1;
-      transition: opacity 0.2s;
+      transition: content 0.2s;
     }
     .menu-center a::after {
       content: "/>";
-      opacity: 1;
-      transition: opacity 0.2s;
+      transition: content 0.2s;
     }
     .menu-center a:hover::before {
       content: ">";
@@ -58,8 +60,8 @@
     }
     .eye-wrapper {
       position: absolute;
-      top: 55%;
-      left: 55%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
       width: 120vw;
       aspect-ratio: 5 / 3;
@@ -97,10 +99,10 @@
     </div>
   </div>
 
-  <div class="menu-center">
-    <a href="#projects">projects</a>
-    <a href="#about">about-us</a>
-    <a href="#contacts">contacts</a>
+  <div class="menu-center" id="menu">
+    <a id="projectLink"></a>
+    <a id="aboutLink"></a>
+    <a id="contactLink"></a>
   </div>
 
   <script>
@@ -147,6 +149,21 @@
     }
 
     animate();
+
+    const menuLines = ["<projects />", "<about-us />", "<contacts />"];
+    let j = 0;
+    function typeMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.visibility = 'visible';
+      menuLines.forEach((line, index) => {
+        const target = document.getElementById(index === 0 ? "projectLink" : index === 1 ? "aboutLink" : "contactLink");
+        target.innerText = line.substring(0, j);
+      });
+      j++;
+      if (j <= menuLines[0].length) setTimeout(typeMenu, 50);
+    }
+
+    setTimeout(typeMenu, 2000);
   </script>
 </body>
 </html>
