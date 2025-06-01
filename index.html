@@ -7,13 +7,12 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
-    html, body {
-      height: 100%;
+    body {
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
       color: #111;
@@ -36,7 +35,6 @@
       position: absolute;
       transition: height 0.1s ease;
       will-change: height;
-      backface-visibility: hidden;
       transform-origin: bottom;
     }
 
@@ -82,8 +80,6 @@
       width: 20%;
       height: 80%;
       transition: height 0.2s ease;
-      will-change: height;
-      backface-visibility: hidden;
       transform-origin: top;
     }
 
@@ -100,7 +96,7 @@
       width: 100%;
       height: 100%;
       background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
       z-index: 1;
       display: none;
     }
@@ -112,9 +108,8 @@
     .section {
       position: relative;
       z-index: 2;
-      min-height: 100vh;
       padding: 10vh 8vw;
-      max-width: 700px;
+      max-width: 680px;
       margin: 0 auto;
     }
 
@@ -127,12 +122,16 @@
       font-size: 1rem;
       line-height: 1.6;
       margin-bottom: 1rem;
-      text-align: left;
+    }
+
+    .spacer {
+      height: 100vh;
     }
   </style>
 </head>
 <body>
 
+  <!-- Eye -->
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
@@ -143,24 +142,29 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
+  <!-- Overlay -->
   <div class="overlay" id="overlay"></div>
 
-  <div class="spacer" style="height: 100vh;"></div>
+  <!-- Spacer before content -->
+  <div class="spacer"></div>
 
+  <!-- About -->
   <div class="section" id="about">
     <h2>About</h2>
-    <p>It is a personal studio—an anonymous and collective identity—born from someone who has seen design up close, but always from behind.</p>
+    <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
     <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
     <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-    <p>In an environment where a name alone legitimizes the object, he felt a growing distance between his own design thinking—rooted in coherence, necessity, and simplicity—and the approximation disguised as genius that permeates parts of the system.</p>
+    <p>In an environment where a name alone legitimizes the object, he felt a growing distance between his own design thinking — rooted in coherence, necessity, and simplicity — and the approximation disguised as genius that permeates parts of the system.</p>
     <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
   </div>
 
+  <!-- Projects -->
   <div class="section" id="projects">
     <h2>Projects</h2>
     <p>Selected works will appear here soon. The focus is not on quantity, but on coherence and clarity. Each project is chosen for its necessity, not its prestige.</p>
   </div>
 
+  <!-- Contacts -->
   <div class="section" id="contacts">
     <h2>Contacts</h2>
     <p>If the work resonates, if the values align, feel free to get in touch:</p>
@@ -169,11 +173,11 @@
   </div>
 
   <script>
+    const overlay = document.getElementById('overlay');
+    const about = document.getElementById('about');
+
     const eyeWrapper = document.getElementById('eyeWrapper');
     const pupil = document.getElementById('pupil');
-    const overlay = document.getElementById('overlay');
-    const aboutSection = document.getElementById('about');
-
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
@@ -212,10 +216,8 @@
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
       eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
-
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
       pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
-
       requestAnimationFrame(animate);
     }
 
@@ -235,11 +237,9 @@
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // Show overlay when About section is visible
     window.addEventListener('scroll', () => {
-      const aboutTop = aboutSection.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-      if (aboutTop < windowHeight) {
+      const top = about.getBoundingClientRect().top;
+      if (top < window.innerHeight) {
         overlay.classList.add('active');
       }
     });
