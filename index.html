@@ -202,10 +202,12 @@
       }, 50);
     }
 
-    setTimeout(() => {
-      document.getElementById("menu").classList.add("show");
-      typeMenuText();
-    }, 1000);
+const isMobile = window.innerWidth <= 768;
+
+setTimeout(() => {
+  document.getElementById("menu").classList.add("show");
+  typeMenuText();
+}, isMobile ? 1800 : 1000);
   </script>
 </body>
 </html>
