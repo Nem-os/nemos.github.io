@@ -2,44 +2,219 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <title>Occhio Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nem.Os</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      overflow: hidden;
+      padding: 0;
     }
+
+    body {
+      background: #ffffff;
+      font-family: 'IBM Plex Mono', monospace;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
     .eye-wrapper {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 60vw;
-      aspect-ratio: 5 / 3;
       transform: translate(-50%, -50%);
+      width: 120vw;
+      aspect-ratio: 5 / 3;
+      max-width: 1200px;
+      z-index: 1;
     }
-    .layer, .rect {
+
+    .layer {
       position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
+
     .rect {
-      background: red;
+      position: absolute;
+      background-color: #e65152;
+    }
+
+    .menu {
+      position: absolute;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      gap: 12vh;
+      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
+      color: #111;
+      visibility: hidden;
+    }
+
+    .menu.show {
+      visibility: visible;
+    }
+
+    .menu a {
+      color: #111;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+
+    .menu a:hover {
+      transform: scale(1.12);
+    }
+
+    @media (max-width: 768px) {
+      .menu {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateY(-50%);
+        align-items: center;
+        gap: 20vh;
+        font-size: 2.4rem;
+      }
+
+      .eye-wrapper {
+        transform: translate(-50%, -50%) scale(0.65);
+      }
     }
   </style>
 </head>
 <body>
   <div class="eye-wrapper">
-    <div class="layer" id="layer1">
-      <div class="rect" style="top: 0%; left: 20%; width: 60%; height: 33.33%;"></div>
+    <!-- Occhio base -->
+    <div id="layer1" class="layer" style="z-index: 1;">
+      <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+    </div>
+    <div id="layer2" class="layer" style="z-index: 2;">
+      <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 66.66%;"></div>
+    </div>
+    <div id="layer3" class="layer" style="z-index: 3;">
+      <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
+    </div>
+
+    <!-- Layer battito -->
+    <div id="blink-layer" class="layer" style="z-index: 999; display: none;">
+      <!-- Riga 2: (1,0,0,0,1) -->
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <!-- Riga 3: (0,1,1,1,0) -->
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
   </div>
 
+  <div class="menu" id="menu">
+    <a id="projectLink"></a>
+    <a id="aboutLink"></a>
+    <a id="contactLink"></a>
+  </div>
+
   <script>
-    const layer = document.getElementById('layer1');
-    let x = 0;
+    let centerX = window.innerWidth / 2;
+    let centerY = window.innerHeight / 2;
+
+    window.addEventListener('resize', () => {
+      centerX = window.innerWidth / 2;
+      centerY = window.innerHeight / 2;
+    });
+
+    const layers = [
+      document.getElementById('layer1'),
+      document.getElementById('layer2'),
+      document.getElementById('layer3')
+    ];
+
+    let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+    let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+    let mouseActive = false;
+    let justBlinked = false;
+
+    function updateTargets(dx, dy) {
+      targets[0] = {x: dx * 0.17, y: dy * 0.22};
+      targets[1] = {x: dx * 0.17, y: dy * 0.22};
+      targets[2] = {x: dx * 0.30, y: dy * 0.22};
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      updateTargets(dx, dy);
+      mouseActive = true;
+    });
+
     function animate() {
-      x += 1;
-      layer.style.transform = `translateX(${Math.sin(x/10)*10}px)`;
+      if (!mouseActive && !justBlinked) {
+        targets = targets.map(t => ({x: t.x * 0.98, y: t.y * 0.98}));
+      }
+      for (let i = 0; i < layers.length; i++) {
+        currents[i].x += (targets[i].x - currents[i].x) * 0.15;
+        currents[i].y += (targets[i].y - currents[i].y) * 0.15;
+        layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
+      }
       requestAnimationFrame(animate);
     }
+
     animate();
+
+    function blink() {
+      justBlinked = true;
+      const blinkLayer = document.getElementById('blink-layer');
+      const normalRects = document.querySelectorAll('.rect:not(#blink-layer .rect)');
+      normalRects.forEach(el => el.style.visibility = 'hidden');
+      blinkLayer.style.display = 'block';
+
+      setTimeout(() => {
+        blinkLayer.style.display = 'none';
+        normalRects.forEach(el => el.style.visibility = 'visible');
+        justBlinked = false;
+      }, 150);
+    }
+
+    // Blink su click e a intervallo
+    document.addEventListener('click', () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
+
+    // Scrittura menu
+    const menuItems = [
+      { id: "projectLink", text: "projects" },
+      { id: "aboutLink", text: "about us" },
+      { id: "contactLink", text: "contacts" }
+    ];
+
+    let userInteracted = false;
+    window.addEventListener('click', () => { userInteracted = true; });
+
+    function typeMenuText() {
+      const maxLength = Math.max(...menuItems.map(item => item.text.length));
+      let i = 0;
+      const interval = setInterval(() => {
+        menuItems.forEach(item => {
+          const el = document.getElementById(item.id);
+          el.textContent = `<${item.text.substring(0, i)}>`;
+        });
+        if (i === maxLength) clearInterval(interval);
+        i++;
+      }, 50);
+    }
+
+    setTimeout(() => {
+      document.getElementById("menu").classList.add("show");
+      typeMenuText();
+    }, 1000);
   </script>
 </body>
 </html>
