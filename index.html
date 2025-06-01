@@ -43,7 +43,7 @@
 
     .rect {
       position: absolute;
-      transition: height 0.2s ease;
+      transition: all 0.2s ease;
     }
 
     .layer1 .rect, .layer3 .rect, .pupil .rect {
@@ -87,6 +87,7 @@
     .blinked .layer2 .rect,
     .blinked .pupil .rect {
       height: 0 !important;
+      top: calc(100% - 0px) !important;
     }
   </style>
 </head>
@@ -94,19 +95,29 @@
   <div class="eye-wrapper" id="eyeWrapper">
     <!-- Layer 1 - rosso -->
     <div class="layer layer1">
-      <div class="rect" style="top: 0%; left: 20%; width: 60%; height: 33.33%;"></div>
-      <div class="rect" style="top: 33.33%; left: 20%; width: 60%; height: 33.33%;"></div>
+      <!-- Riga 1 -->
+      <div class="rect" style="top: 0%; left: 20%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 0%; left: 40%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 0%; left: 60%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <!-- Riga 2 -->
+      <div class="rect" style="top: 33.33%; left: 20%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 40%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 60%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
     </div>
 
     <!-- Layer 2 - bianco -->
     <div class="layer layer2">
-      <div class="rect" style="top: 33.33%; left: 20%; width: 60%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 20%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 40%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 60%; width: 20%; height: 33.33%;"></div>
     </div>
 
     <!-- Layer 3 - rosso -->
     <div class="layer layer3">
-      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div> <!-- quadrato -->
-      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div> <!-- rettangolo -->
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
 
     <!-- Layer 4 - pupilla -->
