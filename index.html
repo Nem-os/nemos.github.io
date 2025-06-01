@@ -22,7 +22,7 @@
       touch-action: none;
     }
 
-    /* Occhio interattivo */
+    /* OCCHIO */
     .eye-wrapper {
       position: absolute;
       top: 50%;
@@ -94,19 +94,20 @@
       height: 0 !important;
     }
 
-    /* Header e menu */
-    header.site-header {
+    /* HEADER ORIZZONTALE */
+    .site-header {
       position: absolute;
       top: 5vh;
-      right: 5vw;
+      left: 5vw;
+      width: 90vw;
+      display: flex;
+      justify-content: flex-end;
       z-index: 10;
     }
 
     .menu {
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 6vh;
+      gap: 4vw;
       font-size: clamp(1.6rem, 2.5vw, 2.8rem);
       color: #111;
       visibility: hidden;
@@ -139,11 +140,11 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <!-- MENU NEL HEADER -->
+  <!-- HEADER CON MENU -->
   <header class="site-header">
     <nav class="menu" id="menu">
-      <a id="projectLink" href="projects.html"></a>
       <a id="aboutLink" href="about.html"></a>
+      <a id="projectLink" href="projects.html"></a>
       <a id="contactLink" href="contacts.html"></a>
     </nav>
   </header>
@@ -213,30 +214,33 @@
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // Menu Typing Effect
+    // TYPING SEQUENZIALE
     const menuItems = [
+      { id: "aboutLink", text: "about-us" },
       { id: "projectLink", text: "projects" },
-      { id: "aboutLink", text: "about us" },
       { id: "contactLink", text: "contacts" }
     ];
 
-    function typeMenuText() {
-      const maxLength = Math.max(...menuItems.map(item => item.text.length));
+    function typeMenuTextSequentially(index = 0) {
+      if (index >= menuItems.length) return;
+
+      const { id, text } = menuItems[index];
+      const el = document.getElementById(id);
       let i = 0;
+
       const interval = setInterval(() => {
-        menuItems.forEach(item => {
-          const el = document.getElementById(item.id);
-          el.textContent = `<${item.text.substring(0, i)}>`;
-        });
-        if (i === maxLength) clearInterval(interval);
+        el.textContent = `<${text.substring(0, i)}>`;
         i++;
-      }, 50);
+        if (i > text.length) {
+          clearInterval(interval);
+          typeMenuTextSequentially(index + 1); // avvia il successivo
+        }
+      }, 70);
     }
 
-    // Avvia animazione menu
     setTimeout(() => {
       document.getElementById("menu").classList.add("show");
-      typeMenuText();
+      typeMenuTextSequentially();
     }, 1000);
   </script>
 </body>
