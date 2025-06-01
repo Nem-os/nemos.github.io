@@ -84,17 +84,21 @@
 
 @media (max-width: 768px) {
   .menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    margin-top: calc(50vh - 1rem - 25vh); /* Centra ABOUT US */
-    gap: 25vh; /* Maggiore distanza tra le voci */
-    font-size: 2rem;
+    justify-content: center;
+    gap: 25vh; /* aumenta per maggiore distanza */
+    font-size: 2.2rem;
     white-space: nowrap;
   }
 
   .eye-wrapper {
-    transform: translate(-50%, -50%) scale(0.6);
+    transform: translate(-50%, -50%) scale(0.65);
   }
 }
   </style>
