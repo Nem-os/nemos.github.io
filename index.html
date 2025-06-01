@@ -113,6 +113,15 @@
       <!-- Riga 3: (0,1,1,1,0) -->
       <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
+
+    <!-- Layer extra occhio cliccato -->
+    <div id="click-layer" class="layer" style="z-index: 1000; display: none;">
+      <!-- Riga 2: (1,0,0,0,1) -->
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <!-- Riga 3: (0,1,1,1,0) -->
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+    </div>
   </div>
 
   <div class="menu" id="menu">
@@ -170,8 +179,8 @@
 
     function blink() {
       justBlinked = true;
-      const blinkLayer = document.getElementById('blink-layer');
-      const normalRects = document.querySelectorAll('.rect:not(#blink-layer .rect)');
+      const blinkLayer = document.getElementById('click-layer');
+      const normalRects = document.querySelectorAll('.rect:not(#click-layer .rect)');
       normalRects.forEach(el => el.style.visibility = 'hidden');
       blinkLayer.style.display = 'block';
 
@@ -182,13 +191,11 @@
       }, 150);
     }
 
-    // Blink su click e a intervallo
     document.addEventListener('click', () => blink());
     setInterval(() => {
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // Scrittura menu
     const menuItems = [
       { id: "projectLink", text: "projects" },
       { id: "aboutLink", text: "about us" },
