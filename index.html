@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nem.Os</title>
+  <title>Nem.Os Mobile</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -12,24 +12,24 @@
       padding: 0;
     }
 
-    body {
-      background: #fff;
+    html, body {
+      height: 100%;
       font-family: 'IBM Plex Mono', monospace;
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-      position: relative;
-      touch-action: none;
+      background: #fff;
+      color: #111;
+      overflow-x: hidden;
     }
 
     .eye-wrapper {
-      position: absolute;
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 90vw;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .layer {
@@ -93,112 +93,31 @@
       height: 0 !important;
     }
 
-    .site-header {
-      position: absolute;
-      top: 5vh;
-      left: 5vw;
-      width: 90vw;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      z-index: 10;
-    }
-
-    .menu {
-      display: flex;
-      gap: 4vw;
-      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
-      color: #111;
-      visibility: hidden;
-    }
-
-    .menu.show {
-      visibility: visible;
-    }
-
-    .menu a {
-      color: #111;
-      text-decoration: none;
-      transition: transform 0.2s ease;
-    }
-
-    .menu a:hover {
-      transform: scale(1.12);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      z-index: 20;
-    }
-
-    .hamburger div {
-      width: 30px;
-      height: 2px;
-      background: #111;
-    }
-
-    @media (max-width: 768px) {
-      .menu {
-        flex-direction: column;
-        position: absolute;
-        top: 10vh;
-        right: 5vw;
-        background: #fff;
-        padding: 2vh 2vw;
-        gap: 2vh;
-        font-size: 1.8rem;
-        border: 1px solid #111;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        align-items: flex-end;
-      }
-
-      .hamburger {
-        display: flex;
-        position: absolute;
-        top: 5vh;
-        right: 5vw;
-      }
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+    .section {
+      min-height: 100vh;
+      padding: 10vh 8vw;
       background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-      display: none;
-      z-index: 50;
+      position: relative;
+      z-index: 1;
     }
 
-    .overlay-content {
-      position: relative;
-      max-width: 700px;
-      margin: 10vh auto;
-      padding: 4vh 5vw;
-      color: #111;
-      font-family: 'IBM Plex Mono', monospace;
+    .section:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .section p {
       font-size: 1rem;
       line-height: 1.6;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: 2rem;
-      background: none;
-      border: none;
-      color: #111;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
+
   <!-- OCCHIO -->
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
@@ -210,165 +129,90 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <!-- HEADER + MENU -->
-  <header class="site-header">
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
-    <nav class="menu" id="menu">
-      <a id="aboutLink" href="#"> </a>
-      <a id="projectLink" href="#"></a>
-      <a id="contactLink" href="#"></a>
-    </nav>
-  </header>
-
-  <!-- OVERLAY -->
-  <div id="overlay" class="overlay">
-    <div class="overlay-content">
-      <button class="close-btn" id="closeOverlay">&times;</button>
-      <div id="overlayText"></div>
-    </div>
+  <!-- SEZIONI -->
+  <div class="section" id="about">
+    <h2>About</h2>
+    <p><strong>Nem.Os</strong> è uno studio personale, un’identità anonima e collettiva, nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
+    <p>Ha firmato col silenzio mobili presentati al Fuorisalone, sviluppato elementi per spazi di brand iconici, accompagnato idee che hanno avuto eco museale. Ma quel lavoro, spesso, lo ha vissuto come un paradosso: la sensazione di costruire cose senza senso per chi non deve mai giustificare nulla.</p>
+    <p>Con Nem.Os, inizia una nuova traiettoria: autonoma, silenziosa, radicale. Un design che non chiede più il permesso, che non cerca l’oggetto speciale, ma quello giusto.</p>
   </div>
 
+  <div class="section" id="projects">
+    <h2>Projects</h2>
+    <p>[Qui compariranno i progetti di Nem.Os: prodotti, oggetti, installazioni, spazi, collaborazioni.]</p>
+    <p>In costruzione: selezione curata, minima, necessaria.</p>
+  </div>
+
+  <div class="section" id="contacts">
+    <h2>Contacts</h2>
+    <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+    <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+  </div>
+
+  <!-- SCRIPT -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const eyeWrapper = document.getElementById('eyeWrapper');
-      const pupil = document.getElementById('pupil');
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
+    const eyeWrapper = document.getElementById('eyeWrapper');
+    const pupil = document.getElementById('pupil');
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
 
-      let target = { x: 0, y: 0 };
-      let current = { x: 0, y: 0 };
-      let pupilTarget = { x: 0 };
-      let pupilCurrent = { x: 0 };
-      let mouseActive = false;
-      let justBlinked = false;
+    let target = { x: 0, y: 0 };
+    let current = { x: 0, y: 0 };
+    let pupilTarget = { x: 0 };
+    let pupilCurrent = { x: 0 };
+    let mouseActive = false;
+    let justBlinked = false;
 
-      document.addEventListener('mousemove', (e) => {
-        const dx = e.clientX - centerX;
-        const dy = e.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.22 };
+    document.addEventListener('mousemove', (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      target = { x: dx * 0.17, y: dy * 0.22 };
+      pupilTarget = { x: dx * 0.25 };
+      mouseActive = true;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        target = { x: dx * 0.17, y: dy * 0.35 };
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
-      });
-
-      document.addEventListener('touchmove', (e) => {
-        if (e.touches.length > 0) {
-          const touch = e.touches[0];
-          const dx = touch.clientX - centerX;
-          const dy = touch.clientY - centerY;
-          target = { x: dx * 0.17, y: dy * 0.35 };
-          pupilTarget = { x: dx * 0.25 };
-          mouseActive = true;
-        }
-      });
-
-      function animate() {
-        if (!mouseActive && !justBlinked) {
-          target.x *= 0.98;
-          target.y *= 0.98;
-          pupilTarget.x *= 0.98;
-        }
-        current.x += (target.x - current.x) * 0.15;
-        current.y += (target.y - current.y) * 0.15;
-        eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
-
-        pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-        pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
-
-        requestAnimationFrame(animate);
       }
-
-      animate();
-
-      function blink() {
-        justBlinked = true;
-        eyeWrapper.classList.add('blinked');
-        setTimeout(() => {
-          eyeWrapper.classList.remove('blinked');
-          justBlinked = false;
-        }, 200);
-      }
-
-      document.addEventListener('click', () => blink());
-      setInterval(() => {
-        if (document.hasFocus()) blink();
-      }, 10000 + Math.random() * 5000);
-
-      const menuItems = [
-        { id: "aboutLink", text: "about-us" },
-        { id: "projectLink", text: "projects" },
-        { id: "contactLink", text: "contacts" }
-      ];
-
-      function typeMenuTextSequentially(index = 0) {
-        if (index >= menuItems.length) return;
-        const { id, text } = menuItems[index];
-        const el = document.getElementById(id);
-        let i = 0;
-        const interval = setInterval(() => {
-          el.textContent = `<${text.substring(0, i)}>`;
-          i++;
-          if (i > text.length) {
-            clearInterval(interval);
-            typeMenuTextSequentially(index + 1);
-          }
-        }, 70);
-      }
-
-      const isMobile = window.matchMedia("(max-width: 768px)").matches;
-      const hamburger = document.getElementById("hamburger");
-      const menu = document.getElementById("menu");
-
-      if (isMobile) {
-        hamburger.addEventListener("click", () => {
-          const visible = menu.classList.toggle("show");
-          if (visible) {
-            typeMenuTextSequentially();
-          } else {
-            menuItems.forEach(item => {
-              document.getElementById(item.id).textContent = "";
-            });
-          }
-        });
-      } else {
-        setTimeout(() => {
-          menu.classList.add("show");
-          typeMenuTextSequentially();
-        }, 1000);
-      }
-
-      // Overlay
-      const overlay = document.getElementById("overlay");
-      const overlayText = document.getElementById("overlayText");
-      const closeBtn = document.getElementById("closeOverlay");
-
-      const texts = {
-        about: `<p><strong>Nem.Os</strong> è uno studio personale, un’identità anonima e collettiva, nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
-        <p>Dietro Nem.Os c'è un progettista giovane, con un passato da sviluppatore per marchi e nomi di rilievo nel mondo del design e del lusso internazionale. Ha collaborato a progetti per eventi, installazioni, showroom e retail di altissimo profilo in Italia, in Europa e negli Stati Uniti.</p>
-        <p>Ha firmato col silenzio mobili presentati al Fuorisalone, sviluppato elementi per spazi di brand iconici, accompagnato idee che hanno avuto eco museale. Ma quel lavoro, spesso, lo ha vissuto come un paradosso:</p>
-        <p>la sensazione di costruire cose senza senso per chi non deve mai giustificare nulla.</p>
-        <p>In un ambiente dove il nome basta a legittimare l’oggetto, ha sentito crescere una distanza tra il proprio pensiero progettuale — radicato in coerenza, necessità e semplicità — e l’approssimazione mascherata da genio che permea parte del sistema.</p>
-        <p>Con Nem.Os, inizia una nuova traiettoria: autonoma, silenziosa, radicale.</p>
-        <p>Un design che non chiede più il permesso, che non cerca l’oggetto speciale, ma quello giusto.</p>
-        <p>Un progetto dove la bellezza è conseguenza della semplicità, e la semplicità è frutto di un pensiero ben fatto.</p>`,
-        projects: `<p>[Progetti e sperimentazioni in arrivo]</p>`,
-        contacts: `<p>Contatti:<br>Email — <a href=\"mailto:studio@nem.os\">studio@nem.os</a><br>Instagram — <a href=\"https://instagram.com/nem.os\" target=\"_blank\">@nem.os</a></p>`
-      };
-
-      document.getElementById("aboutLink").addEventListener("click", () => showOverlay("about"));
-      document.getElementById("projectLink").addEventListener("click", () => showOverlay("projects"));
-      document.getElementById("contactLink").addEventListener("click", () => showOverlay("contacts"));
-
-      function showOverlay(key) {
-        overlayText.innerHTML = texts[key];
-        overlay.style.display = "block";
-      }
-
-      closeBtn.addEventListener("click", () => {
-        overlay.style.display = "none";
-      });
     });
+
+    function animate() {
+      if (!mouseActive && !justBlinked) {
+        target.x *= 0.98;
+        target.y *= 0.98;
+        pupilTarget.x *= 0.98;
+      }
+      current.x += (target.x - current.x) * 0.15;
+      current.y += (target.y - current.y) * 0.15;
+      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
+
+      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    function blink() {
+      justBlinked = true;
+      eyeWrapper.classList.add('blinked');
+      setTimeout(() => {
+        eyeWrapper.classList.remove('blinked');
+        justBlinked = false;
+      }, 200);
+    }
+
+    document.addEventListener('click', () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
   </script>
 </body>
 </html>
