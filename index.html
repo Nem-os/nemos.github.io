@@ -125,20 +125,21 @@
   </div>
 
   <script>
+    let centerX = window.innerWidth / 2;
+    let centerY = window.innerHeight / 2;
+
+    function updateCenter() {
+      centerX = window.innerWidth / 2;
+      centerY = window.innerHeight / 2;
+    }
+
+    window.addEventListener('resize', updateCenter);
+
     const layers = [
       document.getElementById('layer1'),
       document.getElementById('layer2'),
       document.getElementById('layer3')
     ];
-let centerX = window.innerWidth / 2;
-let centerY = window.innerHeight / 2;
-
-function updateCenter() {
-  centerX = window.innerWidth / 2;
-  centerY = window.innerHeight / 2;
-}
-
-window.addEventListener('resize', updateCenter);
 
     let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
@@ -230,25 +231,4 @@ window.addEventListener('resize', updateCenter);
       normalRects.forEach(el => el.style.visibility = 'hidden');
       blinkLayer.style.display = 'block';
 
-      setTimeout(() => {
-        blinkLayer.style.display = 'none';
-        normalRects.forEach(el => el.style.visibility = 'visible');
-      }, 150);
-
-      setTimeout(() => {
-        justBlinked = false;
-      }, 300);
-    }
-
-    // Battito automatico
-    setInterval(() => {
-      if (document.hasFocus()) blink();
-    }, 10000 + Math.random() * 5000);
-
-    // Battito su qualsiasi click
-    document.addEventListener('click', () => {
-      blink();
-    });
-  </script>
-</body>
-</html>
+      setTime
