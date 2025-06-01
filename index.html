@@ -63,6 +63,7 @@
       color: #111;
       text-decoration: none;
       transition: transform 0.2s ease;
+      opacity: 0;
     }
 
     .menu a:hover {
@@ -82,7 +83,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: auto;
         gap: 25vh;
         font-size: 1.8rem;
       }
@@ -113,9 +118,9 @@
   </div>
 
   <div class="menu">
-    <a href="#">projects</a>
-    <a href="#">about us</a>
-    <a href="#">contacts</a>
+    <a id="link1"></a>
+    <a id="link2"></a>
+    <a id="link3"></a>
   </div>
 
   <script>
@@ -135,7 +140,7 @@
       const dy = e.clientY - centerY;
       targets[0] = {x: dx * 0.17, y: dy * 0.22};
       targets[1] = {x: dx * 0.17, y: dy * 0.22};
-      targets[2] = {x: dx * 0.30, y: dy * 0.22};
+      targets[2] = {x: dx * 0.35, y: dy * 0.22};
       mouseActive = true;
     });
 
@@ -146,7 +151,7 @@
         const dy = touch.clientY - centerY;
         targets[0] = {x: dx * 0.17, y: dy * 0.22};
         targets[1] = {x: dx * 0.17, y: dy * 0.22};
-        targets[2] = {x: dx * 0.30, y: dy * 0.22};
+        targets[2] = {x: dx * 0.35, y: dy * 0.22};
         mouseActive = true;
       }
     });
@@ -168,6 +173,30 @@
     }
 
     animate();
+
+    // Menu typing animation
+    const links = [
+      { id: "link1", text: "projects" },
+      { id: "link2", text: "about us" },
+      { id: "link3", text: "contacts" }
+    ];
+
+    function typeMenuText(index = 0, letter = 0) {
+      if (index >= links.length) return;
+      const target = document.getElementById(links[index].id);
+      target.innerHTML = `<${links[index].text.substring(0, letter)}>`;
+      target.style.opacity = 1;
+      if (letter < links[index].text.length) {
+        setTimeout(() => typeMenuText(index, letter + 1), 50);
+      } else {
+        setTimeout(() => typeMenuText(index + 1, 0), 100);
+      }
+    }
+
+    // Delay to match eye animation
+    setTimeout(() => {
+      typeMenuText();
+    }, 1200);
   </script>
 </body>
 </html>
