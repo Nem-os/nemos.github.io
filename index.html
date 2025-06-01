@@ -130,8 +130,15 @@
       document.getElementById('layer2'),
       document.getElementById('layer3')
     ];
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+let centerX = window.innerWidth / 2;
+let centerY = window.innerHeight / 2;
+
+function updateCenter() {
+  centerX = window.innerWidth / 2;
+  centerY = window.innerHeight / 2;
+}
+
+window.addEventListener('resize', updateCenter);
 
     let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
