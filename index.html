@@ -18,10 +18,6 @@
       overflow: hidden;
       height: 100vh;
       width: 100vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       position: relative;
     }
 
@@ -50,7 +46,10 @@
     }
 
     .menu {
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 10;
       display: flex;
       flex-direction: row;
@@ -63,11 +62,10 @@
       color: #111;
       text-decoration: none;
       transition: transform 0.2s ease;
-      opacity: 0;
     }
 
     .menu a:hover {
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
     .menu a::before {
@@ -83,12 +81,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: absolute;
         top: 50%;
-        left: 50%;
         transform: translate(-50%, -50%);
-        height: auto;
-        gap: 25vh;
+        height: 100vh;
+        gap: 22vh;
         font-size: 1.8rem;
       }
 
@@ -113,14 +109,14 @@
     </div>
     <!-- Layer 3 - Pupilla -->
     <div id="layer3" class="layer" style="z-index: 3;">
-      <div class="rect" style="top: 0%; left: 40%; width: 20%; height: 90%;"></div>
+      <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
   </div>
 
   <div class="menu">
-    <a id="link1"></a>
-    <a id="link2"></a>
-    <a id="link3"></a>
+    <a id="projectLink"></a>
+    <a id="aboutLink"></a>
+    <a id="contactLink"></a>
   </div>
 
   <script>
@@ -129,18 +125,29 @@
       document.getElementById('layer2'),
       document.getElementById('layer3')
     ];
+
+    const menuItems = [
+      { id: "projectLink", text: "projects" },
+      { id: "aboutLink", text: "about us" },
+      { id: "contactLink", text: "contacts" }
+    ];
+
     let targets = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let currents = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
     let mouseActive = false;
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
+    function updateTargets(dx, dy) {
+      targets[0] = {x: dx * 0.20, y: dy * 0.22};
+      targets[1] = {x: dx * 0.20, y: dy * 0.22};
+      targets[2] = {x: dx * 0.38, y: dy * 0.22};
+    }
+
     document.addEventListener('mousemove', (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      targets[0] = {x: dx * 0.17, y: dy * 0.22};
-      targets[1] = {x: dx * 0.17, y: dy * 0.22};
-      targets[2] = {x: dx * 0.35, y: dy * 0.22};
+      updateTargets(dx, dy);
       mouseActive = true;
     });
 
@@ -149,9 +156,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        targets[0] = {x: dx * 0.17, y: dy * 0.22};
-        targets[1] = {x: dx * 0.17, y: dy * 0.22};
-        targets[2] = {x: dx * 0.35, y: dy * 0.22};
+        updateTargets(dx, dy);
         mouseActive = true;
       }
     });
@@ -172,31 +177,22 @@
       requestAnimationFrame(animate);
     }
 
-    animate();
-
-    // Menu typing animation
-    const links = [
-      { id: "link1", text: "projects" },
-      { id: "link2", text: "about us" },
-      { id: "link3", text: "contacts" }
-    ];
-
-    function typeMenuText(index = 0, letter = 0) {
-      if (index >= links.length) return;
-      const target = document.getElementById(links[index].id);
-      target.innerHTML = `<${links[index].text.substring(0, letter)}>`;
-      target.style.opacity = 1;
-      if (letter < links[index].text.length) {
-        setTimeout(() => typeMenuText(index, letter + 1), 50);
-      } else {
-        setTimeout(() => typeMenuText(index + 1, 0), 100);
+    function typeMenuText() {
+      let pos = 0;
+      const maxLength = Math.max(...menuItems.map(item => item.text.length));
+      function step() {
+        menuItems.forEach(item => {
+          const target = document.getElementById(item.id);
+          target.innerText = item.text.substring(0, pos);
+        });
+        pos++;
+        if (pos <= maxLength) setTimeout(step, 50);
       }
+      step();
     }
 
-    // Delay to match eye animation
-    setTimeout(() => {
-      typeMenuText();
-    }, 1200);
+    animate();
+    setTimeout(typeMenuText, 1200);
   </script>
 </body>
 </html>
