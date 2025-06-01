@@ -30,24 +30,67 @@
       width: 90vw;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
-      z-index: 1;
     }
 
     .rect {
       position: absolute;
-      transition: transform 0.2s ease;
-      will-change: transform;
+      will-change: height;
+      transition: height 0.2s ease;
+      backface-visibility: hidden;
       transform-origin: top;
     }
 
-    .layer1 .rect,
-    .layer3 .rect,
-    .pupil .rect {
+    /* LAYER 1 — rosso (4x2) */
+    .layer1 {
       background-color: #e65152;
     }
 
-    .layer2 .rect {
+    .layer1 {
+      top: 0%;
+      left: 20%;
+      width: 64%;
+      height: 66.66%;
+    }
+
+    /* LAYER 2 — bianco (3x1) */
+    .layer2 {
       background-color: white;
+      top: 33.33%;
+      left: 28%;
+      width: 44%;
+      height: 33.33%;
+    }
+
+    /* LAYER 3 — rosso statico */
+    .layer3 .quad {
+      background-color: #e65152;
+      top: 33.33%;
+      left: 0%;
+      width: 20%;
+      height: 33.33%;
+    }
+
+    .layer3 .rect {
+      background-color: #e65152;
+      top: 66.66%;
+      left: 20%;
+      width: 60%;
+      height: 33.33%;
+    }
+
+    /* PUPILLA */
+    .pupil {
+      background-color: #e65152;
+      top: 10%;
+      left: 40%;
+      width: 20%;
+      height: 80%;
+    }
+
+    .blinked .layer1,
+    .blinked .layer2,
+    .blinked .pupil {
+      height: 0 !important;
     }
 
     .menu {
@@ -78,36 +121,24 @@
     .menu a:hover {
       transform: scale(1.12);
     }
-
-    .blinked .layer1 .rect,
-    .blinked .layer2 .rect,
-    .blinked .pupil .rect {
-      transform: translateY(100%);
-    }
   </style>
 </head>
 <body>
   <div class="eye-wrapper" id="eyeWrapper">
-    <!-- Layer 1 - rosso: rettangolo 4x2 -->
-    <div class="layer layer1">
-      <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 66.66%;"></div>
-    </div>
+    <!-- Layer 1: rettangolo rosso (4x2) -->
+    <div class="rect layer1"></div>
 
-    <!-- Layer 2 - bianco: rettangolo 3x1 -->
-    <div class="layer layer2">
-      <div class="rect" style="top: 33.33%; left: 28%; width: 44%; height: 33.33%;"></div>
-    </div>
+    <!-- Layer 2: rettangolo bianco (3x1) -->
+    <div class="rect layer2"></div>
 
-    <!-- Layer 3 - rosso statico -->
-    <div class="layer layer3">
-      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
-      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+    <!-- Layer 3: quadrato + rettangolo (statici) -->
+    <div class="layer3">
+      <div class="rect quad"></div>
+      <div class="rect rect"></div>
     </div>
 
     <!-- Pupilla -->
-    <div class="layer pupil" id="layerPupil">
-      <div class="rect" style="top: 10%; left: 40%; width: 20%; height: 80%;"></div>
-    </div>
+    <div class="rect pupil" id="pupilRect"></div>
   </div>
 
   <div class="menu" id="menu">
@@ -118,7 +149,7 @@
 
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
-    const pupilLayer = document.getElementById('layerPupil');
+    const pupilRect = document.getElementById('pupilRect');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
@@ -159,7 +190,7 @@
       eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
 
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupilLayer.style.transform = `translate(${pupilCurrent.x}px, 0)`;
+      pupilRect.style.transform = `translateX(${pupilCurrent.x}px)`;
 
       requestAnimationFrame(animate);
     }
