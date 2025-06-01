@@ -122,11 +122,14 @@
 
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
+    const layer3 = document.getElementById('layer3');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
     let target = {x: 0, y: 0};
     let current = {x: 0, y: 0};
+    let pupilTarget = {x: 0, y: 0};
+    let pupilCurrent = {x: 0, y: 0};
     let mouseActive = false;
     let justBlinked = false;
 
@@ -134,6 +137,7 @@
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
       target = {x: dx * 0.17, y: dy * 0.22};
+      pupilTarget = {x: dx * 0.3, y: dy * 0.3};
       mouseActive = true;
     });
 
@@ -141,10 +145,17 @@
       if (!mouseActive && !justBlinked) {
         target.x *= 0.98;
         target.y *= 0.98;
+        pupilTarget.x *= 0.98;
+        pupilTarget.y *= 0.98;
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
       eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
+
+      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
+      pupilCurrent.y += (pupilTarget.y - pupilCurrent.y) * 0.2;
+      layer3.style.transform = `translate(${pupilCurrent.x}px, ${pupilCurrent.y}px)`;
+
       requestAnimationFrame(animate);
     }
 
