@@ -184,7 +184,6 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 1rem;
       line-height: 1.6;
-      background: none;
     }
 
     .close-btn {
@@ -200,6 +199,7 @@
   </style>
 </head>
 <body>
+  <!-- OCCHIO -->
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
@@ -210,17 +210,19 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
+  <!-- HEADER + MENU -->
   <header class="site-header">
     <div class="hamburger" id="hamburger">
       <div></div><div></div><div></div>
     </div>
     <nav class="menu" id="menu">
-      <a id="aboutLink" href="#"></a>
+      <a id="aboutLink" href="#"> </a>
       <a id="projectLink" href="#"></a>
       <a id="contactLink" href="#"></a>
     </nav>
   </header>
 
+  <!-- OVERLAY -->
   <div id="overlay" class="overlay">
     <div class="overlay-content">
       <button class="close-btn" id="closeOverlay">&times;</button>
@@ -229,122 +231,144 @@
   </div>
 
   <script>
-    const eyeWrapper = document.getElementById('eyeWrapper');
-    const pupil = document.getElementById('pupil');
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+    document.addEventListener("DOMContentLoaded", function () {
+      const eyeWrapper = document.getElementById('eyeWrapper');
+      const pupil = document.getElementById('pupil');
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
 
-    let target = { x: 0, y: 0 };
-    let current = { x: 0, y: 0 };
-    let pupilTarget = { x: 0 };
-    let pupilCurrent = { x: 0 };
-    let mouseActive = false;
-    let justBlinked = false;
+      let target = { x: 0, y: 0 };
+      let current = { x: 0, y: 0 };
+      let pupilTarget = { x: 0 };
+      let pupilCurrent = { x: 0 };
+      let mouseActive = false;
+      let justBlinked = false;
 
-    document.addEventListener('mousemove', (e) => {
-      const dx = e.clientX - centerX;
-      const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.22 };
-      pupilTarget = { x: dx * 0.25 };
-      mouseActive = true;
-    });
-
-    document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const dx = touch.clientX - centerX;
-        const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.35 };
+      document.addEventListener('mousemove', (e) => {
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+        target = { x: dx * 0.17, y: dy * 0.22 };
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
-      }
-    });
+      });
 
-    function animate() {
-      if (!mouseActive && !justBlinked) {
-        target.x *= 0.98;
-        target.y *= 0.98;
-        pupilTarget.x *= 0.98;
-      }
-      current.x += (target.x - current.x) * 0.15;
-      current.y += (target.y - current.y) * 0.15;
-      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
-
-      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    function blink() {
-      justBlinked = true;
-      eyeWrapper.classList.add('blinked');
-      setTimeout(() => {
-        eyeWrapper.classList.remove('blinked');
-        justBlinked = false;
-      }, 200);
-    }
-
-    document.addEventListener('click', () => blink());
-    setInterval(() => {
-      if (document.hasFocus()) blink();
-    }, 10000 + Math.random() * 5000);
-
-    const menuItems = [
-      { id: "aboutLink", text: "about-us" },
-      { id: "projectLink", text: "projects" },
-      { id: "contactLink", text: "contacts" }
-    ];
-
-    function typeMenuTextSequentially(index = 0) {
-      if (index >= menuItems.length) return;
-      const { id, text } = menuItems[index];
-      const el = document.getElementById(id);
-      let i = 0;
-      const interval = setInterval(() => {
-        el.textContent = `<${text.substring(0, i)}>`;
-        i++;
-        if (i > text.length) {
-          clearInterval(interval);
-          typeMenuTextSequentially(index + 1);
-        }
-      }, 70);
-    }
-
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const hamburger = document.getElementById("hamburger");
-    const menu = document.getElementById("menu");
-
-    if (isMobile) {
-      hamburger.addEventListener("click", () => {
-        const menuVisible = menu.classList.toggle("show");
-        if (menuVisible) {
-          typeMenuTextSequentially();
-        } else {
-          menuItems.forEach(item => {
-            document.getElementById(item.id).textContent = "";
-          });
+      document.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          const touch = e.touches[0];
+          const dx = touch.clientX - centerX;
+          const dy = touch.clientY - centerY;
+          target = { x: dx * 0.17, y: dy * 0.35 };
+          pupilTarget = { x: dx * 0.25 };
+          mouseActive = true;
         }
       });
-    } else {
-      setTimeout(() => {
-        menu.classList.add("show");
-        typeMenuTextSequentially();
-      }, 1000);
-    }
 
-    const overlay = document.getElementById("overlay");
-    const overlayText = document.getElementById("overlayText");
-    const closeBtn = document.getElementById("closeOverlay");
+      function animate() {
+        if (!mouseActive && !justBlinked) {
+          target.x *= 0.98;
+          target.y *= 0.98;
+          pupilTarget.x *= 0.98;
+        }
+        current.x += (target.x - current.x) * 0.15;
+        current.y += (target.y - current.y) * 0.15;
+        eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
 
-    const texts = {
-      about: `
-        <p><strong>Nem.Os</strong> è uno studio personale, un’identità anonima e collettiva, nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
+        pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
+        pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+
+      function blink() {
+        justBlinked = true;
+        eyeWrapper.classList.add('blinked');
+        setTimeout(() => {
+          eyeWrapper.classList.remove('blinked');
+          justBlinked = false;
+        }, 200);
+      }
+
+      document.addEventListener('click', () => blink());
+      setInterval(() => {
+        if (document.hasFocus()) blink();
+      }, 10000 + Math.random() * 5000);
+
+      const menuItems = [
+        { id: "aboutLink", text: "about-us" },
+        { id: "projectLink", text: "projects" },
+        { id: "contactLink", text: "contacts" }
+      ];
+
+      function typeMenuTextSequentially(index = 0) {
+        if (index >= menuItems.length) return;
+        const { id, text } = menuItems[index];
+        const el = document.getElementById(id);
+        let i = 0;
+        const interval = setInterval(() => {
+          el.textContent = `<${text.substring(0, i)}>`;
+          i++;
+          if (i > text.length) {
+            clearInterval(interval);
+            typeMenuTextSequentially(index + 1);
+          }
+        }, 70);
+      }
+
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+      const hamburger = document.getElementById("hamburger");
+      const menu = document.getElementById("menu");
+
+      if (isMobile) {
+        hamburger.addEventListener("click", () => {
+          const visible = menu.classList.toggle("show");
+          if (visible) {
+            typeMenuTextSequentially();
+          } else {
+            menuItems.forEach(item => {
+              document.getElementById(item.id).textContent = "";
+            });
+          }
+        });
+      } else {
+        setTimeout(() => {
+          menu.classList.add("show");
+          typeMenuTextSequentially();
+        }, 1000);
+      }
+
+      // Overlay
+      const overlay = document.getElementById("overlay");
+      const overlayText = document.getElementById("overlayText");
+      const closeBtn = document.getElementById("closeOverlay");
+
+      const texts = {
+        about: `<p><strong>Nem.Os</strong> è uno studio personale, un’identità anonima e collettiva, nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
         <p>Dietro Nem.Os c'è un progettista giovane, con un passato da sviluppatore per marchi e nomi di rilievo nel mondo del design e del lusso internazionale. Ha collaborato a progetti per eventi, installazioni, showroom e retail di altissimo profilo in Italia, in Europa e negli Stati Uniti.</p>
         <p>Ha firmato col silenzio mobili presentati al Fuorisalone, sviluppato elementi per spazi di brand iconici, accompagnato idee che hanno avuto eco museale. Ma quel lavoro, spesso, lo ha vissuto come un paradosso:</p>
         <p>la sensazione di costruire cose senza senso per chi non deve mai giustificare nulla.</p>
         <p>In un ambiente dove il nome basta a legittimare l’oggetto, ha sentito crescere una distanza tra il proprio pensiero progettuale — radicato in coerenza, necessità e semplicità — e l’approssimazione mascherata da genio che permea parte del sistema.</p>
         <p>Con Nem.Os, inizia una nuova traiettoria: autonoma, silenziosa, radicale.</p>
-        <p>Un design che non chiede più il perme
+        <p>Un design che non chiede più il permesso, che non cerca l’oggetto speciale, ma quello giusto.</p>
+        <p>Un progetto dove la bellezza è conseguenza della semplicità, e la semplicità è frutto di un pensiero ben fatto.</p>`,
+        projects: `<p>[Progetti e sperimentazioni in arrivo]</p>`,
+        contacts: `<p>Contatti:<br>Email — <a href=\"mailto:studio@nem.os\">studio@nem.os</a><br>Instagram — <a href=\"https://instagram.com/nem.os\" target=\"_blank\">@nem.os</a></p>`
+      };
+
+      document.getElementById("aboutLink").addEventListener("click", () => showOverlay("about"));
+      document.getElementById("projectLink").addEventListener("click", () => showOverlay("projects"));
+      document.getElementById("contactLink").addEventListener("click", () => showOverlay("contacts"));
+
+      function showOverlay(key) {
+        overlayText.innerHTML = texts[key];
+        overlay.style.display = "block";
+      }
+
+      closeBtn.addEventListener("click", () => {
+        overlay.style.display = "none";
+      });
+    });
+  </script>
+</body>
+</html>
