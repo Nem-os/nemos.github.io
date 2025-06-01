@@ -95,7 +95,7 @@
   <audio id="typeSound" src="type.mp3" preload="auto"></audio>
 
   <div class="eye-wrapper">
-    <!-- Occhio originale -->
+    <!-- Occhio visivo di base -->
     <div id="layer1" class="layer" style="z-index: 1;">
       <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
@@ -108,12 +108,13 @@
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
 
-    <!-- Layer battito con la forma richiesta -->
+    <!-- Layer battito (feedback visivo) -->
     <div id="blink-layer" class="layer" style="z-index: 999; display: none;">
-      <!-- Riga 2: (1,0,0,0,0) -->
+      <!-- Riga 2: (1,0,0,0,1) -->
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
-      <!-- Riga 3: (0,1,1,1,1) -->
-      <div class="rect" style="top: 66.66%; left: 20%; width: 80%; height: 33.33%;"></div>
+      <div class="rect" style="top: 33.33%; left: 80%; width: 20%; height: 33.33%;"></div>
+      <!-- Riga 3: (0,1,1,1,0) -->
+      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
   </div>
 
@@ -212,7 +213,7 @@
       typeMenuText();
     }, 1000);
 
-    // Funzione battito personalizzato
+    // Battito personalizzato
     function blink() {
       const normalRects = document.querySelectorAll('.rect:not(#blink-layer .rect)');
       const blinkLayer = document.getElementById('blink-layer');
@@ -226,16 +227,14 @@
       }, 150);
     }
 
-    // Battito automatico ogni 10–15s
+    // Battito automatico
     setInterval(() => {
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // Ogni click ovunque attiva il battito
-    document.body.addEventListener('click', (e) => {
-      // Se clicco un link, evito (opzionale)
-      if (e.target.closest('a')) return;
-      blink();
+    // Battito su qualsiasi click nel documento
+    document.addEventListener('click', () => {
+      blink(); // non blocca il comportamento del click originale
     });
   </script>
 </body>
