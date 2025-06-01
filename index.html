@@ -95,7 +95,7 @@
   <audio id="typeSound" src="type.mp3" preload="auto"></audio>
 
   <div class="eye-wrapper">
-    <!-- Livelli normali -->
+    <!-- Occhio originale -->
     <div id="layer1" class="layer" style="z-index: 1;">
       <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
@@ -108,14 +108,12 @@
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
 
-    <!-- Layer battito -->
+    <!-- Layer battito con la forma richiesta -->
     <div id="blink-layer" class="layer" style="z-index: 999; display: none;">
-      <!-- Riga 1 -->
-      <div class="rect" style="top: 0%; left: 20%; width: 80%; height: 33.33%;"></div>
-      <!-- Riga 2 -->
-      <div class="rect" style="top: 33.33%; left: 0%; width: 100%; height: 33.33%;"></div>
-      <!-- Riga 3 -->
-      <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
+      <!-- Riga 2: (1,0,0,0,0) -->
+      <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
+      <!-- Riga 3: (0,1,1,1,1) -->
+      <div class="rect" style="top: 66.66%; left: 20%; width: 80%; height: 33.33%;"></div>
     </div>
   </div>
 
@@ -214,7 +212,7 @@
       typeMenuText();
     }, 1000);
 
-    // Funzione battito
+    // Funzione battito personalizzato
     function blink() {
       const normalRects = document.querySelectorAll('.rect:not(#blink-layer .rect)');
       const blinkLayer = document.getElementById('blink-layer');
@@ -228,14 +226,15 @@
       }, 150);
     }
 
-    // Battito automatico
+    // Battito automatico ogni 10–15s
     setInterval(() => {
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
-    // Battito su click area occhio (ma non menu)
-    document.querySelector('.eye-wrapper').addEventListener('click', (e) => {
-      if (e.target.closest('.menu') || e.target.tagName === 'A') return;
+    // Ogni click ovunque attiva il battito
+    document.body.addEventListener('click', (e) => {
+      // Se clicco un link, evito (opzionale)
+      if (e.target.closest('a')) return;
       blink();
     });
   </script>
