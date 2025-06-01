@@ -48,22 +48,26 @@
     .menu {
       position: absolute;
       z-index: 10;
-      display: flex;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      display: flex;
       flex-direction: row;
       gap: 15vw;
       font-size: clamp(1.6rem, 2.2vw, 2.5rem);
+      color: #111;
+      visibility: hidden;
       white-space: nowrap;
+    }
+
+    .menu.show {
+      visibility: visible;
     }
 
     .menu a {
       color: #111;
       text-decoration: none;
-      transform: scale(1);
       transition: transform 0.2s ease;
-      display: inline-block;
     }
 
     .menu a:hover {
@@ -90,6 +94,7 @@
         justify-content: center;
         gap: 25vh;
         font-size: 2.2rem;
+        white-space: nowrap;
       }
 
       .eye-wrapper {
@@ -101,27 +106,29 @@
 <body>
 
   <div class="eye-wrapper">
+    <!-- Layer 1 -->
     <div id="layer1" class="layer" style="z-index: 1;">
       <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
       <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
+    <!-- Layer 2 -->
     <div id="layer2" class="layer" style="z-index: 2;">
       <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 66.66%;"></div>
     </div>
+    <!-- Layer 3 - Pupilla -->
     <div id="layer3" class="layer" style="z-index: 3;">
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
   </div>
 
-  <div class="menu">
-    <a id="projects"></a>
-    <a id="about"></a>
-    <a id="contacts"></a>
+  <div class="menu" id="menu">
+    <a id="projectLink"></a>
+    <a id="aboutLink"></a>
+    <a id="contactLink"></a>
   </div>
 
   <script>
-    // OCCHIO
     const layers = [
       document.getElementById('layer1'),
       document.getElementById('layer2'),
@@ -175,27 +182,29 @@
 
     animate();
 
-    // CTA: ANIMAZIONE INDIPENDENTE PER OGNI SCRITTA
+    // TEXT ANIMATION
     const menuItems = [
-      { id: 'projects', text: 'projects' },
-      { id: 'about', text: 'about us' },
-      { id: 'contacts', text: 'contacts' }
+      { id: "projectLink", text: "projects" },
+      { id: "aboutLink", text: "about us" },
+      { id: "contactLink", text: "contacts" }
     ];
 
-    function animateLetters(id, text) {
-      const el = document.getElementById(id);
+    function typeMenuText() {
+      const maxLength = Math.max(...menuItems.map(item => item.text.length));
       let i = 0;
       const interval = setInterval(() => {
-        el.textContent = text.substring(0, i + 1);
+        menuItems.forEach(item => {
+          const el = document.getElementById(item.id);
+          el.textContent = item.text.substring(0, i);
+        });
+        if (i >= maxLength) clearInterval(interval);
         i++;
-        if (i === text.length) clearInterval(interval);
-      }, 40);
+      }, 50);
     }
 
     setTimeout(() => {
-      animateLetters('projects', 'projects');
-      animateLetters('about', 'about us');
-      animateLetters('contacts', 'contacts');
+      document.getElementById("menu").classList.add("show");
+      typeMenuText();
     }, 1000);
   </script>
 </body>
