@@ -22,6 +22,7 @@
       touch-action: none;
     }
 
+    /* Occhio interattivo */
     .eye-wrapper {
       position: absolute;
       top: 50%;
@@ -93,16 +94,19 @@
       height: 0 !important;
     }
 
-    .menu {
+    /* Header e menu */
+    header.site-header {
       position: absolute;
+      top: 5vh;
+      right: 5vw;
       z-index: 10;
+    }
+
+    .menu {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      right: 5%;
-      top: 50%;
-      transform: translateY(-50%);
-      gap: 12vh;
+      gap: 6vh;
       font-size: clamp(1.6rem, 2.5vw, 2.8rem);
       color: #111;
       visibility: hidden;
@@ -124,24 +128,27 @@
   </style>
 </head>
 <body>
+  <!-- OCCHIO -->
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
-
     <div class="layer3">
       <div class="rect1"></div>
       <div class="rect2"></div>
     </div>
-
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <div class="menu" id="menu">
-    <a id="projectLink"></a>
-    <a id="aboutLink"></a>
-    <a id="contactLink"></a>
-  </div>
+  <!-- MENU NEL HEADER -->
+  <header class="site-header">
+    <nav class="menu" id="menu">
+      <a id="projectLink" href="projects.html"></a>
+      <a id="aboutLink" href="about.html"></a>
+      <a id="contactLink" href="contacts.html"></a>
+    </nav>
+  </header>
 
+  <!-- SCRIPT -->
   <script>
     const eyeWrapper = document.getElementById('eyeWrapper');
     const pupil = document.getElementById('pupil');
@@ -206,6 +213,7 @@
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
 
+    // Menu Typing Effect
     const menuItems = [
       { id: "projectLink", text: "projects" },
       { id: "aboutLink", text: "about us" },
@@ -225,6 +233,7 @@
       }, 50);
     }
 
+    // Avvia animazione menu
     setTimeout(() => {
       document.getElementById("menu").classList.add("show");
       typeMenuText();
