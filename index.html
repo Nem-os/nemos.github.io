@@ -47,27 +47,34 @@
 
     .menu {
       position: absolute;
-      z-index: 10;
-      display: flex;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      display: flex;
       flex-direction: row;
       gap: 15vw;
       font-size: clamp(1.6rem, 2.2vw, 2.5rem);
-      color: #111;
-      visibility: hidden;
+      z-index: 10;
       white-space: nowrap;
+      opacity: 0;
     }
 
     .menu.show {
-      visibility: visible;
+      opacity: 1;
     }
 
     .menu a {
       color: #111;
       text-decoration: none;
       transition: transform 0.2s ease;
+      display: inline-block;
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    .menu a.show {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .menu a:hover {
@@ -82,41 +89,34 @@
       content: ">";
     }
 
-@media (max-width: 768px) {
-  .menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 25vh; /* aumenta per maggiore distanza */
-    font-size: 2.2rem;
-    white-space: nowrap;
-  }
+    @media (max-width: 768px) {
+      .menu {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        font-size: 2.2rem;
+        gap: 25vh;
+      }
 
-  .eye-wrapper {
-    transform: translate(-50%, -50%) scale(0.65);
-  }
-}
+      .eye-wrapper {
+        transform: translate(-50%, -50%) scale(0.65);
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="eye-wrapper">
-    <!-- Layer 1 -->
     <div id="layer1" class="layer" style="z-index: 1;">
       <div class="rect" style="top: 0%; left: 20%; width: 64%; height: 33.33%;"></div>
       <div class="rect" style="top: 33.33%; left: 0%; width: 20%; height: 33.33%;"></div>
       <div class="rect" style="top: 66.66%; left: 20%; width: 60%; height: 33.33%;"></div>
     </div>
-    <!-- Layer 2 -->
     <div id="layer2" class="layer" style="z-index: 2;">
       <div class="rect" style="top: 0%; left: 80%; width: 20%; height: 66.66%;"></div>
     </div>
-    <!-- Layer 3 - Pupilla -->
     <div id="layer3" class="layer" style="z-index: 3;">
       <div class="rect" style="top: 5%; left: 40%; width: 20%; height: 85%;"></div>
     </div>
@@ -144,70 +144,4 @@
     function updateTargets(dx, dy) {
       targets[0] = {x: dx * 0.17, y: dy * 0.22};
       targets[1] = {x: dx * 0.17, y: dy * 0.22};
-      targets[2] = {x: dx * 0.30, y: dy * 0.22};
-    }
-
-    document.addEventListener('mousemove', (e) => {
-      const dx = e.clientX - centerX;
-      const dy = e.clientY - centerY;
-      updateTargets(dx, dy);
-      mouseActive = true;
-    });
-
-    document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const dx = touch.clientX - centerX;
-        const dy = touch.clientY - centerY;
-        updateTargets(dx, dy);
-        mouseActive = true;
-      }
-    });
-
-    document.addEventListener('mouseleave', () => {
-      mouseActive = false;
-    });
-
-    function animate() {
-      if (!mouseActive) {
-        targets = targets.map(t => ({x: t.x * 0.98, y: t.y * 0.98}));
-      }
-      for (let i = 0; i < layers.length; i++) {
-        currents[i].x += (targets[i].x - currents[i].x) * 0.15;
-        currents[i].y += (targets[i].y - currents[i].y) * 0.15;
-        layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
-      }
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    // TEXT ANIMATION
-    const menuItems = [
-      { id: "projectLink", text: "projects" },
-      { id: "aboutLink", text: "about us" },
-      { id: "contactLink", text: "contacts" }
-    ];
-
-    function typeMenuText() {
-      const maxLength = Math.max(...menuItems.map(item => item.text.length));
-      let i = 0;
-      const interval = setInterval(() => {
-        menuItems.forEach(item => {
-          const el = document.getElementById(item.id);
-          el.textContent = item.text.substring(0, i);
-        });
-        if (i === maxLength) {
-          clearInterval(interval);
-        }
-        i++;
-      }, 50);
-    }
-
-    setTimeout(() => {
-      document.getElementById("menu").classList.add("show");
-      typeMenuText();
-    }, 1000);
-  </script>
-</body>
-</html>
+      targets[2] = {x: dx * 0.30
