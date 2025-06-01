@@ -47,34 +47,23 @@
 
     .menu {
       position: absolute;
+      z-index: 10;
+      display: flex;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      display: flex;
       flex-direction: row;
       gap: 15vw;
       font-size: clamp(1.6rem, 2.2vw, 2.5rem);
-      z-index: 10;
       white-space: nowrap;
-      opacity: 0;
-    }
-
-    .menu.show {
-      opacity: 1;
     }
 
     .menu a {
       color: #111;
       text-decoration: none;
+      transform: scale(1);
       transition: transform 0.2s ease;
       display: inline-block;
-      transform: scale(0.8);
-      opacity: 0;
-    }
-
-    .menu a.show {
-      opacity: 1;
-      transform: scale(1);
     }
 
     .menu a:hover {
@@ -91,13 +80,16 @@
 
     @media (max-width: 768px) {
       .menu {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 100vh;
-        font-size: 2.2rem;
+        width: 100vw;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         gap: 25vh;
+        font-size: 2.2rem;
       }
 
       .eye-wrapper {
@@ -122,13 +114,14 @@
     </div>
   </div>
 
-  <div class="menu" id="menu">
-    <a id="projectLink"></a>
-    <a id="aboutLink"></a>
-    <a id="contactLink"></a>
+  <div class="menu">
+    <a id="projects"></a>
+    <a id="about"></a>
+    <a id="contacts"></a>
   </div>
 
   <script>
+    // OCCHIO
     const layers = [
       document.getElementById('layer1'),
       document.getElementById('layer2'),
@@ -144,4 +137,66 @@
     function updateTargets(dx, dy) {
       targets[0] = {x: dx * 0.17, y: dy * 0.22};
       targets[1] = {x: dx * 0.17, y: dy * 0.22};
-      targets[2] = {x: dx * 0.30
+      targets[2] = {x: dx * 0.30, y: dy * 0.22};
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      updateTargets(dx, dy);
+      mouseActive = true;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        updateTargets(dx, dy);
+        mouseActive = true;
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      mouseActive = false;
+    });
+
+    function animate() {
+      if (!mouseActive) {
+        targets = targets.map(t => ({x: t.x * 0.98, y: t.y * 0.98}));
+      }
+      for (let i = 0; i < layers.length; i++) {
+        currents[i].x += (targets[i].x - currents[i].x) * 0.15;
+        currents[i].y += (targets[i].y - currents[i].y) * 0.15;
+        layers[i].style.transform = `translate(${currents[i].x}px, ${currents[i].y}px)`;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // CTA: ANIMAZIONE INDIPENDENTE PER OGNI SCRITTA
+    const menuItems = [
+      { id: 'projects', text: 'projects' },
+      { id: 'about', text: 'about us' },
+      { id: 'contacts', text: 'contacts' }
+    ];
+
+    function animateLetters(id, text) {
+      const el = document.getElementById(id);
+      let i = 0;
+      const interval = setInterval(() => {
+        el.textContent = text.substring(0, i + 1);
+        i++;
+        if (i === text.length) clearInterval(interval);
+      }, 40);
+    }
+
+    setTimeout(() => {
+      animateLetters('projects', 'projects');
+      animateLetters('about', 'about us');
+      animateLetters('contacts', 'contacts');
+    }, 1000);
+  </script>
+</body>
+</html>
