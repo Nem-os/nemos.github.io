@@ -137,7 +137,7 @@
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
       target = {x: dx * 0.17, y: dy * 0.22};
-      pupilTarget = {x: dx * 0.25, y: dy * 0.7};
+      pupilTarget = {x: dx * 0.25, y: 0};
       mouseActive = true;
     });
 
@@ -146,14 +146,13 @@
         target.x *= 0.98;
         target.y *= 0.98;
         pupilTarget.x *= 0.98;
-        pupilTarget.y *= 0.98;
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
       eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
 
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupilCurrent.y += (pupilTarget.y - pupilCurrent.y) * 0.2;
+      pupilCurrent.y = 0;
       layer3.style.transform = `translate(${pupilCurrent.x}px, ${pupilCurrent.y}px)`;
 
       requestAnimationFrame(animate);
