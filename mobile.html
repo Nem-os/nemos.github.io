@@ -1,4 +1,4 @@
-
+<!-- VERSIONE MOBILE MODIFICATA -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
@@ -17,7 +18,7 @@
 
     .eye-wrapper {
       position: fixed;
-      top: 50%;
+      top: 40%; /* 👈 Spostato più in alto */
       left: 50%;
       transform: translate(-50%, -50%);
       width: 90vw;
@@ -85,28 +86,10 @@
       height: 0 !important;
     }
 
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(8px);
-      z-index: 1;
-      opacity: 0;
-      transition: opacity 1s ease;
-      pointer-events: none;
-    }
-
-    .overlay.active {
-      opacity: 1;
-    }
-
     .section {
       position: relative;
       z-index: 2;
-      padding: 10vh 8vw;
+      padding: 12vh 8vw;
       max-width: 680px;
       margin: 0 auto;
     }
@@ -128,7 +111,7 @@
 
     @media screen and (max-width: 768px) {
       .section {
-        padding: 6vh 6vw;
+        padding: 8vh 6vw;
       }
 
       .section h2 {
@@ -152,7 +135,6 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <div class="overlay" id="overlay"></div>
   <div class="spacer"></div>
 
   <div class="section" id="about">
@@ -160,7 +142,6 @@
     <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
     <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
     <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-    <p>In an environment where a name alone legitimizes the object, he felt a growing distance between his own design thinking — rooted in coherence, necessity, and simplicity — and the approximation disguised as genius that permeates parts of the system.</p>
     <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
   </div>
 
@@ -177,28 +158,8 @@
   </div>
 
   <script>
-    
-    const overlay = document.getElementById('overlay');
-    const about = document.getElementById('about');
-
-    function checkOverlayTrigger() {
-      const top = about.getBoundingClientRect().top;
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-      if (top < viewportHeight * 0.5) {
-        overlay.classList.add('active');
-      } else {
-        overlay.classList.remove('active');
-      }
-    }
-
-    window.addEventListener('scroll', checkOverlayTrigger);
-    window.addEventListener('load', checkOverlayTrigger);
-
-    window.addEventListener('load', checkOverlayTrigger);
-
-    const eyeWrapper = document.getElementById('eyeWrapper');
-    const pupil = document.getElementById('pupil');
+    const eyeWrapper = document.getElementById("eyeWrapper");
+    const pupil = document.getElementById("pupil");
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
     let target = { x: 0, y: 0 };
@@ -208,31 +169,30 @@
     let mouseActive = false;
     let justBlinked = false;
 
-    document.addEventListener('mousemove', (e) => {
-
-    document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const dx = touch.clientX - centerX;
-        const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.8 };
-        pupilTarget = { x: dx * 0.25 };
-        mouseActive = true;
-      }
-    });
-    
+    document.addEventListener("mousemove", (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.80 };
+      target = { x: dx * 0.17, y: dy * 0.22 };
       pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
     });
 
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        target = { x: dx * 0.17, y: dy * 0.6 }; // 👈 aumentato movimento Y
+        pupilTarget = { x: dx * 0.25 };
+        mouseActive = true;
+      }
+    });
+
     function animate() {
       if (!mouseActive && !justBlinked) {
-        target.x *= 0.99;
-        target.y *= 0.99;
-        pupilTarget.x *= 0.99;
+        target.x *= 0.98;
+        target.y *= 0.98;
+        pupilTarget.x *= 0.98;
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
@@ -246,15 +206,17 @@
 
     function blink() {
       justBlinked = true;
-      eyeWrapper.classList.add('blinked');
+      eyeWrapper.classList.add("blinked");
       setTimeout(() => {
-        eyeWrapper.classList.remove('blinked');
+        eyeWrapper.classList.remove("blinked");
         justBlinked = false;
       }, 200);
     }
 
-    document.addEventListener('click', () => blink());
-    setInterval(() => { if (document.hasFocus()) blink(); }, 10000 + Math.random() * 5000);
+    document.addEventListener("click", () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
   </script>
 </body>
 </html>
