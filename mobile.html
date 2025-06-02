@@ -215,7 +215,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.50 };
+        target = { x: dx * 0.17, y: dy * 0.8 };
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
@@ -223,16 +223,16 @@
     
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.50 };
+      target = { x: dx * 0.17, y: dy * 0.80 };
       pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
     });
 
     function animate() {
       if (!mouseActive && !justBlinked) {
-        target.x *= 0.98;
-        target.y *= 0.98;
-        pupilTarget.x *= 0.98;
+        target.x *= 0.99;
+        target.y *= 0.99;
+        pupilTarget.x *= 0.99;
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
