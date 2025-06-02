@@ -113,6 +113,36 @@
       transform: scale(1.12);
     }
 
+    .ticker-wrapper {
+      display: none;
+      overflow: hidden;
+      background: #fff;
+      border-top: 1px solid #111;
+      border-bottom: 1px solid #111;
+      padding: 0.5rem 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    .ticker-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollTicker 25s linear infinite;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #111;
+      padding-left: 100vw;
+    }
+
+    .ticker-track span {
+      margin-right: 4rem;
+    }
+
+    @keyframes scrollTicker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-100%); }
+    }
+
     .overlay-box {
       position: fixed;
       top: 0;
@@ -199,6 +229,10 @@
     }
 
     @media screen and (min-width: 769px) {
+      .ticker-wrapper {
+        display: block;
+      }
+
       .mobile-overlay {
         display: none !important;
       }
@@ -223,6 +257,14 @@
       <a href="#" data-key="contacts">contacts</a>
     </nav>
   </header>
+
+  <!-- ✅ TICKER INSERITO QUI -->
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
+      <span>Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os</span>
+      <span>Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os</span>
+    </div>
+  </div>
 
   <div class="overlay-box" id="overlay">
     <div class="overlay-content">
@@ -303,7 +345,6 @@
     window.addEventListener("scroll", checkMobileOverlay);
     window.addEventListener("load", checkMobileOverlay);
 
-    // Eye movement logic
     const eyeWrapper = document.getElementById("eyeWrapper");
     const pupil = document.getElementById("pupil");
     const centerX = window.innerWidth / 2;
