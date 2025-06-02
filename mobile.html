@@ -17,9 +17,9 @@
 
     .eye-wrapper {
       position: fixed;
-      top: 30%; /* 👈 più in alto */
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%); /* 👈 solo orizzontale */
+      transform: translate(-50%, -50%);
       width: 90vw;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
@@ -154,7 +154,8 @@
     const eyeWrapper = document.getElementById("eyeWrapper");
     const pupil = document.getElementById("pupil");
     const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight * 0.3; // 👈 coerente con top: 30%
+    const centerY = window.innerHeight * 0.4; // 👈 centro alzato
+
     let target = { x: 0, y: 0 };
     let current = { x: 0, y: 0 };
     let pupilTarget = { x: 0 };
@@ -175,7 +176,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.6 }; // 👈 movimento verticale ampliato
+        target = { x: dx * 0.17, y: dy * 0.6 }; // 👈 movimento Y aumentato
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
@@ -189,7 +190,7 @@
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
-      eyeWrapper.style.transform = `translateX(-50%) translateY(${current.y}px)`;
+      eyeWrapper.style.transform = `translateX(-50%) translateY(calc(-20vh + ${current.y}px))`; // 👈 offset verticale reale
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
       pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
       requestAnimationFrame(animate);
