@@ -1,42 +1,35 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nem.Os</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #fff;
       font-family: 'IBM Plex Mono', monospace;
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-      position: relative;
-      touch-action: none;
+      background: #fff;
+      color: #111;
+      overflow-x: hidden;
     }
 
     .eye-wrapper {
-      position: absolute;
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 90vw;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .layer {
       position: absolute;
       transition: height 0.1s ease;
-      will-change: height;
-      backface-visibility: hidden;
       transform-origin: bottom;
     }
 
@@ -56,9 +49,12 @@
       height: 33.33%;
     }
 
-    .layer3 .rect1 {
+    .layer3 .rect1, .layer3 .rect2 {
       background-color: #e65152;
       position: absolute;
+    }
+
+    .layer3 .rect1 {
       top: 33.33%;
       left: 0%;
       width: 20%;
@@ -66,8 +62,6 @@
     }
 
     .layer3 .rect2 {
-      background-color: #e65152;
-      position: absolute;
       top: 66.66%;
       left: 20%;
       width: 60%;
@@ -82,8 +76,6 @@
       width: 20%;
       height: 80%;
       transition: height 0.2s ease;
-      will-change: height;
-      backface-visibility: hidden;
       transform-origin: top;
     }
 
@@ -109,11 +101,6 @@
       gap: 4vw;
       font-size: clamp(1.6rem, 2.5vw, 2.8rem);
       color: #111;
-      visibility: hidden;
-    }
-
-    .menu.show {
-      visibility: visible;
     }
 
     .menu a {
@@ -126,53 +113,20 @@
       transform: scale(1.12);
     }
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      z-index: 20;
-    }
-
-    .hamburger div {
-      width: 30px;
-      height: 2px;
-      background: #111;
-    }
-
-    @media (max-width: 768px) {
-      .menu {
-        flex-direction: column;
-        position: absolute;
-        top: 10vh;
-        right: 5vw;
-        background: #fff;
-        padding: 2vh 2vw;
-        gap: 2vh;
-        font-size: 1.8rem;
-        border: 1px solid #111;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        align-items: flex-end;
-      }
-
-      .hamburger {
-        display: flex;
-        position: absolute;
-        top: 5vh;
-        right: 5vw;
-      }
-    }
-
-    .overlay {
+    .overlay-box {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-      display: none;
+      backdrop-filter: blur(6px);
       z-index: 50;
+      display: none;
+    }
+
+    .overlay-box.active {
+      display: block;
     }
 
     .overlay-content {
@@ -180,11 +134,8 @@
       max-width: 700px;
       margin: 10vh auto;
       padding: 4vh 5vw;
-      color: #111;
-      font-family: 'IBM Plex Mono', monospace;
       font-size: 1rem;
       line-height: 1.6;
-      background: none;
     }
 
     .close-btn {
@@ -196,6 +147,61 @@
       border: none;
       color: #111;
       cursor: pointer;
+    }
+
+    .mobile-section {
+      display: none;
+    }
+
+    .mobile-section .section {
+      padding: 12vh 8vw;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .mobile-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .mobile-section p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .mobile-overlay.active {
+      opacity: 1;
+    }
+
+    @media screen and (max-width: 768px) {
+      .site-header {
+        display: none;
+      }
+
+      .mobile-section {
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .mobile-overlay {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -211,29 +217,97 @@
   </div>
 
   <header class="site-header">
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
-    <nav class="menu" id="menu">
-      <a id="aboutLink" href="#"></a>
-      <a id="projectLink" href="#"></a>
-      <a id="contactLink" href="#"></a>
+    <nav class="menu">
+      <a href="#" data-key="about">about-us</a>
+      <a href="#" data-key="projects">projects</a>
+      <a href="#" data-key="contacts">contacts</a>
     </nav>
   </header>
 
-  <div id="overlay" class="overlay">
+  <div class="overlay-box" id="overlay">
     <div class="overlay-content">
       <button class="close-btn" id="closeOverlay">&times;</button>
       <div id="overlayText"></div>
     </div>
   </div>
 
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="mobile-section">
+    <div class="section" id="mobile-about">
+      <h2>About</h2>
+      <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+      <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+      <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+      <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+    </div>
+
+    <div class="section" id="mobile-projects">
+      <h2>Projects</h2>
+      <p>Selected works will appear here soon. The focus is not on quantity, but on coherence and clarity. Each project is chosen for its necessity, not its prestige.</p>
+    </div>
+
+    <div class="section" id="mobile-contacts">
+      <h2>Contacts</h2>
+      <p>If the work resonates, if the values align, feel free to get in touch:</p>
+      <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+      <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+    </div>
+  </div>
+
   <script>
-    const eyeWrapper = document.getElementById('eyeWrapper');
-    const pupil = document.getElementById('pupil');
+    const overlay = document.getElementById("overlay");
+    const overlayText = document.getElementById("overlayText");
+    const closeBtn = document.getElementById("closeOverlay");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+    const aboutSection = document.getElementById("mobile-about");
+
+    const content = {
+      about: `
+        <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+        <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+        <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+        <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+      `,
+      projects: `<p>Selected works will appear here soon. The focus is not on quantity, but on coherence and clarity. Each project is chosen for its necessity, not its prestige.</p>`,
+      contacts: `<p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a><br>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>`
+    };
+
+    document.querySelectorAll('.menu a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const key = link.getAttribute('data-key');
+        overlayText.innerHTML = content[key];
+        overlay.classList.add('active');
+      });
+    });
+
+    closeBtn.addEventListener("click", () => {
+      overlay.classList.remove("active");
+    });
+
+    function checkMobileOverlay() {
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        const top = aboutSection.getBoundingClientRect().top;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        if (top < viewportHeight * 0.5) {
+          mobileOverlay.classList.add("active");
+        } else {
+          mobileOverlay.classList.remove("active");
+        }
+      } else {
+        mobileOverlay.classList.remove("active");
+      }
+    }
+
+    window.addEventListener("scroll", checkMobileOverlay);
+    window.addEventListener("load", checkMobileOverlay);
+
+    // Eye movement logic
+    const eyeWrapper = document.getElementById("eyeWrapper");
+    const pupil = document.getElementById("pupil");
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-
     let target = { x: 0, y: 0 };
     let current = { x: 0, y: 0 };
     let pupilTarget = { x: 0 };
@@ -241,7 +315,7 @@
     let mouseActive = false;
     let justBlinked = false;
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
       target = { x: dx * 0.17, y: dy * 0.22 };
@@ -249,7 +323,7 @@
       mouseActive = true;
     });
 
-    document.addEventListener('touchmove', (e) => {
+    document.addEventListener("touchmove", (e) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
@@ -268,11 +342,9 @@
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
-      eyeWrapper.style.transform = translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px));
-
+      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupil.style.transform = translateX(${pupilCurrent.x}px);
-
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
       requestAnimationFrame(animate);
     }
 
@@ -280,92 +352,17 @@
 
     function blink() {
       justBlinked = true;
-      eyeWrapper.classList.add('blinked');
+      eyeWrapper.classList.add("blinked");
       setTimeout(() => {
-        eyeWrapper.classList.remove('blinked');
+        eyeWrapper.classList.remove("blinked");
         justBlinked = false;
       }, 200);
     }
 
-    document.addEventListener('click', () => blink());
+    document.addEventListener("click", () => blink());
     setInterval(() => {
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
-
-    const menuItems = [
-      { id: "aboutLink", text: "about-us" },
-      { id: "projectLink", text: "projects" },
-      { id: "contactLink", text: "contacts" }
-    ];
-
-    function typeMenuTextSequentially(index = 0) {
-      if (index >= menuItems.length) return;
-      const { id, text } = menuItems[index];
-      const el = document.getElementById(id);
-      let i = 0;
-      const interval = setInterval(() => {
-        el.textContent = <${text.substring(0, i)}>;
-        i++;
-        if (i > text.length) {
-          clearInterval(interval);
-          typeMenuTextSequentially(index + 1);
-        }
-      }, 70);
-    }
-
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const hamburger = document.getElementById("hamburger");
-    const menu = document.getElementById("menu");
-
-    if (isMobile) {
-      hamburger.addEventListener("click", () => {
-        const menuVisible = menu.classList.toggle("show");
-        if (menuVisible) {
-          typeMenuTextSequentially();
-        } else {
-          menuItems.forEach(item => {
-            document.getElementById(item.id).textContent = "";
-          });
-        }
-      });
-    } else {
-      setTimeout(() => {
-        menu.classList.add("show");
-        typeMenuTextSequentially();
-      }, 1000);
-    }
-
-    const overlay = document.getElementById("overlay");
-    const overlayText = document.getElementById("overlayText");
-    const closeBtn = document.getElementById("closeOverlay");
-
-    const texts = {
-      about: 
-        <p><strong>Nem.Os</strong> è uno studio personale, un’identità anonima e collettiva, nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
-        <p>Dietro Nem.Os c'è un progettista giovane, con un passato da sviluppatore per marchi e nomi di rilievo nel mondo del design e del lusso internazionale. Ha collaborato a progetti per eventi, installazioni, showroom e retail di altissimo profilo in Italia, in Europa e negli Stati Uniti.</p>
-        <p>Ha firmato col silenzio mobili presentati al Fuorisalone, sviluppato elementi per spazi di brand iconici, accompagnato idee che hanno avuto eco museale. Ma quel lavoro, spesso, lo ha vissuto come un paradosso:</p>
-        <p>la sensazione di costruire cose senza senso per chi non deve mai giustificare nulla.</p>
-        <p>In un ambiente dove il nome basta a legittimare l’oggetto, ha sentito crescere una distanza tra il proprio pensiero progettuale — radicato in coerenza, necessità e semplicità — e l’approssimazione mascherata da genio che permea parte del sistema.</p>
-        <p>Con Nem.Os, inizia una nuova traiettoria: autonoma, silenziosa, radicale.</p>
-        <p>Un design che non chiede più il permesso, che non cerca l’oggetto speciale, ma quello giusto.</p>
-        <p>Un progetto dove la bellezza è conseguenza della semplicità, e la semplicità è frutto di un pensiero ben fatto.</p>
-      ,
-      projects: <p>[In questa sezione andranno i progetti realizzati o concept futuri di Nem.Os]</p>,
-      contacts: <p>Contatti: <br>Email &mdash; <a href="mailto:studio@nem.os">studio@nem.os</a><br>Instagram &mdash; <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
-    };
-
-    document.getElementById("aboutLink").addEventListener("click", () => showOverlay("about"));
-    document.getElementById("projectLink").addEventListener("click", () => showOverlay("projects"));
-    document.getElementById("contactLink").addEventListener("click", () => showOverlay("contacts"));
-
-    function showOverlay(key) {
-      overlayText.innerHTML = texts[key];
-      overlay.style.display = "block";
-    }
-
-    closeBtn.addEventListener("click", () => {
-      overlay.style.display = "none";
-    });
   </script>
 </body>
 </html>
