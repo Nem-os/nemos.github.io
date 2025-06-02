@@ -357,7 +357,7 @@
     document.addEventListener("mousemove", (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.22 };
+      target = { x: dx * 0.17, y: dy * 0.17 };
       pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
     });
@@ -367,7 +367,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.35 };
+        target = { x: dx * 0.17, y: dy * 0.17 };
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
