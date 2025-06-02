@@ -106,7 +106,7 @@
     .section {
       position: relative;
       z-index: 2;
-      padding: 4vh 8vw;
+      padding: 4vh 4vw;
       max-width: 680px;
       margin: 0 auto;
     }
@@ -166,7 +166,7 @@
 }
 
 @keyframes scrollTicker {
-  0% { transform: translateX(0%); }
+  0% { transform: translateX(5%); }
   100% { transform: translateX(-100%); }
 }
 
@@ -264,7 +264,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.35 };
+        target = { x: dx * 0.17, y: dy * 0.6 };
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
@@ -272,7 +272,7 @@
     
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.22 };
+      target = { x: dx * 0.17, y: dy * 0.6 };
       pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
     });
