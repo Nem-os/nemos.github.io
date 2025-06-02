@@ -1,4 +1,3 @@
-<!-- VERSIONE MOBILE MODIFICATA -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +17,9 @@
 
     .eye-wrapper {
       position: fixed;
-      top: 40%; /* 👈 Spostato più in alto */
+      top: 30%; /* 👈 più in alto */
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%); /* 👈 solo orizzontale */
       width: 90vw;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
@@ -105,10 +104,6 @@
       margin-bottom: 1rem;
     }
 
-    .spacer {
-      height: 100vh;
-    }
-
     @media screen and (max-width: 768px) {
       .section {
         padding: 8vh 6vw;
@@ -135,8 +130,6 @@
     <div class="pupil" id="pupil"></div>
   </div>
 
-  <div class="spacer"></div>
-
   <div class="section" id="about">
     <h2>About</h2>
     <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
@@ -161,7 +154,7 @@
     const eyeWrapper = document.getElementById("eyeWrapper");
     const pupil = document.getElementById("pupil");
     const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+    const centerY = window.innerHeight * 0.3; // 👈 coerente con top: 30%
     let target = { x: 0, y: 0 };
     let current = { x: 0, y: 0 };
     let pupilTarget = { x: 0 };
@@ -182,7 +175,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.6 }; // 👈 aumentato movimento Y
+        target = { x: dx * 0.17, y: dy * 0.6 }; // 👈 movimento verticale ampliato
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
@@ -196,7 +189,7 @@
       }
       current.x += (target.x - current.x) * 0.15;
       current.y += (target.y - current.y) * 0.15;
-      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
+      eyeWrapper.style.transform = `translateX(-50%) translateY(${current.y}px)`;
       pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
       pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
       requestAnimationFrame(animate);
