@@ -87,13 +87,14 @@
 
     .site-header {
       position: absolute;
-      top: 5vh;
+      top: 0;
       left: 5vw;
       width: 90vw;
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      z-index: 10;
+      z-index: 20;
+      height: 10vh;
     }
 
     .menu {
@@ -114,14 +115,17 @@
     }
 
     .ticker-wrapper {
-      display: none;
       overflow: hidden;
       background: #fff;
       border-top: 1px solid #111;
       border-bottom: 1px solid #111;
       padding: 0.5rem 0;
-      position: relative;
-      z-index: 5;
+      position: absolute;
+      top: 10vh;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      display: none;
     }
 
     .ticker-track {
@@ -258,7 +262,6 @@
     </nav>
   </header>
 
-  <!-- ✅ TICKER INSERITO QUI -->
   <div class="ticker-wrapper">
     <div class="ticker-track">
       <span>Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os</span>
@@ -305,14 +308,9 @@
     const aboutSection = document.getElementById("mobile-about");
 
     const content = {
-      about: `
-        <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
-        <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
-        <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-        <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
-      `,
-      projects: `<p>Selected works will appear here soon. The focus is not on quantity, but on coherence and clarity. Each project is chosen for its necessity, not its prestige.</p>`,
-      contacts: `<p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a><br>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>`
+      about: document.getElementById("mobile-about").innerHTML,
+      projects: document.getElementById("mobile-projects").innerHTML,
+      contacts: document.getElementById("mobile-contacts").innerHTML
     };
 
     document.querySelectorAll('.menu a').forEach(link => {
