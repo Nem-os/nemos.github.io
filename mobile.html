@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nem.Os</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+ 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -169,6 +170,29 @@
   0% { transform: translateX(1%); }
   100% { transform: translateX(-100%); }
 }
+.projects-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0 0;
+}
+
+.projects-list li {
+  margin-bottom: 1.5rem;
+}
+
+.projects-list a {
+  color: #111;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border-bottom: 1px solid #e65152;
+  padding-bottom: 0.2rem;
+  display: inline-block;
+  transition: opacity 0.25s ease;
+}
+
+.projects-list a:hover {
+  opacity: 0.7;
+}
 
 </style>
 </head>
@@ -215,7 +239,15 @@
 
   <div class="section" id="projects">
     <h2>Projects</h2>
-    <p>Selected works will appear here soon. The focus is not on quantity, but on coherence and clarity. Each project is chosen for its necessity, not its prestige.</p>
+    <div class="section" id="mobile-projects">
+  <h2>Projects</h2>
+  <ul class="projects-list">
+    <li><a href="project-uno.html">Project Uno — Retail Installation, Milan</a></li>
+    <li><a href="project-due.html">Project Due — Sculptural Display, Paris</a></li>
+    <li><a href="project-tre.html">Project Tre — Silent Object, New York</a></li>
+  </ul>
+</div>
+
   </div>
 
   <div class="section" id="contacts">
