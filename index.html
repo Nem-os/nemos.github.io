@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nem.Os</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -32,43 +32,13 @@
       transform-origin: bottom;
     }
 
-    .layer1 {
-      background-color: #e65152;
-      bottom: 33.33%;
-      left: 20%;
-      width: 80%;
-      height: 66.66%;
-    }
-
-    .layer2 {
-      background-color: white;
-      bottom: 33.33%;
-      left: 20%;
-      width: 60%;
-      height: 33.33%;
-    }
-
-    .layer3 .rect1, .layer3 .rect2 {
-      background-color: #e65152;
-      position: absolute;
-    }
-
-    .layer3 .rect1 {
-      top: 33.33%;
-      left: 0%;
-      width: 20%;
-      height: 33.33%;
-    }
-
-    .layer3 .rect2 {
-      top: 66.66%;
-      left: 20%;
-      width: 60%;
-      height: 33.33%;
-    }
-
+    .layer1 { background: #e65152; bottom: 33.33%; left: 20%; width: 80%; height: 66.66%; }
+    .layer2 { background: white; bottom: 33.33%; left: 20%; width: 60%; height: 33.33%; }
+    .layer3 .rect1, .layer3 .rect2 { background: #e65152; position: absolute; }
+    .layer3 .rect1 { top: 33.33%; left: 0%; width: 20%; height: 33.33%; }
+    .layer3 .rect2 { top: 66.66%; left: 20%; width: 60%; height: 33.33%; }
     .pupil {
-      background-color: #e65152;
+      background: #e65152;
       position: absolute;
       bottom: 0;
       left: 40%;
@@ -77,12 +47,7 @@
       transition: height 0.2s ease;
       transform-origin: top;
     }
-
-    .blinked .layer1,
-    .blinked .layer2,
-    .blinked .pupil {
-      height: 0 !important;
-    }
+    .blinked .layer1, .blinked .layer2, .blinked .pupil { height: 0 !important; }
 
     .site-header {
       position: fixed;
@@ -96,39 +61,13 @@
       z-index: 10;
     }
 
-    .menu {
-      display: flex;
-      gap: 4vw;
-      font-size: clamp(1.2rem, 2vw, 2rem);
-      visibility: hidden;
-    }
+    .menu { display: flex; gap: 4vw; font-size: clamp(1.2rem, 2vw, 2rem); visibility: hidden; }
+    .menu.show { visibility: visible; }
+    .menu a { color: #111; text-decoration: none; transition: transform 0.2s ease; }
+    .menu a:hover { transform: scale(1.12); }
 
-    .menu.show {
-      visibility: visible;
-    }
-
-    .menu a {
-      color: #111;
-      text-decoration: none;
-      transition: transform 0.2s ease;
-    }
-
-    .menu a:hover {
-      transform: scale(1.12);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-    }
-
-    .hamburger div {
-      width: 30px;
-      height: 2px;
-      background: #111;
-    }
+    .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
+    .hamburger div { width: 30px; height: 2px; background: #111; }
 
     .section {
       position: relative;
@@ -136,17 +75,38 @@
       padding: 12vh 8vw;
       max-width: 680px;
       margin: 0 auto;
+      display: none;
     }
 
-    .section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 5;
+      display: none;
     }
 
-    .section p {
+    .overlay-content {
+      max-width: 700px;
+      margin: 12vh auto;
+      padding: 4vh 5vw;
+      background: #fff;
+      color: #111;
       font-size: 1rem;
       line-height: 1.6;
-      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
     @media screen and (max-width: 768px) {
@@ -162,22 +122,9 @@
         font-size: 1.2rem;
         align-items: flex-end;
       }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .section {
-        padding: 8vh 6vw;
-      }
-
-      .section h2 {
-        font-size: 1.5rem;
-      }
-
-      .section p {
-        font-size: 0.95rem;
-      }
+      .hamburger { display: flex; }
+      .section { display: block; }
+      .overlay { display: none !important; }
     }
   </style>
 </head>
@@ -193,30 +140,30 @@
   </div>
 
   <header class="site-header">
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
+    <div class="hamburger" id="hamburger"><div></div><div></div><div></div></div>
     <nav class="menu" id="menu">
-      <a href="#about">about</a>
-      <a href="#projects">projects</a>
-      <a href="#contacts">contacts</a>
+      <a href="#" data-key="about">about</a>
+      <a href="#" data-key="projects">projects</a>
+      <a href="#" data-key="contacts">contacts</a>
     </nav>
   </header>
 
+  <div class="overlay" id="overlay">
+    <div class="overlay-content">
+      <button class="close-btn" id="closeOverlay">&times;</button>
+      <div id="overlayText"></div>
+    </div>
+  </div>
+
   <div class="section" id="about">
     <h2>About</h2>
-    <p>Nem.Os è uno studio personale — un’identità anonima e collettiva — nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
-    <p>Dietro Nem.Os c'è un progettista giovane, con un passato da sviluppatore per marchi e nomi di rilievo nel mondo del design e del lusso internazionale.</p>
-    <p>Ha firmato col silenzio mobili presentati al Fuorisalone, sviluppato elementi per brand iconici, accompagnato idee che hanno avuto eco museale.</p>
-    <p>Con Nem.Os, inizia una nuova traiettoria: autonoma, silenziosa, radicale.</p>
-    <p>Un progetto dove la bellezza è conseguenza della semplicità, e la semplicità è frutto di un pensiero ben fatto.</p>
+    <p>Nem.Os &egrave; uno studio personale &mdash; un'identit&agrave; anonima e collettiva &mdash; nata da chi ha visto il design da vicino, ma sempre da dietro.</p>
+    <p>Con un background nello sviluppo per marchi internazionali, oggi inizia un nuovo percorso: radicale, autonomo, coerente.</p>
   </div>
-
   <div class="section" id="projects">
     <h2>Projects</h2>
-    <p>[Qui appariranno progetti selezionati. Focus su coerenza e chiarezza, non quantità.]</p>
+    <p>[In questa sezione andranno i progetti realizzati o concept futuri di Nem.Os]</p>
   </div>
-
   <div class="section" id="contacts">
     <h2>Contacts</h2>
     <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
@@ -224,11 +171,69 @@
   </div>
 
   <script>
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const sections = document.querySelectorAll(".section");
+    const overlay = document.getElementById("overlay");
+    const overlayText = document.getElementById("overlayText");
+    const closeBtn = document.getElementById("closeOverlay");
+
+    const content = {
+      about: document.getElementById("about").innerHTML,
+      projects: document.getElementById("projects").innerHTML,
+      contacts: document.getElementById("contacts").innerHTML
+    };
+
+    document.querySelectorAll(".menu a").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const key = link.dataset.key;
+        if (isMobile) {
+          document.getElementById(key).scrollIntoView({ behavior: "smooth" });
+        } else {
+          overlayText.innerHTML = content[key];
+          overlay.style.display = "block";
+        }
+      });
+    });
+
+    closeBtn.addEventListener("click", () => overlay.style.display = "none");
+
+    const menu = document.getElementById("menu");
+    const hamburger = document.getElementById("hamburger");
+
+    hamburger.addEventListener("click", () => {
+      menu.classList.toggle("show");
+    });
+
+    if (!isMobile) {
+      setTimeout(() => {
+        menu.classList.add("show");
+        const items = [...menu.querySelectorAll("a")];
+        let index = 0;
+        function typeNext() {
+          if (index >= items.length) return;
+          const text = items[index].dataset.key;
+          let i = 0;
+          const interval = setInterval(() => {
+            items[index].textContent = `<${text.slice(0, i)}>`;
+            i++;
+            if (i > text.length) {
+              clearInterval(interval);
+              index++;
+              typeNext();
+            }
+          }, 70);
+        }
+        typeNext();
+      }, 800);
+    } else {
+      menu.classList.add("show");
+    }
+
     const eyeWrapper = document.getElementById('eyeWrapper');
     const pupil = document.getElementById('pupil');
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-
     let target = { x: 0, y: 0 };
     let current = { x: 0, y: 0 };
     let pupilTarget = { x: 0 };
@@ -268,7 +273,6 @@
       pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
       requestAnimationFrame(animate);
     }
-
     animate();
 
     function blink() {
@@ -279,16 +283,8 @@
         justBlinked = false;
       }, 200);
     }
-
     document.addEventListener('click', () => blink());
     setInterval(() => { if (document.hasFocus()) blink(); }, 10000 + Math.random() * 5000);
-
-    const hamburger = document.getElementById("hamburger");
-    const menu = document.getElementById("menu");
-
-    hamburger.addEventListener("click", () => {
-      menu.classList.toggle("show");
-    });
   </script>
 </body>
 </html>
