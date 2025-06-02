@@ -139,9 +139,58 @@
         font-size: 0.95rem;
       }
     }
-  </style>
+  
+.ticker-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
+  padding: 0.5rem 0;
+  width: 100%;
+  z-index: 3;
+}
+
+.ticker-track {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scrollTicker 60s linear infinite;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #111;
+  padding-left: 100vw;
+}
+
+.ticker-track span {
+  margin-right: 4rem;
+}
+
+@keyframes scrollTicker {
+  0% { transform: translateX(50%); }
+  100% { transform: translateX(-100%); }
+}
+
+</style>
 </head>
 <body>
+
+<div class="ticker-wrapper">
+  <div class="ticker-track">
+    <span>
+      Scroll down to explore // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
+      Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
+      Scroll down to explore // Silent but deliberate // We question shape // We listen before drawing //
+      Objects as positions // Not as products // Nem.Os
+    </span>
+    <span>
+      Scroll down to explore // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
+      Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
+      Scroll down to explore // Silent but deliberate // We question shape // We listen before drawing //
+      Objects as positions // Not as products // Nem.Os
+    </span>
+  </div>
+</div>
+
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
@@ -215,7 +264,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.8 };
+        target = { x: dx * 0.17, y: dy * 0.35 };
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
@@ -223,7 +272,7 @@
     
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.8 };
+      target = { x: dx * 0.17, y: dy * 0.22 };
       pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
     });
