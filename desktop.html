@@ -17,7 +17,7 @@
 
     .eye-wrapper {
       position: fixed;
-      top: 50%;
+      top: 55%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 90vw;
@@ -87,6 +87,7 @@
 
     .site-header {
       position: absolute;
+      background-color: #e65152;
       top: 0;
       left: 5vw;
       width: 90vw;
@@ -357,7 +358,7 @@
     document.addEventListener("mousemove", (e) => {
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.17 };
+      target = { x: dx * 0.17, y: dy * 0.15 };
       pupilTarget = { x: dx * 0.25 };
       mouseActive = true;
     });
@@ -367,7 +368,7 @@
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.17 };
+        target = { x: dx * 0.17, y: dy * 0.15 };
         pupilTarget = { x: dx * 0.25 };
         mouseActive = true;
       }
