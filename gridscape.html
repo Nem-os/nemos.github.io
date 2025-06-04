@@ -85,7 +85,7 @@
       z-index: 50;
       backdrop-filter: blur(6px);
       background: rgba(255, 255, 255, 0);
-      animation: fadeIn 2s ease forwards 2s;
+      animation: fadeIn 0.5s ease forwards 0.5s;
     }
     @keyframes fadeIn {
       to {
@@ -123,7 +123,7 @@
       backdrop-filter: none;
       opacity: 0;
       transform: translateX(50px);
-      animation: fadeIn 2s;
+      animation: slideInText 0.6s ease forwards 0.5s;
     }
     .description-box h2 {
       font-size: 1.8rem;
@@ -201,13 +201,22 @@
   z-index: 9999;
   pointer-events: none;
   opacity: 1;
-  animation: fadeOutOverlay 1s ease forwards;
+  transition: opacity 1s ease;
 }
 
-@keyframes fadeOutOverlay {
-  to {
-    opacity: 0;
-  }
+#fadeOverlay.fade-out {
+  opacity: 0;
+}
+
+.page-content {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+body.fade-start .page-content {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 </style>
@@ -221,9 +230,10 @@
       <div class="rect1"></div>
       <div class="rect2"></div>
     </div>
-    <div class="pupil" id="pupil"></div>
-  </div>
+    <div class="pupil" id="pupil">  </div>
+</div>
 
+  <div class="page-content">
   <div class="overlay-box">
     <div class="carousel">
       <img src="citypop_cover_03.png" class="active" alt="Gridscape 1">
@@ -242,8 +252,8 @@
         Il progetto esplora un equilibrio tra l'architettura infantile e la scultura funzionale. Tutti gli elementi sono costruiti come volumi geometrici puri, con materiali leggeri e tonalità pastello enfatizzate da superfici reticolari.<br><br>
         Gridscape invita l'utente a reinterpretare lo spazio abitativo come un ambiente interattivo e trasformabile, in cui il design non è un vincolo ma un gioco serio.
       </p>
-    </div>
-  </div>
+      </div>
+</div>
 
   <script>
     const images = document.querySelectorAll('.carousel img');
@@ -303,5 +313,16 @@
       if (document.hasFocus()) blink();
     }, 10000 + Math.random() * 5000);
   </script>
+
+<script>
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('fadeOverlay');
+    setTimeout(() => {
+      overlay.classList.add('fade-out');
+      document.body.classList.add('fade-start');
+    }, 100);
+  });
+</script>
+
 </body>
 </html>
