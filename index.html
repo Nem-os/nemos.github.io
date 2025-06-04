@@ -321,7 +321,7 @@
   <h2>Projects</h2>
   <ul class="projects-list">
     <li><a href="pratofiorito.html">Pratofiorito — Outdoor Forniture, Italy</a></li>
-    <li><a href="#" class="open-gridscape">Gridscape — Personal Project, Italy</a></li>
+    <li><a href="gridscape.html">Gridscape — Personal Project, Italy</a></li>
     <li><a href="project-tre.html">Project Tre — Silent Object, New York</a></li>
   </ul>
 </div>
@@ -452,92 +452,5 @@
     });
 
 </script>
-
-<div class="overlay-box">
-    <div class="carousel">
-      <img src="citypop_cover_03.png" class="active" alt="Gridscape 1">
-      <img src="citypop_cover_04.png" alt="Gridscape 2">
-      <img src="reder chair_02.png" alt="Gridscape 3">
-      <img src="reder couch.png" alt="Gridscape 4">
-      <img src="reder LAMP_02.png" alt="Gridscape 5">
-      <img src="reder TABLE.png" alt="Gridscape 6">
-    </div>
-    <div class="description-box">
-      <button class="close-btn" onclick="window.location.href='desktop.html'">&times;</button>
-      <h2>Gridscape</h2>
-      <p>
-        Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco, della plastica, del colore.<br><br>
-        Le sedute, i tavoli e i corpi illuminanti sono pensati come pixel tridimensionali che possono essere assemblati liberamente per creare paesaggi domestici o urbani temporanei.<br><br>
-        Il progetto esplora un equilibrio tra l'architettura infantile e la scultura funzionale. Tutti gli elementi sono costruiti come volumi geometrici puri, con materiali leggeri e tonalità pastello enfatizzate da superfici reticolari.<br><br>
-        Gridscape invita l'utente a reinterpretare lo spazio abitativo come un ambiente interattivo e trasformabile, in cui il design non è un vincolo ma un gioco serio.
-      </p>
-    </div>
-  </div>
 </body>
-
-<script>
-  document.querySelector('.open-gridscape')?.addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('.overlay-box').style.display = 'flex';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-    const images = document.querySelectorAll('.carousel img');
-    let current = 0;
-    function showImage(index) {
-      images.forEach((img, i) => img.classList.toggle('active', i === index));
-    }
-    setInterval(() => {
-      current = (current + 1) % images.length;
-      showImage(current);
-    }, 6000);
-
-    const eyeWrapper = document.getElementById("eyeWrapper");
-    const pupil = document.getElementById("pupil");
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    let target = { x: 0, y: 0 };
-    let currentPos = { x: 0, y: 0 };
-    let pupilTarget = { x: 0 };
-    let pupilCurrent = { x: 0 };
-    let mouseActive = false;
-    let justBlinked = false;
-
-    document.addEventListener("mousemove", (e) => {
-      const dx = e.clientX - centerX;
-      const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.15 };
-      pupilTarget = { x: dx * 0.25 };
-      mouseActive = true;
-    });
-
-    function animate() {
-      if (!mouseActive && !justBlinked) {
-        target.x *= 0.98;
-        target.y *= 0.98;
-        pupilTarget.x *= 0.98;
-      }
-      currentPos.x += (target.x - currentPos.x) * 0.15;
-      currentPos.y += (target.y - currentPos.y) * 0.15;
-      eyeWrapper.style.transform = `translate(calc(-50% + ${currentPos.x}px), calc(-50% + ${currentPos.y}px))`;
-      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
-      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    function blink() {
-      justBlinked = true;
-      eyeWrapper.classList.add("blinked");
-      setTimeout(() => {
-        eyeWrapper.classList.remove("blinked");
-        justBlinked = false;
-      }, 200);
-    }
-    document.addEventListener("click", () => blink());
-    setInterval(() => {
-      if (document.hasFocus()) blink();
-    }, 10000 + Math.random() * 5000);
-  
-</script>
 </html>
