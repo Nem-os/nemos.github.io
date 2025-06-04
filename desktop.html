@@ -9,27 +9,13 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
+      transition: opacity 3s ease;
+      opacity: 0;
+      transition: opacity 3s ease;
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
       color: #111;
       overflow-x: hidden;
-    }
-
-    .fade-out {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: white;
-      opacity: 0;
-      transition: opacity 1s ease-in;
-      z-index: 9999;
-      pointer-events: none;
-    }
-
-    .fade-out.active {
-      opacity: 1;
     }
 
     .eye-wrapper {
@@ -259,55 +245,229 @@
         display: none !important;
       }
     }
+.projects-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0 0;
+}
 
-    .projects-list {
-      list-style: none;
-      padding: 0;
-      margin: 2rem 0 0 0;
-    }
+.projects-list li {
+  margin-bottom: 1.5rem;
+}
 
-    .projects-list li {
-      margin-bottom: 1.5rem;
-    }
+.projects-list a {
+  color: #111;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border-bottom: 1px solid #e65152;
+  padding-bottom: 0.2rem;
+  display: inline-block;
+  transition: opacity 0.25s ease;
+}
 
-    .projects-list a {
-      color: #111;
-      font-size: 1.1rem;
-      text-decoration: none;
-      border-bottom: 1px solid #e65152;
-      padding-bottom: 0.2rem;
-      display: inline-block;
-      transition: opacity 0.25s ease;
-    }
+.projects-list a:hover {
+  opacity: 0.7;
+}
 
-    .projects-list a:hover {
-      opacity: 0.7;
-    }
-  </style>
+  
+  body.fade-out {
+    opacity: 0;
+  }
+</style>
 </head>
 <body>
-  <!-- ...tutto il contenuto HTML invariato... -->
+  <div class="eye-wrapper" id="eyeWrapper">
+    <div class="layer layer1"></div>
+    <div class="layer layer2"></div>
+    <div class="layer3">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+    </div>
+    <div class="pupil" id="pupil"></div>
+  </div>
 
-  <div id="fadeOut" class="fade-out"></div>
+  <header class="site-header">
+    <nav class="menu">
+      <a href="#" data-key="about"></a>
+      <a href="#" data-key="projects"></a>
+      <a href="#" data-key="contacts"></a>
+    </nav>
+  </header>
+
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
+<span>
+  Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
+  Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
+  Radical in restraint // Silent but deliberate // We question shape // We listen before drawing //
+  Objects as products // Nem.Os
+</span>
+
+    </div>
+  </div>
+
+  <div class="overlay-box" id="overlay">
+    <div class="overlay-content">
+      <button class="close-btn" id="closeOverlay">&times;</button>
+      <div id="overlayText"></div>
+    </div>
+  </div>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="mobile-section">
+    <div class="section" id="mobile-about">
+      <h2>About</h2>
+      <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+      <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+      <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+      <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+    </div>
+
+<div class="section" id="mobile-projects">
+  <h2>Projects</h2>
+  <ul class="projects-list">
+    <li><a href="pratofiorito.html">Pratofiorito — Outdoor Forniture, Italy</a></li>
+    <li><a href="gridscape.html">Gridscape — Personal Project, Italy</a></li>
+    <li><a href="project-tre.html">Project Tre — Silent Object, New York</a></li>
+  </ul>
+</div>
+
+<div class="section" id="mobile-contacts">
+      <h2>Contacts</h2>
+      <p>If the work resonates, if the values align, feel free to get in touch:</p>
+      <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+      <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+    </div>
+  </div>
 
   <script>
-    // ...tutto il JavaScript esistente invariato...
+    const overlay = document.getElementById("overlay");
+    const overlayText = document.getElementById("overlayText");
+    const closeBtn = document.getElementById("closeOverlay");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+    const aboutSection = document.getElementById("mobile-about");
 
-    function redirectWithFade(targetUrl) {
-      const fadeOutDiv = document.getElementById("fadeOut");
-      fadeOutDiv.classList.add("active");
-      setTimeout(() => {
-        window.location.href = targetUrl;
-      }, 2000);
-    }
+    const content = {
+      about: document.getElementById("mobile-about").innerHTML,
+      projects: document.getElementById("mobile-projects").innerHTML,
+      contacts: document.getElementById("mobile-contacts").innerHTML
+    };
 
-    document.querySelectorAll(".projects-list a").forEach(link => {
-      link.addEventListener("click", function(e) {
+    document.querySelectorAll('.menu a').forEach(link => {
+      link.addEventListener('click', (e) => {
         e.preventDefault();
-        const target = this.getAttribute("href");
-        redirectWithFade(target);
+        const key = link.getAttribute('data-key');
+        overlayText.innerHTML = content[key];
+        overlay.classList.add('active');
       });
     });
-  </script>
+
+    closeBtn.addEventListener("click", () => {
+      overlay.classList.remove("active");
+    });
+
+    function checkMobileOverlay() {
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        const top = aboutSection.getBoundingClientRect().top;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        if (top < viewportHeight * 0.5) {
+          mobileOverlay.classList.add("active");
+        } else {
+          mobileOverlay.classList.remove("active");
+        }
+      } else {
+        mobileOverlay.classList.remove("active");
+      }
+    }
+
+    window.addEventListener("scroll", checkMobileOverlay);
+    window.addEventListener("load", checkMobileOverlay);
+
+    const eyeWrapper = document.getElementById("eyeWrapper");
+    const pupil = document.getElementById("pupil");
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    let target = { x: 0, y: 0 };
+    let current = { x: 0, y: 0 };
+    let pupilTarget = { x: 0 };
+    let pupilCurrent = { x: 0 };
+    let mouseActive = false;
+    let justBlinked = false;
+
+    document.addEventListener("mousemove", (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      target = { x: dx * 0.17, y: dy * 0.15 };
+      pupilTarget = { x: dx * 0.25 };
+      mouseActive = true;
+    });
+
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        target = { x: dx * 0.17, y: dy * 0.15 };
+        pupilTarget = { x: dx * 0.215 };
+        mouseActive = true;
+      }
+    });
+
+    function animate() {
+      if (!mouseActive && !justBlinked) {
+        target.x *= 0.98;
+        target.y *= 0.98;
+        pupilTarget.x *= 0.98;
+      }
+      current.x += (target.x - current.x) * 0.15;
+      current.y += (target.y - current.y) * 0.15;
+      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
+      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    function blink() {
+      justBlinked = true;
+      eyeWrapper.classList.add("blinked");
+      setTimeout(() => {
+        eyeWrapper.classList.remove("blinked");
+        justBlinked = false;
+      }, 200);
+    }
+
+    document.addEventListener("click", () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
+  
+    const menuLabels = ["about-us", "projects", "contacts"];
+const menuLinks = document.querySelectorAll(".menu a");
+menuLinks.forEach((link, index) => {
+  link.textContent = menuLabels[index];
+});
+
+
+
+    window.addEventListener("load", () => {
+      document.body.style.opacity = "1";
+    });
+
+
+    document.querySelectorAll('a[href]:not([target])').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href.startsWith('#') && !href.endsWith('.pdf')) {
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(() => window.location.href = href, 3000);
+        }
+      });
+    });
+
+</script>
 </body>
 </html>
