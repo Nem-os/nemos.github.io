@@ -4,26 +4,540 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nem.Os</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       background: #fff;
       color: #111;
+      overflow-x: hidden;
+    }
+
+    .eye-wrapper {
+      position: fixed;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90vw;
+      aspect-ratio: 5 / 3;
+      max-width: 1200px;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .layer {
+      position: absolute;
+      transition: height 0.1s ease;
+      transform-origin: bottom;
+    }
+
+    .layer1 {
+      background-color: #e65152;
+      bottom: 33.33%;
+      left: 20%;
+      width: 80%;
+      height: 66.66%;
+    }
+
+    .layer2 {
+      background-color: white;
+      bottom: 33.33%;
+      left: 20%;
+      width: 60%;
+      height: 33.33%;
+    }
+
+    .layer3 .rect1, .layer3 .rect2 {
+      background-color: #e65152;
+      position: absolute;
+    }
+
+    .layer3 .rect1 {
+      top: 33.33%;
+      left: 0%;
+      width: 20%;
+      height: 33.33%;
+    }
+
+    .layer3 .rect2 {
+      top: 66.66%;
+      left: 20%;
+      width: 60%;
+      height: 33.33%;
+    }
+
+    .pupil {
+      background-color: #e65152;
+      position: absolute;
+      bottom: 2%;
+      left: 40%;
+      width: 20%;
+      height: 70%;
+      transition: height 0.2s ease;
+      transform-origin: top;
+    }
+
+    .blinked .layer1,
+    .blinked .layer2,
+    .blinked .pupil {
+      height: 0 !important;
+    }
+
+    .site-header {
+      position: absolute;
+      background-color: white;
+      top: 0;
+      left: 5vw;
+      width: 90vw;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      z-index: 20;
+      height: 4vh;
     }
+
+    .menu {
+      display: flex;
+      gap: 15vw;
+      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
+      color: #111;
+    }
+
+    .menu a {
+      color: #111;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+
+    .menu a:hover {
+      transform: scale(1.12);
+    }
+
+    .ticker-wrapper {
+      overflow: hidden;
+      background: #fff;
+      border-top: 1px solid #111;
+      border-bottom: 1px solid #111;
+      padding: 0.5rem 0;
+      position: absolute;
+      top: 5vh;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      display: none;
+    }
+
+    .ticker-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollTicker 60s linear infinite;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #111;
+      padding-left: 10vw;
+    }
+
+    .ticker-track span {
+      margin-right: 4rem;
+    }
+
+    @keyframes scrollTicker {
+      from { transform: translateX(50%); }
+      to   { transform: translateX(-100%); }
+    }
+
+    .overlay-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 50;
+      display: none;
+    }
+
+    .overlay-box.active {
+      display: block;
+    }
+
+    .overlay-content {
+      position: relative;
+      max-width: 700px;
+      margin: 10vh auto;
+      padding: 4vh 5vw;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: #111;
+      cursor: pointer;
+    }
+
+    .mobile-section {
+      display: none;
+    }
+
+    .mobile-section .section {
+      padding: 12vh 8vw;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .mobile-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .mobile-section p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .mobile-overlay.active {
+      opacity: 1;
+    }
+
+    @media screen and (max-width: 768px) {
+      .site-header {
+        display: none;
+      }
+
+      .mobile-section {
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .ticker-wrapper {
+        display: block;
+      }
+
+      .mobile-overlay {
+        display: none !important;
+      }
+    }
+.projects-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0 0;
+}
+
+.projects-list li {
+  margin-bottom: 1.5rem;
+}
+
+.projects-list a {
+  color: #111;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border-bottom: 1px solid #e65152;
+  padding-bottom: 0.2rem;
+  display: inline-block;
+  transition: opacity 0.25s ease;
+}
+
+.projects-list a:hover {
+  opacity: 0.7;
+}
+
   </style>
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const isMobile = window.innerWidth <= 768;
-      const target = isMobile ? "mobile.html" : "desktop.html";
-      window.location.href = target;
-    });
-  </script>
 </head>
 <body>
-  <p>Redirecting to Nem.Os experience...</p>
+  <div class="eye-wrapper" id="eyeWrapper">
+    <div class="layer layer1"></div>
+    <div class="layer layer2"></div>
+    <div class="layer3">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+    </div>
+    <div class="pupil" id="pupil"></div>
+  </div>
+
+  <header class="site-header">
+    <nav class="menu">
+      <a href="#" data-key="about"></a>
+      <a href="#" data-key="projects"></a>
+      <a href="#" data-key="contacts"></a>
+    </nav>
+  </header>
+
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
+<span>
+  Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
+  Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
+  Radical in restraint // Silent but deliberate // We question shape // We listen before drawing //
+  Objects as products // Nem.Os
+</span>
+
+    </div>
+  </div>
+
+  <div class="overlay-box" id="overlay">
+    <div class="overlay-content">
+      <button class="close-btn" id="closeOverlay">&times;</button>
+      <div id="overlayText"></div>
+    </div>
+  </div>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="mobile-section">
+    <div class="section" id="mobile-about">
+      <h2>About</h2>
+      <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+      <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+      <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+      <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+    </div>
+
+<div class="section" id="mobile-projects">
+  <h2>Projects</h2>
+  <ul class="projects-list">
+    <li><a href="pratofiorito.html">Pratofiorito — Outdoor Forniture, Italy</a></li>
+    <li><a href="#" class="open-gridscape">Gridscape — Personal Project, Italy</a></li>
+    <li><a href="project-tre.html">Project Tre — Silent Object, New York</a></li>
+  </ul>
+</div>
+
+<div class="section" id="mobile-contacts">
+      <h2>Contacts</h2>
+      <p>If the work resonates, if the values align, feel free to get in touch:</p>
+      <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+      <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById("overlay");
+    const overlayText = document.getElementById("overlayText");
+    const closeBtn = document.getElementById("closeOverlay");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+    const aboutSection = document.getElementById("mobile-about");
+
+    const content = {
+      about: document.getElementById("mobile-about").innerHTML,
+      projects: document.getElementById("mobile-projects").innerHTML,
+      contacts: document.getElementById("mobile-contacts").innerHTML
+    };
+
+    document.querySelectorAll('.menu a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const key = link.getAttribute('data-key');
+        overlayText.innerHTML = content[key];
+        overlay.classList.add('active');
+      });
+    });
+
+    closeBtn.addEventListener("click", () => {
+      overlay.classList.remove("active");
+    });
+
+    function checkMobileOverlay() {
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        const top = aboutSection.getBoundingClientRect().top;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        if (top < viewportHeight * 0.5) {
+          mobileOverlay.classList.add("active");
+        } else {
+          mobileOverlay.classList.remove("active");
+        }
+      } else {
+        mobileOverlay.classList.remove("active");
+      }
+    }
+
+    window.addEventListener("scroll", checkMobileOverlay);
+    window.addEventListener("load", checkMobileOverlay);
+
+    const eyeWrapper = document.getElementById("eyeWrapper");
+    const pupil = document.getElementById("pupil");
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    let target = { x: 0, y: 0 };
+    let current = { x: 0, y: 0 };
+    let pupilTarget = { x: 0 };
+    let pupilCurrent = { x: 0 };
+    let mouseActive = false;
+    let justBlinked = false;
+
+    document.addEventListener("mousemove", (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      target = { x: dx * 0.17, y: dy * 0.15 };
+      pupilTarget = { x: dx * 0.25 };
+      mouseActive = true;
+    });
+
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        target = { x: dx * 0.17, y: dy * 0.15 };
+        pupilTarget = { x: dx * 0.215 };
+        mouseActive = true;
+      }
+    });
+
+    function animate() {
+      if (!mouseActive && !justBlinked) {
+        target.x *= 0.98;
+        target.y *= 0.98;
+        pupilTarget.x *= 0.98;
+      }
+      current.x += (target.x - current.x) * 0.15;
+      current.y += (target.y - current.y) * 0.15;
+      eyeWrapper.style.transform = `translate(calc(-50% + ${current.x}px), calc(-50% + ${current.y}px))`;
+      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    function blink() {
+      justBlinked = true;
+      eyeWrapper.classList.add("blinked");
+      setTimeout(() => {
+        eyeWrapper.classList.remove("blinked");
+        justBlinked = false;
+      }, 200);
+    }
+
+    document.addEventListener("click", () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
+  
+    const menuLabels = ["about-us", "projects", "contacts"];
+    const menuLinks = document.querySelectorAll(".menu a");
+
+    menuLinks.forEach((link, index) => {
+      const text = menuLabels[index];
+      link.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        link.textContent += text[i];
+        i++;
+        if (i === text.length) clearInterval(interval);
+      }, 80);
+    });
+
+</script>
+
+<div class="overlay-box">
+    <div class="carousel">
+      <img src="citypop_cover_03.png" class="active" alt="Gridscape 1">
+      <img src="citypop_cover_04.png" alt="Gridscape 2">
+      <img src="reder chair_02.png" alt="Gridscape 3">
+      <img src="reder couch.png" alt="Gridscape 4">
+      <img src="reder LAMP_02.png" alt="Gridscape 5">
+      <img src="reder TABLE.png" alt="Gridscape 6">
+    </div>
+    <div class="description-box">
+      <button class="close-btn" onclick="window.location.href='desktop.html'">&times;</button>
+      <h2>Gridscape</h2>
+      <p>
+        Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco, della plastica, del colore.<br><br>
+        Le sedute, i tavoli e i corpi illuminanti sono pensati come pixel tridimensionali che possono essere assemblati liberamente per creare paesaggi domestici o urbani temporanei.<br><br>
+        Il progetto esplora un equilibrio tra l'architettura infantile e la scultura funzionale. Tutti gli elementi sono costruiti come volumi geometrici puri, con materiali leggeri e tonalità pastello enfatizzate da superfici reticolari.<br><br>
+        Gridscape invita l'utente a reinterpretare lo spazio abitativo come un ambiente interattivo e trasformabile, in cui il design non è un vincolo ma un gioco serio.
+      </p>
+    </div>
+  </div>
 </body>
+
+<script>
+  document.querySelector('.open-gridscape')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('.overlay-box').style.display = 'flex';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+    const images = document.querySelectorAll('.carousel img');
+    let current = 0;
+    function showImage(index) {
+      images.forEach((img, i) => img.classList.toggle('active', i === index));
+    }
+    setInterval(() => {
+      current = (current + 1) % images.length;
+      showImage(current);
+    }, 6000);
+
+    const eyeWrapper = document.getElementById("eyeWrapper");
+    const pupil = document.getElementById("pupil");
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    let target = { x: 0, y: 0 };
+    let currentPos = { x: 0, y: 0 };
+    let pupilTarget = { x: 0 };
+    let pupilCurrent = { x: 0 };
+    let mouseActive = false;
+    let justBlinked = false;
+
+    document.addEventListener("mousemove", (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      target = { x: dx * 0.17, y: dy * 0.15 };
+      pupilTarget = { x: dx * 0.25 };
+      mouseActive = true;
+    });
+
+    function animate() {
+      if (!mouseActive && !justBlinked) {
+        target.x *= 0.98;
+        target.y *= 0.98;
+        pupilTarget.x *= 0.98;
+      }
+      currentPos.x += (target.x - currentPos.x) * 0.15;
+      currentPos.y += (target.y - currentPos.y) * 0.15;
+      eyeWrapper.style.transform = `translate(calc(-50% + ${currentPos.x}px), calc(-50% + ${currentPos.y}px))`;
+      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    function blink() {
+      justBlinked = true;
+      eyeWrapper.classList.add("blinked");
+      setTimeout(() => {
+        eyeWrapper.classList.remove("blinked");
+        justBlinked = false;
+      }, 200);
+    }
+    document.addEventListener("click", () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
+  
+</script>
 </html>
