@@ -9,8 +9,9 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
+      transition: opacity 0.8s ease;
       opacity: 0;
-      transition: opacity 5s ease;
+      transition: opacity 0.6s ease;
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
       color: #111;
@@ -268,7 +269,11 @@
   opacity: 0.7;
 }
 
-  </style>
+  
+  body.fade-out {
+    opacity: 0;
+  }
+</style>
 </head>
 <body>
   <div class="eye-wrapper" id="eyeWrapper">
@@ -449,6 +454,18 @@ menuLinks.forEach((link, index) => {
 
     window.addEventListener("load", () => {
       document.body.style.opacity = "1";
+    });
+
+
+    document.querySelectorAll('a[href]:not([target])').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href.startsWith('#') && !href.endsWith('.pdf')) {
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(() => window.location.href = href, 800);
+        }
+      });
     });
 
 </script>
