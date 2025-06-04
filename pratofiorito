@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pratofiorito</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      background: #fff;
+      color: #111;
+      overflow: hidden;
+    }
+    .eye-wrapper {
+      position: fixed;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90vw;
+      aspect-ratio: 5 / 3;
+      max-width: 1200px;
+      z-index: -2;
+      pointer-events: none;
+    }
+    .layer {
+      position: absolute;
+      transition: height 0.1s ease;
+      transform-origin: bottom;
+    }
+    .layer1 {
+      background-color: #e65152;
+      bottom: 33.33%;
+      left: 20%;
+      width: 80%;
+      height: 66.66%;
+    }
+    .layer2 {
+      background-color: white;
+      bottom: 33.33%;
+      left: 20%;
+      width: 60%;
+      height: 33.33%;
+    }
+    .layer3 .rect1, .layer3 .rect2 {
+      background-color: #e65152;
+      position: absolute;
+    }
+    .layer3 .rect1 {
+      top: 33.33%;
+      left: 0%;
+      width: 20%;
+      height: 33.33%;
+    }
+    .layer3 .rect2 {
+      top: 66.66%;
+      left: 20%;
+      width: 60%;
+      height: 33.33%;
+    }
+    .pupil {
+      background-color: #e65152;
+      position: absolute;
+      bottom: 2%;
+      left: 40%;
+      width: 20%;
+      height: 70%;
+      transition: height 0.2s ease;
+      transform-origin: top;
+    }
+    .blinked .layer1,
+    .blinked .layer2,
+    .blinked .pupil {
+      height: 0 !important;
+    }
+    .site-header {
+      position: absolute;
+      background-color: white;
+      top: 0;
+      left: 5vw;
+      width: 90vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      height: 4vh;
+    }
+    .menu {
+      display: flex;
+      gap: 15vw;
+      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
+      color: #111;
+    }
+    .menu a {
+      color: #111;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .menu a:hover {
+      transform: scale(1.12);
+    }
+    .overlay-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      z-index: 50;
+    }
+    .carousel {
+      width: 50vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .carousel img.active {
+      opacity: 1;
+    }
+    .description-box {
+      width: 50vw;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 5vh 4vw;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .description-box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .description-box p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .close-btn {
+      position: absolute;
+      top: 1vh;
+      right: 2vw;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: #111;
+      cursor: pointer;
+      z-index: 60;
+    }
+  </style>
+</head>
+<body>
+  <div class="eye-wrapper" id="eyeWrapper">
+    <div class="layer layer1"></div>
+    <div class="layer layer2"></div>
+    <div class="layer3">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+    </div>
+    <div class="pupil" id="pupil"></div>
+  </div>
+
+  <header class="site-header">
+    <nav class="menu">
+      <a href="desktop.html">about-us</a>
+      <a href="desktop.html">projects</a>
+      <a href="desktop.html">contacts</a>
+    </nav>
+  </header>
+
+  <div class="overlay-box">
+    <div class="carousel">
+      <img src="024.png" class="active" alt="Pratofiorito 1">
+      <img src="025.png" alt="Pratofiorito 2">
+      <img src="07.png" alt="Pratofiorito 3">
+      <img src="035.png" alt="Pratofiorito 4">
+    </div>
+    <div class="description-box">
+      <button class="close-btn" onclick="window.location.href='desktop.html'">&times;</button>
+      <h2>Pratofiorito</h2>
+      <p>
+        Seduta modulare in filo metallico — tra oggetto e paesaggio.<br><br>
+        Pratofiorito è una famiglia di sedute ispirata alla spontaneità dei fiori di campo.
+        La struttura in tondino metallico disegna una forma leggera e vibrante, quasi grafica, che si integra nel paesaggio anziché imporsi.
+        Ogni seduta nasce da un modulo replicabile, pensato per essere prodotto in serie ma con possibilità cromatiche e compositive libere.<br><br>
+        L’obiettivo progettuale era coniugare poesia formale e razionalità costruttiva, offrendo un arredo che fosse al tempo stesso infrastruttura e decorazione, presenza e mimetismo.
+        Realizzabile in ferro zincato verniciato a polvere, con possibilità di intreccio a mano nel nodo centrale.<br><br>
+        La seduta è adatta a spazi pubblici e privati, giardini, installazioni temporanee, eventi.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.carousel img');
+    let current = 0;
+    function showImage(index) {
+      images.forEach((img, i) => img.classList.toggle('active', i === index));
+    }
+    setInterval(() => {
+      current = (current + 1) % images.length;
+      showImage(current);
+    }, 6000);
+
+    const eyeWrapper = document.getElementById("eyeWrapper");
+    const pupil = document.getElementById("pupil");
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    let target = { x: 0, y: 0 };
+    let currentPos = { x: 0, y: 0 };
+    let pupilTarget = { x: 0 };
+    let pupilCurrent = { x: 0 };
+    let mouseActive = false;
+
+    document.addEventListener("mousemove", (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      target = { x: dx * 0.17, y: dy * 0.15 };
+      pupilTarget = { x: dx * 0.25 };
+      mouseActive = true;
+    });
+
+    function animate() {
+      if (!mouseActive) {
+        target.x *= 0.98;
+        target.y *= 0.98;
+        pupilTarget.x *= 0.98;
+      }
+      currentPos.x += (target.x - currentPos.x) * 0.15;
+      currentPos.y += (target.y - currentPos.y) * 0.15;
+      eyeWrapper.style.transform = `translate(calc(-50% + ${currentPos.x}px), calc(-50% + ${currentPos.y}px))`;
+      pupilCurrent.x += (pupilTarget.x - pupilCurrent.x) * 0.2;
+      pupil.style.transform = `translateX(${pupilCurrent.x}px)`;
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
