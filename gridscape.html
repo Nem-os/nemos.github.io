@@ -132,6 +132,22 @@
       cursor: pointer;
       z-index: 60;
     }
+
+    @media (max-width: 768px) {
+      .overlay-box {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+      .carousel {
+        width: 100vw;
+        height: 50vh;
+      }
+      .description-box {
+        width: 100vw;
+        height: auto;
+        padding: 2vh 5vw 5vh;
+      }
+    }
   </style>
 </head>
 <body>
