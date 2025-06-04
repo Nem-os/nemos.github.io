@@ -190,9 +190,30 @@
         }
       }
     }
-  </style>
+  
+#fadeOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  animation: fadeOutOverlay 1s ease forwards;
+}
+
+@keyframes fadeOutOverlay {
+  to {
+    opacity: 0;
+  }
+}
+
+</style>
 </head>
 <body>
+  <div id="fadeOverlay"></div>
   <div class="eye-wrapper" id="eyeWrapper">
     <div class="layer layer1"></div>
     <div class="layer layer2"></div>
