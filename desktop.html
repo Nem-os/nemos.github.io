@@ -9,9 +9,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      transition: opacity 2s ease;
-      opacity: 0;
-      transition: opacity 2s ease;
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
       color: #111;
@@ -269,11 +266,7 @@
   opacity: 0.7;
 }
 
-  
-  body.fade-out {
-    opacity: 0;
-  }
-</style>
+  </style>
 </head>
 <body>
   <div class="eye-wrapper" id="eyeWrapper">
@@ -445,29 +438,17 @@
     }, 10000 + Math.random() * 5000);
   
     const menuLabels = ["about-us", "projects", "contacts"];
-const menuLinks = document.querySelectorAll(".menu a");
-menuLinks.forEach((link, index) => {
-  link.textContent = menuLabels[index];
-});
+    const menuLinks = document.querySelectorAll(".menu a");
 
-
-window.addEventListener("DOMContentLoaded", () => {
-  document.body.style.opacity = "0";
-  requestAnimationFrame(() => {
-    document.body.style.transition = "opacity 0.8s ease";
-    document.body.style.opacity = "1";
-  });
-});
-
-    document.querySelectorAll('a[href]:not([target])').forEach(link => {
-      link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (!href.startsWith('#') && !href.endsWith('.pdf')) {
-          e.preventDefault();
-          document.body.classList.add('fade-out');
-          setTimeout(() => window.location.href = href, 2500);
-        }
-      });
+    menuLinks.forEach((link, index) => {
+      const text = menuLabels[index];
+      link.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        link.textContent += text[i];
+        i++;
+        if (i === text.length) clearInterval(interval);
+      }, 80);
     });
 
 </script>
