@@ -11,7 +11,7 @@
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
       color: #111;
-      
+      overflow: hidden;
     }
     .eye-wrapper {
       position: fixed;
@@ -79,13 +79,13 @@
       top: 0;
       left: 0;
       width: 100vw;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       z-index: 50;
       backdrop-filter: blur(6px);
       background: rgba(255, 255, 255, 0);
-      animation: fadeIn 0.5s ease forwards 0.5s;
+      
     }
     @keyframes fadeIn {
       to {
@@ -93,13 +93,13 @@
       }
     }
     .carousel {
-      width: 50vw;
-      min-height: 100vh;
-      
+  width: 100vw;
+  height: 100vw;
+      overflow: hidden;
       position: relative;
       opacity: 0;
       transform: translateX(50px);
-      animation: slideInImg 0.6s ease forwards 0.5s;
+      
     }
     .carousel img {
       width: 100%;
@@ -115,16 +115,15 @@
       opacity: 1;
     }
     .description-box {
-  padding-top: 8vh;
       width: 50vw;
-      min-height: 100vh;
+      height: 100vh;
       overflow-y: auto;
       padding: 5vh 4vw;
       background: none;
       backdrop-filter: none;
       opacity: 0;
       transform: translateX(50px);
-      animation: slideInText 0.6s ease forwards 0.5s;
+      
     }
     .description-box h2 {
       font-size: 1.8rem;
@@ -135,8 +134,20 @@
       line-height: 1.6;
     }
     
+.close-btn {
+  position: fixed;
+  top: 1vh;
+  right: 2vw;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #111;
+  cursor: pointer;
+  z-index: 10000;
+}
 
-@keyframes slideInImg {
+
+    @keyframes slideInImg {
       to {
         opacity: 1;
         transform: translateX(0);
@@ -150,41 +161,23 @@
       }
     }
 
-    
-@media (max-width: 768px) {
-  .overlay-box {
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  .carousel {
-    width: 100vw;
-    height: 100vw;
-    transform: none;
-    animation: none;
-  }
-  .description-box {
-  padding-top: 8vh;
-    width: 100vw;
-    height: auto;
-    padding: 2vh 5vw 5vh;
-    transform: none;
-    animation: none;
-  }
-}
-
+    @media (max-width: 768px) {
+      .overlay-box {
+        flex-direction: column;
+        overflow-y: auto;
+      }
       .carousel {
-        width: 100vw;
-        height: 50vh;
+  width: 100vw;
+  height: 100vw;
         transform: translateY(-50px);
-        animation: slideDown 0.6s ease forwards 0.5s;
+        
       }
       .description-box {
-  padding-top: 8vh;
         width: 100vw;
         height: auto;
         padding: 2vh 5vw 5vh;
         transform: translateY(50px);
-        animation: slideUp 0.6s ease forwards 0.5s;
+        
       }
       @keyframes slideDown {
         to {
@@ -205,7 +198,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   background: white;
   z-index: 9999;
   pointer-events: none;
@@ -253,6 +246,7 @@ body.fade-start .page-content {
       <img src="reder TABLE.png" alt="Gridscape 6">
     </div>
     <div class="description-box">
+      <button class="close-btn" onclick="window.location.href='index.html'">&times;</button>
       <h2>Gridscape</h2>
       <p>
         Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco, della plastica, del colore.<br><br>
