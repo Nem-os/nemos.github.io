@@ -733,13 +733,6 @@ function toggleProject(e, id) {
 let sliderColors = ['#e65152', '#ffc107', '#4caf50', '#2196f3'];
 let currentSlide = 0;
 
-function toggleImageOverlay() {
-  const overlay = document.getElementById('imageOverlay');
-  const square = document.getElementById('sliderSquare');
-  overlay.classList.add('active');
-  square.style.background = sliderColors[currentSlide];
-}
-
 function nextSlide() {
   const square = document.getElementById('sliderSquare');
   currentSlide = (currentSlide + 1) % sliderColors.length;
@@ -770,16 +763,10 @@ const images = [
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
 ];
-let currentIndex = 0;
+
 
 function updateImage() {
   document.getElementById("sliderImage").src = images[currentIndex];
-}
-
-function openOverlay() {
-  document.getElementById("sliderOverlay").classList.add("active");
-  updateImage();
-  history.pushState(null, "", "#overlay");
 }
 
 function closeOverlay() {
@@ -818,50 +805,7 @@ window.addEventListener("popstate", function () {
 <rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="3" y="2"></rect>
 </symbol>
 </svg>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  if (window.innerWidth <= 768) {
-    const sections = document.querySelectorAll(".mobile-section .section");
-    sections.forEach(section => {
-      const header = section.querySelector("h2");
-      const contentNodes = Array.from(section.childNodes).filter(node => {
-        return !(node.tagName === "H2" || (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()));
-      });
 
-      const container = document.createElement("div");
-      contentNodes.forEach(node => container.appendChild(node));
-      container.style.display = "none";
-      section.appendChild(container);
-
-      header.style.cursor = "pointer";
-      header.addEventListener("click", () => {
-        document.querySelectorAll(".mobile-section .section > div").forEach(d => {
-          if (d !== container) d.style.display = "none";
-        });
-        container.style.display = (container.style.display === "block") ? "none" : "block";
-      });
-    });
-  }
-});
-</script><script>
-document.addEventListener("DOMContentLoaded", function () {
-  if (window.innerWidth <= 768) {
-    window.addEventListener("popstate", function () {
-      const overlay = document.getElementById("imageOverlay");
-      if (overlay && overlay.classList.contains("active")) {
-        overlay.classList.remove("active");
-        history.pushState(null, "", window.location.pathname);
-      }
-    });
-
-    document.querySelectorAll(".eye-tooltip-wrapper").forEach(wrapper => {
-      wrapper.addEventListener("click", () => {
-        history.pushState(null, "", "#viewing");
-      });
-    });
-  }
-});
-</script>
 
 </div>
 
@@ -887,19 +831,25 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 
 
+
 <script>
-// === Inizio codice aggiornato per carosello per progetto ===
 const projectImages = {
   pratofiorito: [
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png"
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
   ],
   gridscape: [
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png"
+    "/mnt/data/reder couch.png",
+    "/mnt/data/reder LAMP_02.png",
+    "/mnt/data/reder TABLE.png",
+    "/mnt/data/citypop_cover_03.jpg",
+    "/mnt/data/reder chair_02.png"
   ],
   tre: [
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png"
   ]
 };
 
@@ -915,9 +865,8 @@ function openOverlay(projectKey) {
 }
 
 function updateImage() {
-  const img = document.getElementById("sliderImage");
   const images = projectImages[currentProject];
-  if (img && images) img.src = images[currentIndex];
+  document.getElementById("sliderImage").src = images[currentIndex];
 }
 
 function nextSlide() {
@@ -940,8 +889,8 @@ function closeOverlay() {
 window.addEventListener("popstate", function () {
   document.getElementById("sliderOverlay").classList.remove("active");
 });
-// === Fine codice aggiornato ===
 </script>
+
 
 </body>
 </html>
