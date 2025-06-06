@@ -763,13 +763,24 @@ document.addEventListener('keydown', function(e) {
 });
 
 
-const images = [
+const projectImages = {
+  pratofiorito: [
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
-];
+  ],
+  gridscape: [
+    "link3.png",
+    "link4.png"
+  ],
+  tre: [
+    "link5.png",
+    "link6.png"
+  ]
+};
+let currentProject = "pratofiorito";
 let currentIndex = 0;
 
 function updateImage() {
