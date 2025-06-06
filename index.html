@@ -746,15 +746,7 @@ function toggleMobileSection(id) {
 </script>
 <div class="image-overlay" id="imageOverlay">
 <div class="slider-container">
-<div class="slider-square" id="sliderSquare">
-<button class="slider-close" onclick="closeOverlay()">×</button>
-<button class="slider-arrow left" onclick="prevSlide()">
-<svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
-</button>
-<button class="slider-arrow right" onclick="nextSlide()">
-<svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
-</button>
-</div>
+<div class="slider-square" id="sliderSquare"><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/035.png" style="max-width: 100%; max-height: 100%; display: block; position: absolute; object-fit: contain;"/><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/07.png" style="max-width: 100%; max-height: 100%; display: none; position: absolute; object-fit: contain;"/><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/024.png" style="max-width: 100%; max-height: 100%; display: none; position: absolute; object-fit: contain;"/><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/025.png" style="max-width: 100%; max-height: 100%; display: none; position: absolute; object-fit: contain;"/><button class="slider-arrow left" onclick="prevSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button><button class="slider-arrow right" onclick="nextSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button><button class="slider-close" onclick="closeOverlay()">×</button></div>
 </div>
 </div>
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
@@ -793,5 +785,28 @@ function toggleMobileSection(id) {
     }
   };
 })();
+</script><script>
+let currentSlide = 0;
+const slides = document.querySelectorAll(".slider-img");
+
+function showSlide(index) {
+  slides.forEach((img, i) => {
+    img.style.display = i === index ? "block" : "none";
+  });
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+}
+
+function closeOverlay() {
+  document.getElementById("imageOverlay").classList.remove("active");
+}
 </script></body>
 </html>
