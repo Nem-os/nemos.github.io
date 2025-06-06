@@ -525,9 +525,9 @@
 </div>
 <header class="site-header">
 <nav class="menu">
-<a data-key="about" href="#"></a>
-<a data-key="projects" href="#"></a>
-<a data-key="contacts" href="#"></a>
+<a data-key="about" href="#">about-us</a>
+<a data-key="projects" href="#">projects</a>
+<a data-key="contacts" href="#">contacts</a>
 </nav>
 </header>
 <div class="ticker-wrapper">
@@ -733,22 +733,6 @@ function toggleProject(e, id) {
 let sliderColors = ['#e65152', '#ffc107', '#4caf50', '#2196f3'];
 let currentSlide = 0;
 
-function nextSlide() {
-  const square = document.getElementById('sliderSquare');
-  currentSlide = (currentSlide + 1) % sliderColors.length;
-  square.style.background = sliderColors[currentSlide];
-}
-
-function prevSlide() {
-  const square = document.getElementById('sliderSquare');
-  currentSlide = (currentSlide - 1 + sliderColors.length) % sliderColors.length;
-  square.style.background = sliderColors[currentSlide];
-}
-
-function closeOverlay() {
-  document.getElementById('imageOverlay').classList.remove('active');
-}
-
 document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowRight') nextSlide();
   if (e.key === 'ArrowLeft') prevSlide();
@@ -756,34 +740,8 @@ document.addEventListener('keydown', function(e) {
 });
 
 
-const images = [
-  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
-  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
-  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
-  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
-  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
-  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/036.png",
-];
 
 
-function updateImage() {
-  document.getElementById("sliderImage").src = images[currentIndex];
-}
-
-function closeOverlay() {
-  document.getElementById("sliderOverlay").classList.remove("active");
-  if (location.hash === "#overlay") history.back();
-}
-
-function nextSlide() {
-  currentIndex = (currentIndex + 1) % images.length;
-  updateImage();
-}
-
-function prevSlide() {
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  updateImage();
-}
 
 window.addEventListener("popstate", function () {
   document.getElementById("sliderOverlay").classList.remove("active");
@@ -830,6 +788,10 @@ window.addEventListener("popstate", function () {
     </button>
   </div>
 </div>
+
+
+
+
 
 
 
@@ -891,7 +853,6 @@ window.addEventListener("popstate", function () {
   document.getElementById("sliderOverlay").classList.remove("active");
 });
 </script>
-
 
 </body>
 </html>
