@@ -362,18 +362,7 @@
   z-index: 210;
 }
 
-.slider-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2rem;
-  height: 2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 210;
-  opacity: 0.5;
-}
+
 
 .slider-arrow.left {
   left: 2vw;
@@ -436,53 +425,90 @@
   }
 }
 
-.slider-scroll-overlay {
+.slider-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(5px);
   display: none;
+  justify-content: center;
+  align-items: center;
   z-index: 200;
 }
-.slider-scroll-overlay.active {
-  display: block;
-}
-.slider-scroll-container {
-  height: 100%;
-  padding: 5vh 0;
+.slider-overlay.active {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+}
+.slider-container {
   position: relative;
-}
-.slider-scroll-track {
+  width: 80vmin;
+  height: 80vmin;
   display: flex;
-  overflow-x: auto;
-  gap: 2vw;
-  padding: 1rem;
-  scroll-snap-type: x mandatory;
+  justify-content: center;
+  align-items: center;
 }
-.slider-scroll-track img {
-  height: 70vmin;
-  aspect-ratio: 1 / 1;
+.slider-container img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  scroll-snap-align: center;
-  border-radius: 1rem;
 }
+
+.slider-arrow.left { left: -3rem; }
+.slider-arrow.right { right: -3rem; }
 .slider-close {
   position: absolute;
-  top: 2vh;
-  right: 2vw;
+  top: -3rem;
+  right: -3rem;
   font-size: 2rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 210;
+}
+@media screen and (max-width: 768px) {
+  .slider-close { display: none !important; }
+}
+
+
+.slider-arrow {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
   background: none;
   border: none;
   cursor: pointer;
   z-index: 210;
 }
+.slider-arrow.left {
+  left: 0;
+}
+.slider-arrow.right {
+  right: 0;
+}
+.slider-arrow svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.5;
+}
+.slider-arrow.left svg {
+  left: 1rem;
+}
+.slider-arrow.right svg {
+  right: 1rem;
+}
+
+
 @media screen and (max-width: 768px) {
-  .slider-close { display: none !important; }
+  .slider-container {
+    width: 100vw;
+    height: 100vw;
+  }
 }
 
 </style>
@@ -532,7 +558,7 @@
 <div class="section" id="mobile-projects">
 <h2>Projects</h2>
 <ul class="projects-list">
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="document.getElementById('imageOverlay').classList.add('active')">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -542,7 +568,7 @@
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="document.getElementById('imageOverlay').classList.add('active')">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -552,7 +578,7 @@
 <p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="document.getElementById('imageOverlay').classList.add('active')">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -737,14 +763,47 @@ document.addEventListener('keydown', function(e) {
 });
 
 
-function closeOverlay() {
-  document.getElementById('imageOverlay').classList.remove('active');
+const images = [
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
+];
+let currentIndex = 0;
+
+function updateImage() {
+  document.getElementById("sliderImage").src = images[currentIndex];
 }
 
-</script>
-<div class="image-overlay" id="imageOverlay">
-<div class="slider-container">
+function openOverlay() {
+  document.getElementById("sliderOverlay").classList.add("active");
+  updateImage();
+  history.pushState(null, "", "#overlay");
+}
 
+function closeOverlay() {
+  document.getElementById("sliderOverlay").classList.remove("active");
+  if (location.hash === "#overlay") history.back();
+}
+
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateImage();
+}
+
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateImage();
+}
+
+window.addEventListener("popstate", function () {
+  document.getElementById("sliderOverlay").classList.remove("active");
+});
+
+</script>
+
+</div>
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
 <symbol id="eye-icon" viewbox="0 0 5 3">
 <rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="1" y="0"></rect>
@@ -803,42 +862,27 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 </script>
-<div id="imageOverlay" class="image-overlay">
-  <div class="slider-container">
-    <div id="sliderSquare" class="slider-square">
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png" class="slider-img" style="display: block;" />
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png" class="slider-img" />
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png" class="slider-img" />
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png" class="slider-img" />
 
-      <button class="slider-close" onclick="closeOverlay()">&times;</button>
-
-      <button class="slider-arrow left" onclick="prevSlide()">
-        <svg viewBox="0 0 24 24">
-          <polyline points="15 6 9 12 15 18" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <button class="slider-arrow right" onclick="nextSlide()">
-        <svg viewBox="0 0 24 24">
-          <polyline points="9 6 15 12 9 18" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  </div>
 </div>
 
 
 
-<div class="slider-scroll-overlay" id="imageOverlay">
-  <div class="slider-scroll-container">
-    <div class="slider-scroll-track">
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png" />
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png" />
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png" />
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png" />
-      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png" />
-    </div>
+<div class="slider-overlay" id="sliderOverlay">
+  <div class="slider-container">
     <button class="slider-close" onclick="closeOverlay()">&times;</button>
+    <button class="slider-arrow left" onclick="prevSlide()">
+      <svg viewBox="0 0 24 24">
+        <polyline points="15 6 9 12 15 18" stroke="white" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <img id="sliderImage" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png" />
+    <button class="slider-arrow right" onclick="nextSlide()">
+      <svg viewBox="0 0 24 24">
+        <polyline points="9 6 15 12 9 18" stroke="white" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </div>
 </div>
 
