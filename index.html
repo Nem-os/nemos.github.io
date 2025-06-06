@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Nem.Os</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nem.Os</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -215,10 +214,13 @@
       background: rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(6px);
       z-index: -1;
+      opacity: 0;
+      transition: opacity 1s ease;
       pointer-events: none;
     }
 
     .mobile-overlay.active {
+      opacity: 1;
     }
 
     @media screen and (max-width: 768px) {
@@ -257,72 +259,236 @@
   border-bottom: 1px solid #e65152;
   padding-bottom: 0.2rem;
   display: inline-block;
+  transition: opacity 0.25s ease;
 }
 
 .projects-list a:hover {
+  opacity: 0.7;
 }
 
   
-  }</style>
+.eye-bullet {
+  width: 1.5rem;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.eye-bullet:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+.eye-tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.eye-tooltip {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.eye-tooltip-wrapper:hover .eye-tooltip {
+  opacity: 1;
+}
+
+.image-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.image-overlay.active {
+  display: flex;
+}
+
+.slider-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-square {
+  width: 90vmin;
+  height: 90vmin;
+  background: #e65152;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-close {
+  position: absolute;
+  top: 1rem;
+  right: 2vw;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 210;
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 210;
+  opacity: 0.5;
+}
+
+.slider-arrow.left {
+  left: 2vw;
+}
+
+.slider-arrow.right {
+  right: 2vw;
+}
+
+.slider-arrow svg {
+  width: 100%;
+  height: 100%;
+  fill: white;
+}
+
+</style>
 </head>
 <body>
-<div class="eye-wrapper" id="eyeWrapper">
-<div class="layer layer1"></div>
-<div class="layer layer2"></div>
-<div class="layer3">
-<div class="rect1"></div>
-<div class="rect2"></div>
-</div>
-<div class="pupil" id="pupil"></div>
-</div>
-<header class="site-header">
-<nav class="menu">
-<a data-key="about" href="#"></a>
-<a data-key="projects" href="#"></a>
-<a data-key="contacts" href="#"></a>
-</nav>
-</header>
-<div class="ticker-wrapper">
-<div class="ticker-track">
+  <div class="eye-wrapper" id="eyeWrapper">
+    <div class="layer layer1"></div>
+    <div class="layer layer2"></div>
+    <div class="layer3">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+    </div>
+    <div class="pupil" id="pupil"></div>
+  </div>
+
+  <header class="site-header">
+    <nav class="menu">
+      <a href="#" data-key="about"></a>
+      <a href="#" data-key="projects"></a>
+      <a href="#" data-key="contacts"></a>
+    </nav>
+  </header>
+
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
 <span>
   Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
   Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
   Radical in restraint // Silent but deliberate // We question shape // We listen before drawing //
   Objects as products // Nem.Os
 </span>
-</div>
-</div>
-<div class="overlay-box" id="overlay">
-<div class="overlay-content">
-<button class="close-btn" id="closeOverlay">×</button>
-<div id="overlayText"></div>
-</div>
-</div>
-<div class="mobile-overlay" id="mobileOverlay"></div>
-<div class="mobile-section">
-<div class="section" id="mobile-about">
-<h2>About</h2>
-<p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
-<p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
-<p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-<p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
-</div>
+
+    </div>
+  </div>
+
+  <div class="overlay-box" id="overlay">
+    <div class="overlay-content">
+      <button class="close-btn" id="closeOverlay">&times;</button>
+      <div id="overlayText"></div>
+    </div>
+  </div>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <div class="mobile-section">
+    <div class="section" id="mobile-about">
+      <h2>About</h2>
+      <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+      <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+      <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+      <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+    </div>
+
 <div class="section" id="mobile-projects">
-<h2>Projects</h2>
-<ul class="projects-list">
-<li><a href="pratofiorito.html">Pratofiorito — Outdoor Forniture, Italy</a></li>
-<li><a href="gridscape.html">Gridscape — Personal Project, Italy</a></li>
-<li><a href="project-tre.html">Project Tre — Silent Object, New York</a></li>
-</ul>
+  <h2>Projects</h2>
+  <ul class="projects-list">
+    <li>
+      
+<div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+  <svg class="eye-bullet">
+    <use xlink:href="#eye-icon"></use>
+  </svg>
+  <span class="eye-tooltip">Guarda le immagini</span>
 </div>
+<a href="#" onclick="toggleProject(event, 'pratofiorito-desc')">Pratofiorito — Outdoor Forniture, Italy</a>
+      <div class="project-desc" id="pratofiorito-desc" style="display: none;">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
+      </div>
+    </li>
+    <li>
+      
+<div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+  <svg class="eye-bullet">
+    <use xlink:href="#eye-icon"></use>
+  </svg>
+  <span class="eye-tooltip">Guarda le immagini</span>
+</div>
+<a href="#" onclick="toggleProject(event, 'gridscape-desc')">Gridscape — Personal Project, Italy</a>
+      <div class="project-desc" id="gridscape-desc" style="display: none;">
+        <p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+      </div>
+    </li>
+    <li>
+      
+<div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+  <svg class="eye-bullet">
+    <use xlink:href="#eye-icon"></use>
+  </svg>
+  <span class="eye-tooltip">Guarda le immagini</span>
+</div>
+<a href="#" onclick="toggleProject(event, 'project-tre-desc')">Project Tre — Silent Object, New York</a>
+      <div class="project-desc" id="project-tre-desc" style="display: none;">
+        <p>Project Tre esplora il concetto di oggetto muto come risposta critica alla sovraesposizione simbolica del design contemporaneo. Nulla pariatur excepteur sint occaecat cupidatat non proident.</p>
+      </div>
+    </li>
+    
+    
+    
+  </ul>
+</div>
+
 <div class="section" id="mobile-contacts">
-<h2>Contacts</h2>
-<p>If the work resonates, if the values align, feel free to get in touch:</p>
-<p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
-<p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
-</div>
-</div>
-<script>
+      <h2>Contacts</h2>
+      <p>If the work resonates, if the values align, feel free to get in touch:</p>
+      <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+      <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+    </div>
+  </div>
+
+  <script>
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlayText");
     const closeBtn = document.getElementById("closeOverlay");
@@ -426,26 +592,94 @@
     }, 10000 + Math.random() * 5000);
   
     const menuLabels = ["about-us", "projects", "contacts"];
-const menuLinks = document.querySelectorAll(".menu a");
-menuLinks.forEach((link, index) => {
-  link.textContent = menuLabels[index];
+    const menuLinks = document.querySelectorAll(".menu a");
+
+    menuLinks.forEach((link, index) => {
+      const text = menuLabels[index];
+      link.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        link.textContent += text[i];
+        i++;
+        if (i === text.length) clearInterval(interval);
+      }, 80);
+    });
+
+
+function toggleProject(e, id) {
+  e.preventDefault();
+  const el = document.getElementById(id);
+  if (el.style.display === 'none' || el.style.display === '') {
+    el.style.display = 'block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+
+let sliderColors = ['#e65152', '#ffc107', '#4caf50', '#2196f3'];
+let currentSlide = 0;
+
+function toggleImageOverlay() {
+  const overlay = document.getElementById('imageOverlay');
+  const square = document.getElementById('sliderSquare');
+  overlay.classList.add('active');
+  square.style.background = sliderColors[currentSlide];
+}
+
+function nextSlide() {
+  const square = document.getElementById('sliderSquare');
+  currentSlide = (currentSlide + 1) % sliderColors.length;
+  square.style.background = sliderColors[currentSlide];
+}
+
+function prevSlide() {
+  const square = document.getElementById('sliderSquare');
+  currentSlide = (currentSlide - 1 + sliderColors.length) % sliderColors.length;
+  square.style.background = sliderColors[currentSlide];
+}
+
+function closeOverlay() {
+  document.getElementById('imageOverlay').classList.remove('active');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'Escape') closeOverlay();
 });
 
-
-
-    window.addEventListener("load", () => {
-      document.body.style.opacity = "1";
-    });
-
-
-    document.querySelectorAll('a[href]:not([target])').forEach(link => {
-      link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (!href.startsWith('#') && !href.endsWith('.pdf')) {
-          e.preventDefault();
-        }
-      });
-    });
 </script>
+
+<div id="imageOverlay" class="image-overlay">
+  <div class="slider-container">
+    <div id="sliderSquare" class="slider-square">
+      <button class="slider-close" onclick="closeOverlay()">&times;</button>
+      <button class="slider-arrow left" onclick="prevSlide()">
+        <svg viewBox="0 0 24 24"><polyline points="15 6 9 12 15 18" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="slider-arrow right" onclick="nextSlide()">
+        <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="eye-icon" viewBox="0 0 5 3">
+    <rect x="1" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="2" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="3" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="4" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="0" y="1" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="2" y="1" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="4" y="1" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="1" y="2" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="2" y="2" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+    <rect x="3" y="2" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
+  </symbol>
+</svg>
+
 </body>
 </html>
