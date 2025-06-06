@@ -425,73 +425,19 @@
   bottom: 80% !important; /* distanza ulteriormente ridotta */
 }
 
-.mobile-header {
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 2rem;
-  border-bottom: 1px solid #111;
-  padding-bottom: 0.5rem;
+@media screen and (max-width: 768px) {
+  .slider-close { display: none !important; }
 }
 
 @media screen and (max-width: 768px) {
-  .mobile-section .section {
-    padding: 6vh 8vw !important;
-  }
-
-  .mobile-header {
-    margin-top: 1.2rem !important;
-    padding-bottom: 0.3rem !important;
-    font-size: 1.4rem !important;
-  }
-
-  .mobile-section p {
-    margin-bottom: 0.6rem !important;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .eye-tooltip {
-    display: none !important;
-  }
-
-  .slider-close {
-    display: none !important;
-  }
-}
-
-@media screen and (min-width: 769px) {
-  .site-header {
-    width: 100vw !important;
-    left: 0 !important;
-    background-color: #fff !important;
-  }
-
-  .ticker-wrapper {
-    background-color: #fff !important;
-  }
-}
-
-@media screen and (min-width: 769px) {
-  .header-background-extended {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 8vh;
-    background-color: #fff;
-    z-index: 5;
-  }
-}
-
-@media screen and (min-width: 769px) {
-  .menu a {
-    
+  .mobile-section h2 {
+    border-bottom: 1px solid #111;
+    padding-bottom: 0.3rem;
   }
 }
 </style>
 </head>
-<body><div class="header-background-extended"></div>
+<body>
 <div class="eye-wrapper" id="eyeWrapper">
 <div class="layer layer1"></div>
 <div class="layer layer2"></div>
@@ -520,20 +466,22 @@
 </div>
 <div class="overlay-box" id="overlay">
 <div class="overlay-content">
-<button class="close-btn" id="closeOverlay" style=" position: fixed; top: 12vh; right: 4vw; z-index: 1000; background: transparent;">×</button>
+<button class="close-btn" id="closeOverlay" style=" position: fixed; top: 12vh; right: 30vw; z-index: 1000; background: transparent;">×</button>
 <div id="overlayText"></div>
 </div>
 </div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <div class="mobile-section">
-<div class="section mobile-collapsible" id="mobile-about"><div class="mobile-header" onclick="toggleMobileSection('mobile-about')">About</div>
-<p style="display: none;">Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
-<p style="display: none;">Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
-<p style="display: none;">He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-<p style="display: none;">With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+<div class="section" id="mobile-about">
+<h2>About</h2>
+<p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+<p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+<p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+<p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
 </div>
-<div class="section mobile-collapsible" id="mobile-projects"><div class="mobile-header" onclick="toggleMobileSection('mobile-projects')">Projects</div>
-<ul class="projects-list" style="display: none;">
+<div class="section" id="mobile-projects">
+<h2>Projects</h2>
+<ul class="projects-list">
 <li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
@@ -566,10 +514,11 @@
 </li>
 </ul>
 </div>
-<div class="section mobile-collapsible" id="mobile-contacts"><div class="mobile-header" onclick="toggleMobileSection('mobile-contacts')">Contacts</div>
-<p style="display: none;">If the work resonates, if the values align, feel free to get in touch:</p>
-<p style="display: none;">Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
-<p style="display: none;">Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+<div class="section" id="mobile-contacts">
+<h2>Contacts</h2>
+<p>If the work resonates, if the values align, feel free to get in touch:</p>
+<p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+<p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
 </div>
 </div>
 <script>
@@ -737,22 +686,10 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeOverlay();
 });
 
-
-function toggleMobileSection(id) {
-  document.querySelectorAll('.mobile-collapsible').forEach(section => {
-    const content = [...section.children].filter(c => !c.classList.contains('mobile-header'));
-    if (section.id === id) {
-      const isVisible = content[0].style.display === 'block';
-      content.forEach(el => el.style.display = isVisible ? 'none' : 'block');
-    } else {
-      content.forEach(el => el.style.display = 'none');
-    }
-  });
-}
 </script>
 <div class="image-overlay" id="imageOverlay">
 <div class="slider-container">
-<div class="slider-square" id="sliderSquare"><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/035.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: block;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/07.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/024.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/025.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><button class="slider-close" onclick="closeOverlay()">×</button><button class="slider-arrow left" onclick="prevSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button><button class="slider-arrow right" onclick="nextSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button></div>
+<div class="slider-square" id="sliderSquare"><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/035.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: block;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/07.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/024.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/025.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><button class="slider-arrow left" onclick="prevSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button><button class="slider-arrow right" onclick="nextSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button></div>
 </div>
 </div>
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
@@ -770,49 +707,47 @@ function toggleMobileSection(id) {
 </symbol>
 </svg>
 <script>
-(function() {
-  const imageOverlay = document.getElementById("imageOverlay");
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.innerWidth <= 768) {
+    const sections = document.querySelectorAll(".mobile-section .section");
+    sections.forEach(section => {
+      const header = section.querySelector("h2");
+      const contentNodes = Array.from(section.childNodes).filter(node => {
+        return !(node.tagName === "H2" || (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()));
+      });
 
-  window.addEventListener("popstate", function(event) {
-    if (imageOverlay && imageOverlay.classList.contains("active")) {
-      imageOverlay.classList.remove("active");
-    }
-  });
+      const container = document.createElement("div");
+      contentNodes.forEach(node => container.appendChild(node));
+      container.style.display = "none";
+      section.appendChild(container);
 
-  const originalToggle = window.toggleImageOverlay;
-  window.toggleImageOverlay = function() {
-    const overlay = document.getElementById('imageOverlay');
-    if (!overlay.classList.contains("active")) {
-      history.pushState(null, "", location.href);
-      overlay.classList.add("active");
-      const square = document.getElementById('sliderSquare');
-      let sliderColors = ['#e65152', '#ffc107', '#4caf50', '#2196f3'];
-      square.style.background = sliderColors[0];
-    }
-  };
-})();
+      header.style.cursor = "pointer";
+      header.addEventListener("click", () => {
+        document.querySelectorAll(".mobile-section .section > div").forEach(d => {
+          if (d !== container) d.style.display = "none";
+        });
+        container.style.display = (container.style.display === "block") ? "none" : "block";
+      });
+    });
+  }
+});
 </script><script>
-let currentSlide = 0;
-const slides = document.querySelectorAll(".slider-img");
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.innerWidth <= 768) {
+    window.addEventListener("popstate", function () {
+      const overlay = document.getElementById("imageOverlay");
+      if (overlay && overlay.classList.contains("active")) {
+        overlay.classList.remove("active");
+        history.pushState(null, "", window.location.pathname);
+      }
+    });
 
-function showSlide(index) {
-  slides.forEach((img, i) => {
-    img.style.display = i === index ? "block" : "none";
-  });
-}
-
-function nextSlide() {
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}
-
-function prevSlide() {
-  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-  showSlide(currentSlide);
-}
-
-function closeOverlay() {
-  document.getElementById('imageOverlay').classList.remove('active');
-}
+    document.querySelectorAll(".eye-tooltip-wrapper").forEach(wrapper => {
+      wrapper.addEventListener("click", () => {
+        history.pushState(null, "", "#viewing");
+      });
+    });
+  }
+});
 </script></body>
 </html>
