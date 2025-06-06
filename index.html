@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nem.Os</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nem.Os</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -165,6 +166,9 @@
     }
 
     .overlay-content {
+  max-height: 80vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
       position: relative;
       max-width: 700px;
       margin: 10vh auto;
@@ -249,10 +253,11 @@
 }
 
 .projects-list li {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .projects-list a {
+  flex: 1;
   color: #111;
   font-size: 1.1rem;
   text-decoration: none;
@@ -280,8 +285,11 @@
 }
 
 .eye-tooltip-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   position: relative;
-  display: inline-block;
+  flex-shrink: 0;
 }
 
 .eye-tooltip {
@@ -381,114 +389,128 @@
   fill: white;
 }
 
+
+.projects-list li > div.eye-tooltip-wrapper,
+.projects-list li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.overlay-content::-webkit-scrollbar { display: none; }
+.projects-list li .project-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.project-desc {
+  margin-left: 2.1rem;
+  margin-top: 0.3rem;
+}
+
+.eye-tooltip {
+  background: none !important;
+  color: #111 !important;
+  font-size: 0.7rem;
+  bottom: 105% !important; /* ridotto rispetto a 125% */
+  transform: translateX(-50%);
+}
+
+.eye-tooltip {
+  bottom: 90% !important; /* ridotto ancora per maggiore vicinanza */
+}
+
+.eye-tooltip {
+  bottom: 80% !important; /* distanza ulteriormente ridotta */
+}
 </style>
 </head>
 <body>
-  <div class="eye-wrapper" id="eyeWrapper">
-    <div class="layer layer1"></div>
-    <div class="layer layer2"></div>
-    <div class="layer3">
-      <div class="rect1"></div>
-      <div class="rect2"></div>
-    </div>
-    <div class="pupil" id="pupil"></div>
-  </div>
-
-  <header class="site-header">
-    <nav class="menu">
-      <a href="#" data-key="about"></a>
-      <a href="#" data-key="projects"></a>
-      <a href="#" data-key="contacts"></a>
-    </nav>
-  </header>
-
-  <div class="ticker-wrapper">
-    <div class="ticker-track">
+<div class="eye-wrapper" id="eyeWrapper">
+<div class="layer layer1"></div>
+<div class="layer layer2"></div>
+<div class="layer3">
+<div class="rect1"></div>
+<div class="rect2"></div>
+</div>
+<div class="pupil" id="pupil"></div>
+</div>
+<header class="site-header">
+<nav class="menu">
+<a data-key="about" href="#"></a>
+<a data-key="projects" href="#"></a>
+<a data-key="contacts" href="#"></a>
+</nav>
+</header>
+<div class="ticker-wrapper">
+<div class="ticker-track">
 <span>
   Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
   Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
   Radical in restraint // Silent but deliberate // We question shape // We listen before drawing //
   Objects as products // Nem.Os
 </span>
-
-    </div>
-  </div>
-
-  <div class="overlay-box" id="overlay">
-    <div class="overlay-content">
-      <button class="close-btn" id="closeOverlay">&times;</button>
-      <div id="overlayText"></div>
-    </div>
-  </div>
-
-  <div class="mobile-overlay" id="mobileOverlay"></div>
-
-  <div class="mobile-section">
-    <div class="section" id="mobile-about">
-      <h2>About</h2>
-      <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
-      <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
-      <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-      <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
-    </div>
-
+</div>
+</div>
+<div class="overlay-box" id="overlay">
+<div class="overlay-content">
+<button class="close-btn" id="closeOverlay" style=" position: fixed; top: 12vh; right: 4vw; z-index: 1000; background: transparent;">×</button>
+<div id="overlayText"></div>
+</div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-section">
+<div class="section" id="mobile-about">
+<h2>About</h2>
+<p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+<p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+<p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+<p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+</div>
 <div class="section" id="mobile-projects">
-  <h2>Projects</h2>
-  <ul class="projects-list">
-    <li>
-      
-<div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
-  <svg class="eye-bullet">
-    <use xlink:href="#eye-icon"></use>
-  </svg>
-  <span class="eye-tooltip">Guarda le immagini</span>
+<h2>Projects</h2>
+<ul class="projects-list">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+<svg class="eye-bullet">
+<use xlink:href="#eye-icon"></use>
+</svg>
+<span class="eye-tooltip">View images</span>
+</div><a href="#" onclick="toggleProject(event, 'pratofiorito-desc')">Pratofiorito — Outdoor Forniture, Italy</a></div>
+<div class="project-desc" id="pratofiorito-desc" style="display: none;">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
 </div>
-<a href="#" onclick="toggleProject(event, 'pratofiorito-desc')">Pratofiorito — Outdoor Forniture, Italy</a>
-      <div class="project-desc" id="pratofiorito-desc" style="display: none;">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
-      </div>
-    </li>
-    <li>
-      
-<div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
-  <svg class="eye-bullet">
-    <use xlink:href="#eye-icon"></use>
-  </svg>
-  <span class="eye-tooltip">Guarda le immagini</span>
+</li>
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+<svg class="eye-bullet">
+<use xlink:href="#eye-icon"></use>
+</svg>
+<span class="eye-tooltip">View images</span>
+</div><a href="#" onclick="toggleProject(event, 'gridscape-desc')">Gridscape — Personal Project, Italy</a></div>
+<div class="project-desc" id="gridscape-desc" style="display: none;">
+<p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
 </div>
-<a href="#" onclick="toggleProject(event, 'gridscape-desc')">Gridscape — Personal Project, Italy</a>
-      <div class="project-desc" id="gridscape-desc" style="display: none;">
-        <p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-      </div>
-    </li>
-    <li>
-      
-<div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
-  <svg class="eye-bullet">
-    <use xlink:href="#eye-icon"></use>
-  </svg>
-  <span class="eye-tooltip">Guarda le immagini</span>
+</li>
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+<svg class="eye-bullet">
+<use xlink:href="#eye-icon"></use>
+</svg>
+<span class="eye-tooltip">View images</span>
+</div><a href="#" onclick="toggleProject(event, 'project-tre-desc')">Project Tre — Silent Object, New York</a></div>
+<div class="project-desc" id="project-tre-desc" style="display: none;">
+<p>Project Tre esplora il concetto di oggetto muto come risposta critica alla sovraesposizione simbolica del design contemporaneo. Nulla pariatur excepteur sint occaecat cupidatat non proident.</p>
 </div>
-<a href="#" onclick="toggleProject(event, 'project-tre-desc')">Project Tre — Silent Object, New York</a>
-      <div class="project-desc" id="project-tre-desc" style="display: none;">
-        <p>Project Tre esplora il concetto di oggetto muto come risposta critica alla sovraesposizione simbolica del design contemporaneo. Nulla pariatur excepteur sint occaecat cupidatat non proident.</p>
-      </div>
-    </li>
-    
-    
-    
-  </ul>
+</li>
+</ul>
 </div>
-
 <div class="section" id="mobile-contacts">
-      <h2>Contacts</h2>
-      <p>If the work resonates, if the values align, feel free to get in touch:</p>
-      <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
-      <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
-    </div>
-  </div>
-
-  <script>
+<h2>Contacts</h2>
+<p>If the work resonates, if the values align, feel free to get in touch:</p>
+<p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+<p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+</div>
+</div>
+<script>
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlayText");
     const closeBtn = document.getElementById("closeOverlay");
@@ -609,6 +631,10 @@
 function toggleProject(e, id) {
   e.preventDefault();
   const el = document.getElementById(id);
+  const allDescs = document.querySelectorAll('.project-desc');
+  allDescs.forEach(desc => {
+    if (desc !== el) desc.style.display = 'none';
+  });
   if (el.style.display === 'none' || el.style.display === '') {
     el.style.display = 'block';
   } else {
@@ -650,36 +676,32 @@ document.addEventListener('keydown', function(e) {
 });
 
 </script>
-
-<div id="imageOverlay" class="image-overlay">
-  <div class="slider-container">
-    <div id="sliderSquare" class="slider-square">
-      <button class="slider-close" onclick="closeOverlay()">&times;</button>
-      <button class="slider-arrow left" onclick="prevSlide()">
-        <svg viewBox="0 0 24 24"><polyline points="15 6 9 12 15 18" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="slider-arrow right" onclick="nextSlide()">
-        <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </div>
+<div class="image-overlay" id="imageOverlay">
+<div class="slider-container">
+<div class="slider-square" id="sliderSquare">
+<button class="slider-close" onclick="closeOverlay()">×</button>
+<button class="slider-arrow left" onclick="prevSlide()">
+<svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+</button>
+<button class="slider-arrow right" onclick="nextSlide()">
+<svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+</button>
 </div>
-
-
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-  <symbol id="eye-icon" viewBox="0 0 5 3">
-    <rect x="1" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="2" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="3" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="4" y="0" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="0" y="1" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="2" y="1" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="4" y="1" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="1" y="2" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="2" y="2" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-    <rect x="3" y="2" width="1" height="1" fill="#e65152" stroke="#e65152" stroke-width="0.1"/>
-  </symbol>
+</div>
+</div>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+<symbol id="eye-icon" viewbox="0 0 5 3">
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="1" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="2" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="3" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="4" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="0" y="1"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="2" y="1"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="4" y="1"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="1" y="2"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="2" y="2"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="3" y="2"></rect>
+</symbol>
 </svg>
-
 </body>
 </html>
