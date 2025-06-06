@@ -558,7 +558,7 @@
 <div class="section" id="mobile-projects">
 <h2>Projects</h2>
 <ul class="projects-list">
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('pratofiorito')">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -568,7 +568,7 @@
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('gridscape')">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -578,7 +578,7 @@
 <p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('tre')">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -763,24 +763,13 @@ document.addEventListener('keydown', function(e) {
 });
 
 
-const projectImages = {
-  pratofiorito: [
+const images = [
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
   "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
-  ],
-  gridscape: [
-    "link3.png",
-    "link4.png"
-  ],
-  tre: [
-    "link5.png",
-    "link6.png"
-  ]
-};
-let currentProject = "pratofiorito";
+];
 let currentIndex = 0;
 
 function updateImage() {
@@ -896,6 +885,63 @@ document.addEventListener("DOMContentLoaded", function () {
     </button>
   </div>
 </div>
+
+
+<script>
+// === Inizio codice aggiornato per carosello per progetto ===
+const projectImages = {
+  pratofiorito: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png"
+  ],
+  gridscape: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png"
+  ],
+  tre: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
+  ]
+};
+
+let currentProject = "pratofiorito";
+let currentIndex = 0;
+
+function openOverlay(projectKey) {
+  currentProject = projectKey;
+  currentIndex = 0;
+  updateImage();
+  document.getElementById("sliderOverlay").classList.add("active");
+  history.pushState(null, "", "#overlay");
+}
+
+function updateImage() {
+  const img = document.getElementById("sliderImage");
+  const images = projectImages[currentProject];
+  if (img && images) img.src = images[currentIndex];
+}
+
+function nextSlide() {
+  const images = projectImages[currentProject];
+  currentIndex = (currentIndex + 1) % images.length;
+  updateImage();
+}
+
+function prevSlide() {
+  const images = projectImages[currentProject];
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateImage();
+}
+
+function closeOverlay() {
+  document.getElementById("sliderOverlay").classList.remove("active");
+  if (location.hash === "#overlay") history.back();
+}
+
+window.addEventListener("popstate", function () {
+  document.getElementById("sliderOverlay").classList.remove("active");
+});
+// === Fine codice aggiornato ===
+</script>
 
 </body>
 </html>
