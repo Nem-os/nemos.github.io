@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -9,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'IBM Plex Mono', monospace;
       background: #fff;
@@ -18,13 +18,13 @@
 
     .eye-wrapper {
       position: fixed;
-      top: 50%;
+      top: 55%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 90vw;
       aspect-ratio: 5 / 3;
       max-width: 1200px;
-      z-index: 0;
+      z-index: -2;
       pointer-events: none;
     }
 
@@ -72,10 +72,10 @@
     .pupil {
       background-color: #e65152;
       position: absolute;
-      bottom: 0;
+      bottom: 2%;
       left: 40%;
       width: 20%;
-      height: 80%;
+      height: 70%;
       transition: height 0.2s ease;
       transform-origin: top;
     }
@@ -86,98 +86,178 @@
       height: 0 !important;
     }
 
-    .overlay {
+    .site-header {
+      position: absolute;
+      background-color: white;
+      top: 0;
+      left: 5vw;
+      width: 90vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      height: 4vh;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15vw;
+      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
+      color: #111;
+    }
+
+    .menu a {
+      color: #111;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+
+    .menu a:hover {
+      transform: scale(1.12);
+    }
+
+    .ticker-wrapper {
+      overflow: hidden;
+      background: #fff;
+      border-top: 1px solid #111;
+      border-bottom: 1px solid #111;
+      padding: 0.5rem 0;
+      position: absolute;
+      top: 5vh;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      display: none;
+    }
+
+    .ticker-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollTicker 60s linear infinite;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #111;
+      padding-left: 10vw;
+    }
+
+    .ticker-track span {
+      margin-right: 4rem;
+    }
+
+    @keyframes scrollTicker {
+      from { transform: translateX(50%); }
+      to   { transform: translateX(-100%); }
+    }
+
+    .overlay-box {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(8px);
-      z-index: 1;
-      opacity: 0;
-      transition: opacity 1s ease;
-      pointer-events: none;
+      backdrop-filter: blur(6px);
+      z-index: 50;
+      display: none;
     }
 
-    .overlay.active {
-      opacity: 1;
+    .overlay-box.active {
+      display: block;
     }
 
-    .section {
+    .overlay-content {
+  max-height: 80vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
       position: relative;
-      z-index: 2;
-      padding: 4vh 8vw;
+      max-width: 700px;
+      margin: 10vh auto;
+      padding: 4vh 5vw;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: #111;
+      cursor: pointer;
+    }
+
+    .mobile-section {
+      display: none;
+    }
+
+    .mobile-section .section {
+      padding: 12vh 8vw;
       max-width: 680px;
       margin: 0 auto;
     }
 
-    .section h2 {
+    .mobile-section h2 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
     }
 
-    .section p {
+    .mobile-section p {
       font-size: 1rem;
       line-height: 1.6;
       margin-bottom: 1rem;
     }
 
-    .spacer {
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
       height: 100vh;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .mobile-overlay.active {
+      opacity: 1;
     }
 
     @media screen and (max-width: 768px) {
-      .section {
-        padding: 2vh 2vw;
+      .site-header {
+        display: none;
       }
 
-      .section h2 {
-        font-size: 1.5rem;
-      }
-
-      .section p {
-        font-size: 0.95rem;
+      .mobile-section {
+        display: block;
       }
     }
-  
-.ticker-wrapper {
-  position: relative;
-  overflow: hidden;
-  background: #fff;
-  border-top: 1px solid #111;
-  border-bottom: 1px solid #111;
-  padding: 0.5rem 0;
-  width: 100%;
-  z-index: 3;
-}
 
-.ticker-track {
-  display: inline-block;
-  white-space: nowrap;
-  animation: scrollTicker 80s linear infinite;
-  font-size: 1rem;
-  font-weight: 400;
-  color: #111;
-  padding-left: 100vw;
-}
+    @media screen and (min-width: 769px) {
+      .ticker-wrapper {
+        display: block;
+      }
 
-.ticker-track span {
-  margin-right: 4rem;
-}
-
-@keyframes scrollTicker {
-  0% { transform: translateX(1%); }
-  100% { transform: translateX(-100%); }
-}
-
+      .mobile-overlay {
+        display: none !important;
+      }
+    }
+.projects-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0 0;
 }
 
 .projects-list li {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .projects-list a {
+  flex: 1;
   color: #111;
   font-size: 1.1rem;
   text-decoration: none;
@@ -191,31 +271,305 @@
   opacity: 0.7;
 }
 
+  
+.eye-bullet {
+  width: 1.5rem;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
 
-ul.projects-list {
-  list-style-type: none !important;
-  padding-left: 0 !important;
-  margin-left: 0 !important;
+.eye-bullet:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+.eye-tooltip-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.eye-tooltip {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.eye-tooltip-wrapper:hover .eye-tooltip {
+  opacity: 1;
+}
+
+.image-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.image-overlay.active {
+  display: flex;
+}
+
+.slider-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-square {
+  width: 90vmin;
+  height: 90vmin;
+  background: #e65152;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-close {
+  position: absolute;
+  top: 1rem;
+  right: 2vw;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 210;
+}
+
+
+
+.slider-arrow.left {
+  left: 2vw;
+}
+
+.slider-arrow.right {
+  right: 2vw;
+}
+
+.slider-arrow svg {
+  width: 100%;
+  height: 100%;
+  fill: white;
+}
+
+
+.projects-list li > div.eye-tooltip-wrapper,
+.projects-list li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.overlay-content::-webkit-scrollbar { display: none; }
+.projects-list li .project-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.project-desc {
+  margin-left: 2.1rem;
+  margin-top: 0.3rem;
+}
+
+.eye-tooltip {
+  background: none !important;
+  color: #111 !important;
+  font-size: 0.7rem;
+  bottom: 105% !important; /* ridotto rispetto a 125% */
+  transform: translateX(-50%);
+}
+
+.eye-tooltip {
+  bottom: 90% !important; /* ridotto ancora per maggiore vicinanza */
+}
+
+.eye-tooltip {
+  bottom: 80% !important; /* distanza ulteriormente ridotta */
+}
+
+@media screen and (max-width: 768px) {
+  .slider-close { display: none !important; }
+}
+
+@media screen and (max-width: 768px) {
+  .mobile-section h2 {
+    border-bottom: 1px solid #111;
+    padding-bottom: 0.3rem;
+  }
+}
+
+.slider-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+.slider-overlay.active {
+  display: flex;
+}
+.slider-container {
+  position: relative;
+  width: 80vmin;
+  height: 80vmin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slider-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider-arrow.left { left: -3rem; }
+.slider-arrow.right { right: -3rem; }
+.slider-close {
+  position: absolute;
+  top: -3rem;
+  right: -3rem;
+  font-size: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 210;
+}
+@media screen and (max-width: 768px) {
+  .slider-close { display: none !important; }
+}
+
+
+.slider-arrow {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 210;
+}
+.slider-arrow.left {
+  left: 0;
+}
+.slider-arrow.right {
+  right: 0;
+}
+.slider-arrow svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.5;
+}
+.slider-arrow.left svg {
+  left: 1rem;
+}
+.slider-arrow.right svg {
+  right: 1rem;
+}
+
+
+@media screen and (max-width: 768px) {
+  .slider-container {
+    width: 100vw;
+    height: 100vw;
+  }
+}
+
+
+<style>
+@media screen and (max-width: 768px) {
+  .mobile-section .section .accordion-content {
+    display: none;
+  }
+  .mobile-section .section.active .accordion-content {
+    display: block;
+  }
+}
+</style>
+<style>
+@media screen and (max-width: 768px) {
+  .accordion-content {
+    display: none;
+  }
+  .section.active .accordion-content {
+    display: block;
+  }
+}
+</style>
+<style>
+@media screen and (max-width: 768px) {
+  .site-header {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-left: 1rem;
+  }
+  .site-header nav {
+    justify-content: flex-start !important;
+  }
+}
+</style>
+<style>
+@media screen and (max-width: 768px) {
+  .site-header {
+    padding-left: 1rem;
+  }
+
+  .site-header nav {
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 1rem;
+  }
+
+  .site-header a {
+    text-align: left !important;
+  }
 }
 </style>
 </head>
 <body>
-<div class="ticker-wrapper">
-<div class="ticker-track">
-<span>
-      Scroll down to explore // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
-      Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
-      Scroll down to explore // Silent but deliberate // We question shape // We listen before drawing //
-      Objects as positions // Not as products // Nem.Os
-    </span>
-<span>
-      Scroll down to explore // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
-      Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
-      Scroll down to explore // Silent but deliberate // We question shape // We listen before drawing //
-      Objects as positions // Not as products // Nem.Os
-    </span>
-</div>
-</div>
+<script>
+  if (window.innerWidth <= 768) {
+    const path = window.location.pathname.split("/").slice(0, -1).join("/");
+    window.location.href = path + "/mobile/index.html";
+  }
+</script>
+
 <div class="eye-wrapper" id="eyeWrapper">
 <div class="layer layer1"></div>
 <div class="layer layer2"></div>
@@ -225,56 +579,125 @@ ul.projects-list {
 </div>
 <div class="pupil" id="pupil"></div>
 </div>
-<div class="overlay" id="overlay"></div>
-<div class="spacer"></div>
-<div class="section" id="about">
+<header class="site-header">
+<nav class="menu">
+<a data-key="about" href="#">about-us</a>
+<a data-key="projects" href="#">projects</a>
+<a data-key="contacts" href="#">contacts</a>
+</nav>
+</header>
+<div class="ticker-wrapper">
+<div class="ticker-track">
+<span>
+  Backstage of luxury // Signed in silence // No permission asked // Open to collaboration // Nem.Os //
+  Beauty is a consequence // Not for prestige // For necessity // Designed to disappear //
+  Radical in restraint // Silent but deliberate // We question shape // We listen before drawing //
+  Objects as products // Nem.Os
+</span>
+</div>
+</div>
+<div class="overlay-box" id="overlay">
+<div class="overlay-content">
+<button class="close-btn" id="closeOverlay" style=" position: fixed; top: 12vh; right: 30vw; z-index: 1000; background: transparent;">×</button>
+<div id="overlayText"></div>
+</div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-section">
+<div class="section" id="mobile-about">
 <h2>About</h2>
 <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
 <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
 <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-<p>In an environment where a name alone legitimizes the object, he felt a growing distance between his own design thinking — rooted in coherence, necessity, and simplicity — and the approximation disguised as genius that permeates parts of the system.</p>
 <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
 </div>
-<div class="section" id="projects">
-<h2>Projects</h2>
 <div class="section" id="mobile-projects">
-
+<h2>Projects</h2>
 <ul class="projects-list">
- <li><a href="pratofiorito.html">Pratofiorito — Outdoor Forniture, Italy</a></li>
-    <li><a href="gridscape.html">Gridscape — Personal Project, Italy</a></li>
-<li><a href="project-tre.html">Project Tre — Silent Object, New York</a></li>
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('pratofiorito')">
+<svg class="eye-bullet">
+<use xlink:href="#eye-icon"></use>
+</svg>
+<span class="eye-tooltip">View images</span>
+</div><a href="#" onclick="toggleProject(event, 'pratofiorito-desc')">Pratofiorito — Outdoor Forniture, Italy</a></div>
+<div class="project-desc" id="pratofiorito-desc" style="display: none;">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
+</div>
+</li>
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('gridscape')">
+<svg class="eye-bullet">
+<use xlink:href="#eye-icon"></use>
+</svg>
+<span class="eye-tooltip">View images</span>
+</div><a href="#" onclick="toggleProject(event, 'gridscape-desc')">Gridscape — Personal Project, Italy</a></div>
+<div class="project-desc" id="gridscape-desc" style="display: none;">
+<p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+</div>
+</li>
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('tre')">
+<svg class="eye-bullet">
+<use xlink:href="#eye-icon"></use>
+</svg>
+<span class="eye-tooltip">View images</span>
+</div><a href="#" onclick="toggleProject(event, 'project-tre-desc')">Project Tre — Silent Object, New York</a></div>
+<div class="project-desc" id="project-tre-desc" style="display: none;">
+<p>Project Tre esplora il concetto di oggetto muto come risposta critica alla sovraesposizione simbolica del design contemporaneo. Nulla pariatur excepteur sint occaecat cupidatat non proident.</p>
+</div>
+</li>
 </ul>
 </div>
-</div>
-<div class="section" id="contacts">
+<div class="section" id="mobile-contacts">
 <h2>Contacts</h2>
 <p>If the work resonates, if the values align, feel free to get in touch:</p>
 <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
 <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
 </div>
+</div>
 <script>
-    
-    const overlay = document.getElementById('overlay');
-    const about = document.getElementById('about');
+    const overlay = document.getElementById("overlay");
+    const overlayText = document.getElementById("overlayText");
+    const closeBtn = document.getElementById("closeOverlay");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+    const aboutSection = document.getElementById("mobile-about");
 
-    function checkOverlayTrigger() {
-      const top = about.getBoundingClientRect().top;
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const content = {
+      about: document.getElementById("mobile-about").innerHTML,
+      projects: document.getElementById("mobile-projects").innerHTML,
+      contacts: document.getElementById("mobile-contacts").innerHTML
+    };
 
-      if (top < viewportHeight * 0.5) {
+    document.querySelectorAll('.menu a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const key = link.getAttribute('data-key');
+        overlayText.innerHTML = content[key];
         overlay.classList.add('active');
+      });
+    });
+
+    closeBtn.addEventListener("click", () => {
+      overlay.classList.remove("active");
+    });
+
+    function checkMobileOverlay() {
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        const top = aboutSection.getBoundingClientRect().top;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        if (top < viewportHeight * 0.5) {
+          mobileOverlay.classList.add("active");
+        } else {
+          mobileOverlay.classList.remove("active");
+        }
       } else {
-        overlay.classList.remove('active');
+        mobileOverlay.classList.remove("active");
       }
     }
 
-    window.addEventListener('scroll', checkOverlayTrigger);
-    window.addEventListener('load', checkOverlayTrigger);
+    window.addEventListener("scroll", checkMobileOverlay);
+    window.addEventListener("load", checkMobileOverlay);
 
-    window.addEventListener('load', checkOverlayTrigger);
-
-    const eyeWrapper = document.getElementById('eyeWrapper');
-    const pupil = document.getElementById('pupil');
+    const eyeWrapper = document.getElementById("eyeWrapper");
+    const pupil = document.getElementById("pupil");
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
     let target = { x: 0, y: 0 };
@@ -284,24 +707,23 @@ ul.projects-list {
     let mouseActive = false;
     let justBlinked = false;
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      target = { x: dx * 0.17, y: dy * 0.15 };
+      pupilTarget = { x: dx * 0.25 };
+      mouseActive = true;
+    });
 
-    document.addEventListener('touchmove', (e) => {
+    document.addEventListener("touchmove", (e) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.6 };
-        pupilTarget = { x: dx * 0.25 };
+        target = { x: dx * 0.17, y: dy * 0.15 };
+        pupilTarget = { x: dx * 0.215 };
         mouseActive = true;
       }
-    });
-    
-      const dx = e.clientX - centerX;
-      const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.6 };
-      pupilTarget = { x: dx * 0.25 };
-      mouseActive = true;
     });
 
     function animate() {
@@ -322,15 +744,154 @@ ul.projects-list {
 
     function blink() {
       justBlinked = true;
-      eyeWrapper.classList.add('blinked');
+      eyeWrapper.classList.add("blinked");
       setTimeout(() => {
-        eyeWrapper.classList.remove('blinked');
+        eyeWrapper.classList.remove("blinked");
         justBlinked = false;
       }, 200);
     }
 
-    document.addEventListener('click', () => blink());
-    setInterval(() => { if (document.hasFocus()) blink(); }, 10000 + Math.random() * 5000);
-  </script>
+    document.addEventListener("click", () => blink());
+    setInterval(() => {
+      if (document.hasFocus()) blink();
+    }, 10000 + Math.random() * 5000);
+  
+    const menuLabels = ["about-us", "projects", "contacts"];
+    const menuLinks = document.querySelectorAll(".menu a");
+
+    menuLinks.forEach((link, index) => {
+      const text = menuLabels[index];
+      link.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        link.textContent += text[i];
+        i++;
+        if (i === text.length) clearInterval(interval);
+      }, 80);
+    });
+
+
+function toggleProject(e, id) {
+  e.preventDefault();
+  const el = document.getElementById(id);
+  const allDescs = document.querySelectorAll('.project-desc');
+  allDescs.forEach(desc => {
+    if (desc !== el) desc.style.display = 'none';
+  });
+  if (el.style.display === 'none' || el.style.display === '') {
+    el.style.display = 'block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+
+let sliderColors = ['#e65152', '#ffc107', '#4caf50', '#2196f3'];
+let currentSlide = 0;
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'Escape') closeOverlay();
+});
+
+
+
+
+
+window.addEventListener("popstate", function () {
+  document.getElementById("sliderOverlay").classList.remove("active");
+});
+
+</script>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+<symbol id="eye-icon" viewbox="0 0 5 3">
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="1" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="2" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="3" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="4" y="0"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="0" y="1"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="2" y="1"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="4" y="1"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="1" y="2"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="2" y="2"></rect>
+<rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="3" y="2"></rect>
+</symbol>
+</svg>
+<div class="slider-overlay" id="sliderOverlay">
+<div class="slider-container">
+<button class="slider-close" onclick="closeOverlay()">×</button>
+<button class="slider-arrow left" onclick="prevSlide()">
+<svg viewbox="0 0 24 24">
+<polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+</svg>
+</button>
+<img id="sliderImage" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png"/>
+<button class="slider-arrow right" onclick="nextSlide()">
+<svg viewbox="0 0 24 24">
+<polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+</svg>
+</button>
+</div>
+</div>
+<script>
+const projectImages = {
+  pratofiorito: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
+  ],
+  gridscape: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/citypop_cover_03.jpg",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/reder couch.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/reder LAMP_02.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/reder chair_02.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/reder TABLE.png"
+  ],
+  tre: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png"
+  ]
+};
+
+let currentProject = "pratofiorito";
+let currentIndex = 0;
+
+function openOverlay(projectKey) {
+  if (window.innerWidth <= 768) return;
+  currentProject = projectKey;
+  currentIndex = 0;
+  updateImage();
+  document.getElementById("sliderOverlay").classList.add("active");
+  history.pushState(null, "", "#overlay");
+}
+
+function updateImage() {
+  const images = projectImages[currentProject];
+  document.getElementById("sliderImage").src = images[currentIndex];
+}
+
+function nextSlide() {
+  const images = projectImages[currentProject];
+  currentIndex = (currentIndex + 1) % images.length;
+  updateImage();
+}
+
+function prevSlide() {
+  const images = projectImages[currentProject];
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateImage();
+}
+
+function closeOverlay() {
+  document.getElementById("sliderOverlay").classList.remove("active");
+  if (location.hash === "#overlay") history.back();
+}
+
+window.addEventListener("popstate", function () {
+  document.getElementById("sliderOverlay").classList.remove("active");
+});
+</script>
 </body>
 </html>
