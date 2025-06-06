@@ -483,6 +483,12 @@
     z-index: 5;
   }
 }
+
+@media screen and (min-width: 769px) {
+  .menu a {
+    
+  }
+}
 </style>
 </head>
 <body><div class="header-background-extended"></div>
@@ -746,7 +752,7 @@ function toggleMobileSection(id) {
 </script>
 <div class="image-overlay" id="imageOverlay">
 <div class="slider-container">
-<div class="slider-square" id="sliderSquare"><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/035.png" style="max-width: 100%; max-height: 100%; display: block; position: absolute; object-fit: contain;"/><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/07.png" style="max-width: 100%; max-height: 100%; display: none; position: absolute; object-fit: contain;"/><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/024.png" style="max-width: 100%; max-height: 100%; display: none; position: absolute; object-fit: contain;"/><img class="slider-img" loading="lazy" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/025.png" style="max-width: 100%; max-height: 100%; display: none; position: absolute; object-fit: contain;"/><button class="slider-arrow left" onclick="prevSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button><button class="slider-arrow right" onclick="nextSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button><button class="slider-close" onclick="closeOverlay()">×</button></div>
+<div class="slider-square" id="sliderSquare"><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/035.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: block;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/07.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/024.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><img class="slider-img" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/img/025.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/><button class="slider-close" onclick="closeOverlay()">×</button><button class="slider-arrow left" onclick="prevSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button><button class="slider-arrow right" onclick="nextSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></button></div>
 </div>
 </div>
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
@@ -806,7 +812,7 @@ function prevSlide() {
 }
 
 function closeOverlay() {
-  document.getElementById("imageOverlay").classList.remove("active");
+  document.getElementById('imageOverlay').classList.remove('active');
 }
 </script></body>
 </html>
