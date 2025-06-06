@@ -435,6 +435,56 @@
     padding-bottom: 0.3rem;
   }
 }
+
+.slider-scroll-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: none;
+  z-index: 200;
+}
+.slider-scroll-overlay.active {
+  display: block;
+}
+.slider-scroll-container {
+  height: 100%;
+  padding: 5vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.slider-scroll-track {
+  display: flex;
+  overflow-x: auto;
+  gap: 2vw;
+  padding: 1rem;
+  scroll-snap-type: x mandatory;
+}
+.slider-scroll-track img {
+  height: 70vmin;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  scroll-snap-align: center;
+  border-radius: 1rem;
+}
+.slider-close {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 210;
+}
+@media screen and (max-width: 768px) {
+  .slider-close { display: none !important; }
+}
+
 </style>
 </head>
 <body>
@@ -482,7 +532,7 @@
 <div class="section" id="mobile-projects">
 <h2>Projects</h2>
 <ul class="projects-list">
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="document.getElementById('imageOverlay').classList.add('active')">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -492,7 +542,7 @@
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="document.getElementById('imageOverlay').classList.add('active')">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -502,7 +552,7 @@
 <p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="toggleImageOverlay()">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="document.getElementById('imageOverlay').classList.add('active')">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -686,19 +736,15 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeOverlay();
 });
 
+
+function closeOverlay() {
+  document.getElementById('imageOverlay').classList.remove('active');
+}
+
 </script>
 <div class="image-overlay" id="imageOverlay">
 <div class="slider-container">
-<div class="slider-square" id="sliderSquare">
-<img class="slider-img slider-img" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: block;"/>
-<img class="slider-img slider-img" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/>
-<img class="slider-img slider-img" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/>
-<img class="slider-img slider-img" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png" style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; display: none;"/>
-<button class="slider-arrow left" onclick="prevSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-</polyline></svg></button><button class="slider-arrow right" onclick="nextSlide()"><svg viewbox="0 0 24 24"><polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-</polyline></svg></button><button class="slider-close" onclick="closeOverlay()" style="position: absolute; top: 1rem; right: 2vw; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; z-index: 210; opacity: 0.5;">×</button></div>
-</div>
-</div>
+
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
 <symbol id="eye-icon" viewbox="0 0 5 3">
 <rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="1" y="0"></rect>
@@ -781,6 +827,20 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
 </div>
 
+
+
+<div class="slider-scroll-overlay" id="imageOverlay">
+  <div class="slider-scroll-container">
+    <div class="slider-scroll-track">
+      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png" />
+      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png" />
+      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png" />
+      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png" />
+      <img src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png" />
+    </div>
+    <button class="slider-close" onclick="closeOverlay()">&times;</button>
+  </div>
+</div>
 
 </body>
 </html>
