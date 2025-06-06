@@ -558,7 +558,7 @@
 <div class="section" id="mobile-projects">
 <h2>Projects</h2>
 <ul class="projects-list">
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('pratofiorito')">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -568,7 +568,7 @@
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et urna nec sapien convallis vulputate. Integer placerat elit vel posuere convallis. Maecenas rhoncus lacus non turpis iaculis, at efficitur risus vehicula.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('gridscape')">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -578,7 +578,7 @@
 <p>Gridscape è un sistema di arredo modulare ispirato all'estetica dei mondi isometrici e ai linguaggi del gioco. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
 </div>
 </li>
-<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('projectTre')">
+<li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay()">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
 </svg>
@@ -756,13 +756,46 @@ function closeOverlay() {
   document.getElementById('imageOverlay').classList.remove('active');
 }
 
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'Escape') closeOverlay();
+});
 
 
-
-
+const images = [
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
+  "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
+];
 let currentIndex = 0;
 
+function updateImage() {
+  document.getElementById("sliderImage").src = images[currentIndex];
+}
 
+function openOverlay() {
+  document.getElementById("sliderOverlay").classList.add("active");
+  updateImage();
+  history.pushState(null, "", "#overlay");
+}
+
+function closeOverlay() {
+  document.getElementById("sliderOverlay").classList.remove("active");
+  if (location.hash === "#overlay") history.back();
+}
+
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateImage();
+}
+
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateImage();
+}
 
 window.addEventListener("popstate", function () {
   document.getElementById("sliderOverlay").classList.remove("active");
@@ -852,118 +885,6 @@ document.addEventListener("DOMContentLoaded", function () {
     </button>
   </div>
 </div>
-
-
-<script>
-const projectImages = {
-  pratofiorito: [
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png"
-  ],
-  gridscape: [
-    "/mnt/data/reder LAMP_02.png",
-    "/mnt/data/reder TABLE.png",
-    "/mnt/data/citypop_cover_03.jpg",
-    "/mnt/data/reder chair_02.png",
-    "/mnt/data/reder couch.png"
-  ],
-  projectTre: [
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
-  ]
-};
-
-let currentProject = '';
-let currentIndex = 0;
-
-function openOverlay(projectId) {
-  currentProject = projectId;
-  currentIndex = 0;
-  updateImage();
-  document.getElementById("sliderOverlay").classList.add("active");
-  history.pushState(null, "", "#overlay");
-}
-
-
-</script>
-
-
-<script>
-const imageSets = {
-  pratofiorito: [
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png"
-  ],
-  gridscape: [
-    "/mnt/data/reder LAMP_02.png",
-    "/mnt/data/reder TABLE.png",
-    "/mnt/data/citypop_cover_03.jpg",
-    "/mnt/data/reder chair_02.png",
-    "/mnt/data/reder couch.png"
-  ],
-  projectTre: [
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
-  ],
-  about: [
-    "https://via.placeholder.com/600x400?text=About+Image+1",
-    "https://via.placeholder.com/600x400?text=About+Image+2"
-  ],
-  projects: [
-    "https://via.placeholder.com/600x400?text=Projects+Image+1"
-  ],
-  contacts: [
-    "https://via.placeholder.com/600x400?text=Contacts+Image+1"
-  ]
-};
-
-let currentProject = '';
-let currentIndex = 0;
-
-function openOverlay(projectId) {
-  currentProject = projectId;
-  currentIndex = 0;
-  updateImage();
-  document.getElementById("sliderOverlay").classList.add("active");
-  history.pushState(null, "", "#overlay");
-}
-
-function updateImage() {
-  const imageList = imageSets[currentProject] || [];
-  const img = imageList[currentIndex] || '';
-  document.getElementById("sliderImage").src = img;
-}
-
-function nextSlide() {
-  const imageList = imageSets[currentProject] || [];
-  currentIndex = (currentIndex + 1) % imageList.length;
-  updateImage();
-}
-
-function prevSlide() {
-  const imageList = imageSets[currentProject] || [];
-  currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
-  updateImage();
-}
-
-// Menu click handler aggiornato
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll('.menu a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const key = link.getAttribute('data-key');
-      if (imageSets[key]) {
-        openOverlay(key);
-      } else {
-        overlayText.innerHTML = content[key];
-        overlay.classList.add('active');
-      }
-    });
-  });
-});
-</script>
 
 </body>
 </html>
