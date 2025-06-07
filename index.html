@@ -511,6 +511,56 @@
   }
 }
 
+
+<style>
+@media screen and (max-width: 768px) {
+  .mobile-section .section .accordion-content {
+    display: none;
+  }
+  .mobile-section .section.active .accordion-content {
+    display: block;
+  }
+}
+</style>
+<style>
+@media screen and (max-width: 768px) {
+  .accordion-content {
+    display: none;
+  }
+  .section.active .accordion-content {
+    display: block;
+  }
+}
+</style>
+<style>
+@media screen and (max-width: 768px) {
+  .site-header {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-left: 1rem;
+  }
+  .site-header nav {
+    justify-content: flex-start !important;
+  }
+}
+</style>
+
+<style>
+@media screen and (max-width: 768px) {
+  .site-header {
+    padding-left: 1rem;
+  }
+
+  .site-header nav {
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 1rem;
+  }
+
+  .site-header a {
+    text-align: left !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -547,17 +597,22 @@
 </div>
 </div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
+
 <div class="mobile-section">
-<div class="section" id="mobile-about">
-<h2>About</h2>
-<p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
-<p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
-<p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
-<p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
-</div>
-<div class="section" id="mobile-projects">
-<h2>Projects</h2>
-<ul class="projects-list">
+  <div class="section" id="mobile-about">
+    <h2 onclick="toggleSection(this)">About</h2>
+    <div class="accordion-content">
+      <p>Nem.Os is a personal studio — an anonymous and collective identity — born from someone who has seen design up close, but always from behind.</p>
+      <p>Behind Nem.Os is a young designer with a background in development for renowned names in the world of international design and luxury. He has contributed to high-profile projects for events, installations, showrooms, and retail spaces across Italy, Europe, and the United States.</p>
+      <p>He has signed with silence furniture showcased at the Fuorisalone, developed elements for iconic brand spaces, and supported ideas that echoed in museums. Yet, that work often felt paradoxical: the sense of building things without meaning, for those who never have to justify anything.</p>
+      <p>With Nem.Os, a new trajectory begins: autonomous, silent, radical. A design that no longer asks for permission, that no longer seeks the special object, but the right one. A project where beauty is the consequence of simplicity, and simplicity is the outcome of well-made thinking.</p>
+    </div>
+  </div>
+
+  <div class="section" id="mobile-projects">
+    <h2 onclick="toggleSection(this)">Projects</h2>
+    <div class="accordion-content">
+      <ul class="projects-list">
 <li><div class="project-header"><div class="eye-tooltip-wrapper" onclick="openOverlay('pratofiorito')">
 <svg class="eye-bullet">
 <use xlink:href="#eye-icon"></use>
@@ -589,14 +644,29 @@
 </div>
 </li>
 </ul>
+    </div>
+  </div>
+
+  <div class="section" id="mobile-contacts">
+    <h2 onclick="toggleSection(this)">Contacts</h2>
+    <div class="accordion-content">
+      <p>If the work resonates, if the values align, feel free to get in touch:</p>
+      <p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
+      <p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
+    </div>
+  </div>
 </div>
-<div class="section" id="mobile-contacts">
-<h2>Contacts</h2>
-<p>If the work resonates, if the values align, feel free to get in touch:</p>
-<p>Email: <a href="mailto:studio@nem.os">studio@nem.os</a></p>
-<p>Instagram: <a href="https://instagram.com/nem.os" target="_blank">@nem.os</a></p>
-</div>
-</div>
+<script>
+function toggleSection(header) {
+  const section = header.parentElement;
+  const allSections = document.querySelectorAll('.mobile-section .section');
+  allSections.forEach(s => {
+    if (s !== section) s.classList.remove('active');
+  });
+  section.classList.toggle('active');
+}
+</script>
+
 <script>
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlayText");
@@ -748,8 +818,6 @@ window.addEventListener("popstate", function () {
 });
 
 </script>
-
-</div>
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
 <symbol id="eye-icon" viewbox="0 0 5 3">
 <rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="1" y="0"></rect>
@@ -764,37 +832,22 @@ window.addEventListener("popstate", function () {
 <rect fill="#e65152" height="1" stroke="#e65152" stroke-width="0.1" width="1" x="3" y="2"></rect>
 </symbol>
 </svg>
-
-
-</div>
-
-
-
 <div class="slider-overlay" id="sliderOverlay">
-  <div class="slider-container">
-    <button class="slider-close" onclick="closeOverlay()">&times;</button>
-    <button class="slider-arrow left" onclick="prevSlide()">
-      <svg viewBox="0 0 24 24">
-        <polyline points="15 6 9 12 15 18" stroke="white" stroke-width="2" fill="none"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <img id="sliderImage" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png" />
-    <button class="slider-arrow right" onclick="nextSlide()">
-      <svg viewBox="0 0 24 24">
-        <polyline points="9 6 15 12 9 18" stroke="white" stroke-width="2" fill="none"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
+<div class="slider-container">
+<button class="slider-close" onclick="closeOverlay()">×</button>
+<button class="slider-arrow left" onclick="prevSlide()">
+<svg viewbox="0 0 24 24">
+<polyline fill="none" points="15 6 9 12 15 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+</svg>
+</button>
+<img id="sliderImage" src="https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png"/>
+<button class="slider-arrow right" onclick="nextSlide()">
+<svg viewbox="0 0 24 24">
+<polyline fill="none" points="9 6 15 12 9 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+</svg>
+</button>
 </div>
-
-
-
-
-
-
-
+</div>
 <script>
 const projectImages = {
   pratofiorito: [
@@ -820,6 +873,11 @@ let currentProject = "pratofiorito";
 let currentIndex = 0;
 
 function openOverlay(projectKey) {
+  currentProject = projectKey;
+  currentIndex = 0;
+  updateImage();
+  document.getElementById("sliderOverlay").classList.add("active");
+  history.pushState(null, "", "#overlay");
   currentProject = projectKey;
   currentIndex = 0;
   updateImage();
@@ -853,6 +911,5 @@ window.addEventListener("popstate", function () {
   document.getElementById("sliderOverlay").classList.remove("active");
 });
 </script>
-
 </body>
 </html>
