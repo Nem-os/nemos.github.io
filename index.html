@@ -822,7 +822,7 @@ function toggleSection(header) {
         const touch = e.touches[0];
         const dx = touch.clientX - centerX;
         const dy = touch.clientY - centerY;
-        target = { x: dx * 0.17, y: dy * 0.15 };
+        target = { x: dx * 0.17, y: dy * 0.5 };
         pupilTarget = { x: dx * 0.215 };
         mouseActive = true;
       }
