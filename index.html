@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>nem-os — product design portfolio</title>
-<meta name="description" content="nem-os is a self-initiated design practice focused on product, form and material. A quiet research into objects made to last, designed to disappear.">
-<link rel="icon" href="favicon.png" type="image/png">
+<meta content="nem-os is a self-initiated design practice focused on product, form and material. A quiet research into objects made to last, designed to disappear." name="description"/>
+<link href="favicon.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <style>
 
@@ -37,17 +37,6 @@
       overflow-x: hidden;
     }
 
-    .eye-wrapper {
-      position: fixed;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90vw;
-      aspect-ratio: 5 / 3;
-      max-width: 1200px;
-      z-index: -2;
-      pointer-events: none;
-    }
 
     .layer {
       position: absolute;
@@ -117,13 +106,13 @@
       justify-content: center;
       align-items: center;
       z-index: 20;
-      height: 4vh;
+      height: 5vh;
     }
 
     .menu {
       display: flex;
       gap: 15vw;
-      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
+      font-size: clamp(1.2rem, 1.8vw, 2rem);
       color: #111;
     }
 
@@ -147,7 +136,7 @@
       top: 5vh;
       left: 0;
       width: 100%;
-      z-index: 10;
+      z-index: 30;
       display: none;
     }
 
@@ -327,7 +316,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-  z-index: 10;
+  z-index: 30;
 }
 
 .eye-tooltip-wrapper:hover .eye-tooltip {
@@ -558,6 +547,19 @@
     .view-images-link {
       font-size: 1.1rem !important;
     }
+
+
+.eye-wrapper {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85.5vw, calc(100vh * (16 / 9) * 0.95));
+  aspect-ratio: 5 / 3;
+  max-width: 1200px;
+  z-index: -2;
+  pointer-events: none;
+}
 </style>
 <style>
 @media screen and (max-width: 768px) {
@@ -581,7 +583,6 @@
   }
 }
 </style>
-
 <style>
 @media screen and (max-width: 768px) {
   .site-header {
@@ -648,102 +649,90 @@
 </div>
 </div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
-
 <div class="mobile-section">
-  <div class="section" id="mobile-about">
-    <h2 onclick="toggleSection(this)">About</h2>
-    <div class="accordion-content">
-      <p>Nem.Os is a personal design studio—quietly established by direct and deliberate experience.
+<div class="section" id="mobile-about">
+<h2 onclick="toggleSection(this)">About</h2>
+<div class="accordion-content">
+<p>Nem.Os is a personal design studio—quietly established by direct and deliberate experience.
 
  <p>Its founder, a young designer shaped by years behind the scenes of international luxury design, has developed projects showcased at events, installations, and high-end retail spaces across Italy, Europe, and the United States. Yet, working quietly behind renowned names often felt disconnected from genuine meaning: a continuous pursuit of striking appearances rather than thoughtful purpose.</p>
- <p>Nem.Os marks a deliberate shift. It chooses autonomy over approval, clarity over spectacle, necessity over status. Here, design does not seek attention—it earns it quietly. Beauty emerges naturally from simplicity, and simplicity is the careful outcome of clear, functional thinking.</p>
- <p>Nem.Os is not about creating special objects, but meaningful ones—objects made to last, designed to disappear gracefully into their environment, existing solely because they should.</p>
-    </div>
-  </div>
-
-  <div class="section" id="mobile-projects">
-    <h2 onclick="toggleSection(this)">Projects</h2>
-    <div class="accordion-content">
-      
-        <ul class="projects-list">
-
-          <!-- Pratofiorito -->
-          <li>
-            <div class="project-header">
-              <div class="eye-tooltip-wrapper" onclick="openOverlay('pratofiorito')">
-                <svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
-                <span class="eye-tooltip">View images</span>
-              </div>
-              <a href="#" onclick="toggleProject(event, 'pratofiorito-desc')">
-                <span class="project-title">Pratofiorito</span>
-                <span class="project-year">2025</span>
-              </a>
-            </div>
-            <div class="project-desc" id="pratofiorito-desc" style="display: none;">
-              <p>Pratofiorito collection is coming soon.</p>
-              <p><a class="view-images-link" onclick="openOverlay('pratofiorito')">View images</a></p>
-            </div>
-          </li>
-
-          <!-- Gridscape -->
-          <li>
-            <div class="project-header">
-              <div class="eye-tooltip-wrapper" onclick="openOverlay('gridscape')">
-                <svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
-                <span class="eye-tooltip">View images</span>
-              </div>
-              <a href="#" onclick="toggleProject(event, 'gridscape-desc')">
-                <span class="project-title">Gridscape</span>
-                <span class="project-year">2024</span>
-              </a>
-            </div>
-            <div class="project-desc" id="gridscape-desc" style="display: none;">
-              <p>Gridscape is a collection that materializes a digital imaginary shaped by 1980s pop culture. It blends modular design, synthetic materials, and visual codes from early digital aesthetics to create objects that are both functional and scenographic.</p>
-
+<p>Nem.Os marks a deliberate shift. It chooses autonomy over approval, clarity over spectacle, necessity over status. Here, design does not seek attention—it earns it quietly. Beauty emerges naturally from simplicity, and simplicity is the careful outcome of clear, functional thinking.</p>
+<p>Nem.Os is not about creating special objects, but meaningful ones—objects made to last, designed to disappear gracefully into their environment, existing solely because they should.</p>
+</p></div>
+</div>
+<div class="section" id="mobile-projects">
+<h2 onclick="toggleSection(this)">Projects</h2>
+<div class="accordion-content">
+<ul class="projects-list">
+<!-- Pratofiorito -->
+<li>
+<div class="project-header">
+<div class="eye-tooltip-wrapper" onclick="openOverlay('pratofiorito')">
+<svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
+<span class="eye-tooltip">View images</span>
+</div>
+<a href="#" onclick="toggleProject(event, 'pratofiorito-desc')">
+<span class="project-title">Pratofiorito</span>
+<span class="project-year">2025</span>
+</a>
+</div>
+<div class="project-desc" id="pratofiorito-desc" style="display: none;">
+<p>Pratofiorito is a collection of outdoor furniture inspired by wildflowers—light, spontaneous elements that inhabit space without demanding attention. The project is built on the tension between two formal languages: one expressive and organic, echoing the irregularity of nature; the other more rational and structural. Chairs and tables are designed around the balance of these forces. The chairs—slim, lightweight, customizable in color—work as a group. Like flowers in a field, their identity emerges through repetition and variation. Each model suggests a different bloom, without falling into decorative imitation. The table serves as a neutral surface: a metal grating top that filters light, color, and context. Sturdy yet discreet, it is stackable, easy to disassemble, and suitable for indoor use as well. </p>
+<p>Pratofiorito doesn’t aim to create iconic objects, but rather a cohesive landscape—quiet, lightweight pieces designed to exist in relation to each other and their environment.</p>
+<p><a class="view-images-link" onclick="openOverlay('pratofiorito')">View images</a></p>
+</div>
+</li>
+<!-- Gridscape -->
+<li>
+<div class="project-header">
+<div class="eye-tooltip-wrapper" onclick="openOverlay('gridscape')">
+<svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
+<span class="eye-tooltip">View images</span>
+</div>
+<a href="#" onclick="toggleProject(event, 'gridscape-desc')">
+<span class="project-title">Gridscape</span>
+<span class="project-year">2024</span>
+</a>
+</div>
+<div class="project-desc" id="gridscape-desc" style="display: none;">
+<p>Gridscape is a collection that materializes a digital imaginary shaped by 1980s pop culture. It blends modular design, synthetic materials, and visual codes from early digital aesthetics to create objects that are both functional and scenographic.</p>
 <p>The project begins with My First Couch, a seating system inspired by children’s foam blocks. A metal grid forms the structural base; soft, colorful elements can be inserted freely, allowing the user to configure armchairs or sofas. This playful logic doesn’t just suggest customization—it enables easy disassembly and transport, proposing a different idea of domesticity: informal, temporary, open.</p>
-
 <p>Wrap Lamp reflects on the culture of consumption through a poetic inversion: its packaging becomes its structure. The box defines the shape, supports the neon, and makes the object both container and content. It’s a luminous gesture, critical yet elegant.</p>
-
 <p>Bunch Chair abstracts the classical column into a sculptural seat. Folded aluminum sheets create a form that is stable, ornamental, and open to variation. The reference is there, but it’s filtered through postmodern irony and industrial language.</p>
-
 <p>Finally, Synth Table brings digital light into the physical world. By day, it appears as a simple patterned surface; by night, fluorescent engravings glow through the glass, transforming it into a graphic landscape. It’s a table, but also an ambient device.</p>
 <p>Gridscape doesn’t replicate the past—it translates it. Each object is a fragment of a fictional metropolis, where design becomes a language suspended between memory, simulation, and use.</p>
-              <p><a class="view-images-link" onclick="openOverlay('gridscape')">View images</a></p>
-            </div>
-          </li>
-
-          <!-- Deriva -->
-          <li>
-            <div class="project-header">
-              <div class="eye-tooltip-wrapper" onclick="openOverlay('tre')">
-                <svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
-                <span class="eye-tooltip">View images</span>
-              </div>
-              <a href="#" onclick="toggleProject(event, 'project-tre-desc')">
-                <span class="project-title">Deriva</span>
-                <span class="project-year">2024</span>
-              </a>
-            </div>
-            <div class="project-desc" id="project-tre-desc" style="display: none;">
-              <p>Flutto and Chiglia are two pieces born from the desire to express the essence of the sea through wood. Inspired by marine elements and crafted in cedar and teak, they embody both movement and structure. Flutto, the table, captures the rhythm of waves through fluid, sinuous lines that echo the grain of the wood and the perpetual motion of the ocean. Its teak surface gently curves to embrace the cedar base, like the sea parting around a ship's hull.
+<p><a class="view-images-link" onclick="openOverlay('gridscape')">View images</a></p>
+</div>
+</li>
+<!-- Deriva -->
+<li>
+<div class="project-header">
+<div class="eye-tooltip-wrapper" onclick="openOverlay('tre')">
+<svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
+<span class="eye-tooltip">View images</span>
+</div>
+<a href="#" onclick="toggleProject(event, 'project-tre-desc')">
+<span class="project-title">Deriva</span>
+<span class="project-year">2024</span>
+</a>
+</div>
+<div class="project-desc" id="project-tre-desc" style="display: none;">
+<p>Flutto and Chiglia are two pieces born from the desire to express the essence of the sea through wood. Inspired by marine elements and crafted in cedar and teak, they embody both movement and structure. Flutto, the table, captures the rhythm of waves through fluid, sinuous lines that echo the grain of the wood and the perpetual motion of the ocean. Its teak surface gently curves to embrace the cedar base, like the sea parting around a ship's hull.
 Chiglia, the bench, takes its name from the keel of a boat. Its shape recalls a vessel slicing through water, with soft, flowing curves that offer a tactile experience as well as a visual one. The natural warmth and scent of cedar enhance this sensory quality, inviting touch and closeness.</p>
-              <p><a class="view-images-link" onclick="openOverlay('tre')">View images</a></p>
-            </div>
-          </li>
-
-        </ul>
-
-    </div>
-  </div>
-
-  <div class="section" id="mobile-contacts">
-    <h2 onclick="toggleSection(this)">Contacts</h2>
-    <div class="accordion-content">
-      <p>If the work resonates, if the values align, feel free to get in touch:</p>
-      <p>Email: <a class="contact-link" href="mailto:studio@nem-os.com">studio@nem-os.com</a></p>
-      <p>Instagram: <a class="contact-link" href="https://instagram.com/nem.0s" target="_blank">@nem.os</a></p>
-    </div>
-  </div>
+<p><a class="view-images-link" onclick="openOverlay('tre')">View images</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="mobile-contacts">
+<h2 onclick="toggleSection(this)">Contacts</h2>
+<div class="accordion-content">
+<p>If the work resonates, if the values align, feel free to get in touch:</p>
+<p>Email: <a class="contact-link" href="mailto:studio@nem-os.com">studio@nem-os.com</a></p>
+<p>Instagram: <a class="contact-link" href="https://instagram.com/nem.0s" target="_blank">@nem.os</a></p>
+</div>
+</div>
 </div>
 <script>
 function toggleSection(header) {
@@ -755,7 +744,6 @@ function toggleSection(header) {
   section.classList.toggle('active');
 }
 </script>
-
 <script>
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlayText");
@@ -812,9 +800,19 @@ function toggleSection(header) {
 
     document.addEventListener("mousemove", (e) => {
       const dx = e.clientX - centerX;
+  const ratio = window.innerWidth / window.innerHeight;
+  const limitFactor = ratio > 1.8 ? 0.6 : 1;
       const dy = e.clientY - centerY;
-      target = { x: dx * 0.17, y: dy * 0.15 };
-      pupilTarget = { x: dx * 0.25 };
+      let tentativeY = dy * 0.15;
+  if (ratio > 1.8) {
+    const tickerHeight = document.querySelector('.ticker-wrapper')?.offsetHeight || 40;
+    const eyeHeight = eyeWrapper.offsetHeight;
+    const maxY = window.innerHeight * 0.5 - tickerHeight - eyeHeight * 0.5;
+    const minY = -maxY;
+    tentativeY = Math.max(Math.min(tentativeY, maxY), minY);
+  }
+  target = { x: dx * 0.1615 * limitFactor, y: tentativeY };
+      pupilTarget = { x: dx * 0.2375 * limitFactor };
       mouseActive = true;
     });
 
@@ -941,7 +939,7 @@ window.addEventListener("popstate", function () {
 const projectImages = {
   pratofiorito: [
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07blur.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/037blur.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035blur.png",
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024blur.png",
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025blur.png",
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026blur.png"
@@ -1006,5 +1004,12 @@ window.addEventListener("popstate", function () {
   document.getElementById("sliderOverlay").classList.remove("active");
 });
 </script>
-</body>
+<script>
+document.getElementById("sliderOverlay").addEventListener("click", function (e) {
+  const container = document.querySelector(".slider-container");
+  if (window.innerWidth <= 768 && !container.contains(e.target)) {
+    closeOverlay();
+  }
+});
+</script></body>
 </html>
