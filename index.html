@@ -263,7 +263,7 @@
 }
 
 .projects-list li {
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
 }
 
 .projects-list a {
@@ -664,6 +664,23 @@
 <h2 onclick="toggleSection(this)">Projects</h2>
 <div class="accordion-content">
 <ul class="projects-list">
+<!-- Allume -->
+<li>
+  <div class="project-header">
+    <div class="eye-tooltip-wrapper" onclick="openOverlay('allume')">
+      <svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
+      <span class="eye-tooltip">View images</span>
+    </div>
+    <a href="#" onclick="toggleProject(event, 'allume-desc')">
+      <span class="project-title">Allume</span>
+      <span class="project-year">2025</span>
+    </a>
+  </div>
+  <div class="project-desc" id="allume-desc" style="display: none;">
+    <p>Allume is a portable light that rethinks the candle as a modular, rechargeable object designed for real-world use. Its base, which houses the battery, detaches and recharges by stacking—an intuitive gesture inspired by wireless restaurant buzzers. A magnetic system allows the light to attach to metal surfaces, transforming from a table lamp into a wall-mounted fixture. Controlled by a chrome switch at the top, Allume revives the ritual of turning on a light through physical interaction without touch sensors, apps, or unnecessary complexity.</p>
+    <p><a class="view-images-link" onclick="openOverlay('allume')">View images</a></p>
+  </div>
+</li>
 <!-- Pratofiorito -->
 <li>
 <div class="project-header">
@@ -937,12 +954,19 @@ window.addEventListener("popstate", function () {
 </div>
 <script>
 const projectImages = {
-  pratofiorito: [
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07blur.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/037blur.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024blur.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025blur.png",
-    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026blur.png"
+    allume: [
+    "allume/allume_27_02.jpg",
+    "allume/allume_28_02.jpg",
+    "allume/allume_29.jpg",
+    "allume/allume_30_02.jpg",
+    "allume/allume_08.png"
+  ],
+pratofiorito: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/035.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/024.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/025.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/026.png"
   ],
   gridscape: [
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/citypop_cover_03.jpg",
