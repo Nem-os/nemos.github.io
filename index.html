@@ -681,6 +681,24 @@
     <p><a class="view-images-link" onclick="openOverlay('allume')">View images</a></p>
   </div>
 </li>
+<!-- Mesa -->
+<li>
+  <div class="project-header">
+    <div class="eye-tooltip-wrapper" onclick="openOverlay('mesa')">
+      <svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
+      <span class="eye-tooltip">View images</span>
+    </div>
+    <a href="#" onclick="toggleProject(event, 'mesa-desc')">
+      <span class="project-title">Mesa</span>
+      <span class="project-year">2025</span>
+    </a>
+  </div>
+  <div class="project-desc" id="mesa-desc" style="display: none;">
+    <p>Inspired by the rocky desert plateaus, Mesa translates—through cathedral glass fusing—the warm hues and horizontal lines of geology. The name recalls both the natural formations and the Spanish word for “table,” blending function and evocation. Transparency and overlapping colors create depth and shift with the light, turning a piece of furniture into a domestic landscape suspended between nature and contemporary design. The use of different colors, overlays, and stripe widths enables a wide range of iterations of the same object.</p>
+    <p><a class="view-images-link" onclick="openOverlay('mesa')">View images</a></p>
+  </div>
+</li>
+
 <!-- Pratofiorito -->
 <li>
 <div class="project-header">
@@ -954,12 +972,18 @@ window.addEventListener("popstate", function () {
 </div>
 <script>
 const projectImages = {
-    allume: [
-     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_20_02.png",
-     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_28_02.jpg",
-     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_29_02.png",
-     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_30_03.png",
-     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_08_02.png"
+      mesa: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/ca_29.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/ca_40.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/ca_41.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/ca_42.png"
+  ],
+allume: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_27_02.jpg",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_28_02.jpg",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_29.jpg",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_30_02.jpg",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/allume_08.png"
   ],
 pratofiorito: [
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/07blur.png",
