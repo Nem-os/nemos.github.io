@@ -665,6 +665,26 @@
 <div class="accordion-content">
 <ul class="projects-list">
 
+  <!-- Soglia -->
+<li>
+<div class="project-header">
+<div class="eye-tooltip-wrapper" onclick="openOverlay('soglia')">
+<svg class="eye-bullet"><use xlink:href="#eye-icon"></use></svg>
+<span class="eye-tooltip">View images</span>
+</div>
+<a href="#" onclick="toggleProject(event, 'tilt-desc')">
+<span class="project-title">Soglia</span>
+<span class="project-year">2026</span>
+</a>
+</div>
+<div class="project-desc" id="soglia-desc" style="display: none;">
+<p>A continuous line articulates the surface, transforming a flat plane into an active element. Each fold captures and redirects light, producing a rhythmic sequence of shadows that changes throughout the day. The wall is no longer a neutral background, but a dynamic presence shaped by time and illumination.<p>
+<p>Soglia functions as a coat rack, but its utility is inseparable from its spatial behavior. The folded geometry creates multiple anchoring points while maintaining a compact, linear profile. The object defines a threshold—not only in name, but in use—marking transitions between movement and pause, entry and rest.<p>
+<p>Two material interpretations emphasize different relationships with color. In the full-color version, both sides share the same finish, giving the object a clear, assertive presence in space. In the white version with a colored back, the hue remains hidden, revealed only through reflected light on the wall, resulting in a softer, more restrained effect.<p>
+<p>Soglia is defined by repetition, precision, and restraint. A minimal gesture that activates the surface it inhabits, turning light, shadow, and use into a single continuous system.<p>
+<p><a class="view-images-link" onclick="openOverlay('soglia')">View images</a></p>
+</div>
+</li>
   <!-- Tilt -->
 <li>
 <div class="project-header">
@@ -994,7 +1014,11 @@ window.addEventListener("popstate", function () {
 </div>
 <script>
 const projectImages = {
-       tilt: [
+         soglia: [
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/hiro_20.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/hiro_12.png",
+    "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/hiro_16.png",
+  tilt: [
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/tilt_06.jpg",
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/tilt_09.jpg",
     "https://raw.githubusercontent.com/Nem-os/nemos.github.io/main/tilt_07_1920x1080.jpg"
