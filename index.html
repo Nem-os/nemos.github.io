@@ -101,16 +101,7 @@ nav.scrolled {
 .nav-links a:hover { color: var(--red); }
 .nav-links a:hover::after { transform: scaleX(1); }
 
-/* ══ TICKER ══ */
-.ticker-bar { background: var(--black); overflow: hidden; padding: 0.42rem 0; white-space: nowrap; }
-.ticker-track {
-  display: inline-block;
-  animation: ticker 55s linear infinite;
-  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white);
-}
-.ticker-track span { margin-right: 3.5rem; }
-.ticker-track .dot { color: var(--red); }
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
 
 /* ══ SECTIONS ══ */
 section { padding: 7rem 0; }
@@ -359,34 +350,7 @@ footer {
 
 <main>
 
-  <div class="ticker-bar">
-    <div class="ticker-track">
-      <span>Follow the eye</span><span class="dot">●</span>
-      <span>Signed in silence</span><span class="dot">●</span>
-      <span>No permission asked</span><span class="dot">●</span>
-      <span>Open to collaboration</span><span class="dot">●</span>
-      <span>Nem.Os</span><span class="dot">●</span>
-      <span>Beauty is a consequence</span><span class="dot">●</span>
-      <span>Not for prestige</span><span class="dot">●</span>
-      <span>Designed to disappear</span><span class="dot">●</span>
-      <span>Radical in restraint</span><span class="dot">●</span>
-      <span>Silent but deliberate</span><span class="dot">●</span>
-      <span>We question shape</span><span class="dot">●</span>
-      <span>Objects as products</span><span class="dot">●</span>
-      <span>Follow the eye</span><span class="dot">●</span>
-      <span>Signed in silence</span><span class="dot">●</span>
-      <span>No permission asked</span><span class="dot">●</span>
-      <span>Open to collaboration</span><span class="dot">●</span>
-      <span>Nem.Os</span><span class="dot">●</span>
-      <span>Beauty is a consequence</span><span class="dot">●</span>
-      <span>Not for prestige</span><span class="dot">●</span>
-      <span>Designed to disappear</span><span class="dot">●</span>
-      <span>Radical in restraint</span><span class="dot">●</span>
-      <span>Silent but deliberate</span><span class="dot">●</span>
-      <span>We question shape</span><span class="dot">●</span>
-      <span>Objects as products</span><span class="dot">●</span>
-    </div>
-  </div>
+
 
   <!-- ABOUT -->
   <section id="about">
