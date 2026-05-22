@@ -168,12 +168,12 @@ section { padding: 7rem 0; }
 }
 .carousel-slide.active { opacity: 1; }
 
-.carousel-slide img {
+.carousel-slide img,
+.carousel-slide video {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
   pointer-events: none;
-  /* NO border-radius */
 }
 
 /* Dots */
@@ -192,26 +192,6 @@ section { padding: 7rem 0; }
 .carousel-dot.active {
   background: var(--red);
   width: 30px;
-}
-
-/* ══ PROJECT VIDEOS ══ */
-.project-videos {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.7rem;
-  margin-top: 0.7rem;
-}
-
-.project-video {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  display: block;
-  background: #ddd;
-}
-
-@media (max-width: 768px) {
-  .project-videos { grid-template-columns: 1fr; }
 }
 
 /* ══ PROJECT DESCRIPTION ══ */
@@ -410,7 +390,7 @@ footer {
           <div class="project-body">
             <div class="project-layout">
               <div>
-                <div class="carousel" data-images='["tavolo_04.png","tavolo_02.png"]'></div>
+                <div class="carousel" data-slides='[{"type":"img","src":"tavolo_04.png"},{"type":"img","src":"tavolo_02.png"},{"type":"video","src":"tavolo_animato_01.mp4"},{"type":"video","src":"tavolo_animato_02.mp4"}]'></div>
                 <div class="carousel-dots-wrap"></div>
               </div>
               <div class="project-description">
@@ -419,10 +399,6 @@ footer {
                 <p>The effect is not decorative. It is physical — a direct consequence of form, material, and the act of touching. Each rotation produces a different visual frequency, turning an ordinary gesture into something worth pausing for.</p>
                 <p>A table that earns its presence not through appearance, but through what it asks you to notice.</p>
               </div>
-            </div>
-            <div class="project-videos">
-              <video class="project-video" src="tavolo_animato_01.mp4" autoplay loop muted playsinline></video>
-              <video class="project-video" src="tavolo_animato_02.mp4" autoplay loop muted playsinline></video>
             </div>
           </div>
         </div>
@@ -681,29 +657,51 @@ window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', sy > 80);
 }, {passive:true});
 
-/* ══ CAROUSEL — 10s crossfade, no progress bar ══ */
+/* ══ CAROUSEL — 10s crossfade, supports img and video slides ══ */
 const INTERVAL = 10000;
 
 function buildCarousel(el) {
-  const images = JSON.parse(el.dataset.images);
-  const dotsWrap = el.nextElementSibling; // .carousel-dots-wrap
+  // Support both data-slides (mixed) and legacy data-images (img only)
+  let slides;
+  if (el.dataset.slides) {
+    slides = JSON.parse(el.dataset.slides);
+  } else {
+    slides = JSON.parse(el.dataset.images).map(src => ({ type: 'img', src }));
+  }
+
+  const dotsWrap = el.nextElementSibling;
   let current = 0;
   let timer = null;
 
   // Build slides
-  images.forEach((src, i) => {
+  slides.forEach((item, i) => {
     const slide = document.createElement('div');
     slide.className = 'carousel-slide' + (i === 0 ? ' active' : '');
-    const img = document.createElement('img');
-    img.src = src; img.alt = ''; img.loading = 'lazy';
-    slide.appendChild(img);
+
+    if (item.type === 'video') {
+      const vid = document.createElement('video');
+      vid.src = item.src;
+      vid.loop = true;
+      vid.muted = true;
+      vid.playsInline = true;
+      vid.setAttribute('playsinline', '');
+      vid.preload = 'metadata';
+      slide.appendChild(vid);
+      // Play only when active
+      if (i === 0) vid.play().catch(()=>{});
+    } else {
+      const img = document.createElement('img');
+      img.src = item.src; img.alt = ''; img.loading = 'lazy';
+      slide.appendChild(img);
+    }
+
     el.appendChild(slide);
   });
 
   // Dots
   const dotsEl = document.createElement('div');
   dotsEl.className = 'carousel-dots';
-  images.forEach((_, i) => {
+  slides.forEach((_, i) => {
     const d = document.createElement('button');
     d.className = 'carousel-dot' + (i===0?' active':'');
     d.addEventListener('click', (e) => { e.stopPropagation(); goTo(i); resetTimer(); });
@@ -711,12 +709,25 @@ function buildCarousel(el) {
   });
   dotsWrap.appendChild(dotsEl);
 
+  function getVideo(idx) {
+    return el.querySelectorAll('.carousel-slide')[idx].querySelector('video');
+  }
+
   function goTo(idx) {
-    el.querySelectorAll('.carousel-slide')[current].classList.remove('active');
+    const slideEls = el.querySelectorAll('.carousel-slide');
+    // Pause outgoing video
+    const outVid = slideEls[current].querySelector('video');
+    if (outVid) { outVid.pause(); outVid.currentTime = 0; }
+
+    slideEls[current].classList.remove('active');
     dotsEl.querySelectorAll('.carousel-dot')[current].classList.remove('active');
-    current = ((idx % images.length) + images.length) % images.length;
-    el.querySelectorAll('.carousel-slide')[current].classList.add('active');
+    current = ((idx % slides.length) + slides.length) % slides.length;
+    slideEls[current].classList.add('active');
     dotsEl.querySelectorAll('.carousel-dot')[current].classList.add('active');
+
+    // Play incoming video
+    const inVid = slideEls[current].querySelector('video');
+    if (inVid) inVid.play().catch(()=>{});
   }
 
   function resetTimer() {
@@ -724,16 +735,20 @@ function buildCarousel(el) {
     timer = setInterval(() => goTo(current + 1), INTERVAL);
   }
 
-  // Click carousel → lightbox at current slide
-  el.addEventListener('click', () => openLightbox(images, current));
+  // Click → lightbox (pass slide objects so lightbox knows type)
+  el.addEventListener('click', () => openLightbox(slides, current));
 
-  // Start/stop with accordion open/close
+  // Start/stop with accordion
   const projectItem = el.closest('.project-item');
   new MutationObserver(() => {
     if (projectItem.classList.contains('open')) {
+      // Play current video if it's a video slide
+      const vid = el.querySelectorAll('.carousel-slide')[current].querySelector('video');
+      if (vid) vid.play().catch(()=>{});
       resetTimer();
     } else {
       clearInterval(timer);
+      el.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
     }
   }).observe(projectItem, { attributes: true, attributeFilter: ['class'] });
 }
@@ -750,28 +765,52 @@ document.querySelectorAll('.project-item').forEach(item => {
 });
 
 /* ══ LIGHTBOX ══ */
-let lbImages = [], lbIdx = 0;
+let lbSlides = [], lbIdx = 0;
 
-function openLightbox(imgs, idx) {
-  lbImages = imgs; lbIdx = idx;
+function openLightbox(slides, idx) {
+  // Normalise: accept array of strings (legacy) or objects {type,src}
+  lbSlides = slides.map(s => typeof s === 'string' ? {type:'img', src:s} : s);
+  lbIdx = idx;
   refreshLb();
   document.getElementById('lightbox').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
+
 function refreshLb() {
-  document.getElementById('lightbox-img').src = lbImages[lbIdx];
-  document.getElementById('lightbox-counter').textContent = `${lbIdx+1} / ${lbImages.length}`;
+  const wrap = document.getElementById('lightbox-img-wrap');
+  const item = lbSlides[lbIdx];
+  // Clear previous content
+  wrap.innerHTML = '';
+  if (item.type === 'video') {
+    const vid = document.createElement('video');
+    vid.src = item.src;
+    vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
+    vid.setAttribute('playsinline','');
+    vid.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    wrap.appendChild(vid);
+    vid.play().catch(()=>{});
+  } else {
+    const img = document.createElement('img');
+    img.src = item.src; img.alt = '';
+    img.id = 'lightbox-img';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;user-select:none;';
+    wrap.appendChild(img);
+  }
+  document.getElementById('lightbox-counter').textContent = `${lbIdx+1} / ${lbSlides.length}`;
 }
+
 function closeLb() {
+  // Stop any video playing in lightbox
+  document.getElementById('lightbox-img-wrap').querySelectorAll('video').forEach(v=>v.pause());
   document.getElementById('lightbox').classList.remove('active');
   document.body.style.overflow = '';
 }
 document.getElementById('lightbox-close').addEventListener('click', closeLb);
 document.getElementById('lightbox-prev').addEventListener('click', e => {
-  e.stopPropagation(); lbIdx=(lbIdx-1+lbImages.length)%lbImages.length; refreshLb();
+  e.stopPropagation(); lbIdx=(lbIdx-1+lbSlides.length)%lbSlides.length; refreshLb();
 });
 document.getElementById('lightbox-next').addEventListener('click', e => {
-  e.stopPropagation(); lbIdx=(lbIdx+1)%lbImages.length; refreshLb();
+  e.stopPropagation(); lbIdx=(lbIdx+1)%lbSlides.length; refreshLb();
 });
 document.getElementById('lightbox').addEventListener('click', e => {
   // Close if clicking backdrop — not on image, arrows, or close button
@@ -787,8 +826,8 @@ document.getElementById('lightbox').addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('active')) return;
-  if (e.key==='ArrowRight') { lbIdx=(lbIdx+1)%lbImages.length; refreshLb(); }
-  if (e.key==='ArrowLeft')  { lbIdx=(lbIdx-1+lbImages.length)%lbImages.length; refreshLb(); }
+  if (e.key==='ArrowRight') { lbIdx=(lbIdx+1)%lbSlides.length; refreshLb(); }
+  if (e.key==='ArrowLeft')  { lbIdx=(lbIdx-1+lbSlides.length)%lbSlides.length; refreshLb(); }
   if (e.key==='Escape') closeLb();
 });
 
