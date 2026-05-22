@@ -253,36 +253,36 @@ footer {
   user-select: none;
 }
 
-/* Close button — large tap target, top-right, always visible */
+/* Close button */
 #lightbox-close {
   position: fixed;
   top: 1.2rem; right: 1.2rem;
   width: 2.8rem; height: 2.8rem;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: rgba(255,255,255,0.8);
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.55);
   cursor: pointer;
-  font-size: 1.3rem; line-height: 1;
+  font-size: 1.8rem; line-height: 1;
   z-index: 210;
-  transition: background 0.2s, color 0.2s;
+  transition: color 0.2s;
 }
-#lightbox-close:hover { background: var(--red); color: white; border-color: var(--red); }
+#lightbox-close:hover { color: white; }
 
 #lightbox-prev, #lightbox-next {
   position: fixed; top: 50%; transform: translateY(-50%);
   width: 2.8rem; height: 2.8rem;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.7);
-  cursor: default; z-index: 210;
-  transition: background 0.2s, color 0.2s;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer; z-index: 210;
+  transition: color 0.2s;
 }
 #lightbox-prev { left: 1.2rem; }
 #lightbox-next { right: 1.2rem; }
-#lightbox-prev:hover, #lightbox-next:hover { background: rgba(255,255,255,0.18); color: white; }
-#lightbox-prev svg, #lightbox-next svg { width: 1.1rem; height: 1.1rem; }
+#lightbox-prev:hover, #lightbox-next:hover { color: white; }
+#lightbox-prev svg, #lightbox-next svg { width: 1.6rem; height: 1.6rem; }
 
 #lightbox-counter {
   position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
@@ -291,8 +291,8 @@ footer {
 }
 
 @media (max-width: 768px) {
-  #lightbox-prev { left: 0.5rem; }
-  #lightbox-next { right: 0.5rem; }
+  #lightbox-prev { left: 0.3rem; }
+  #lightbox-next { right: 0.3rem; }
   #lightbox-close { top: 0.7rem; right: 0.7rem; }
 }
 
