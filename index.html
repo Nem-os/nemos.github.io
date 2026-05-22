@@ -194,6 +194,26 @@ section { padding: 7rem 0; }
   width: 30px;
 }
 
+/* ══ PROJECT VIDEOS ══ */
+.project-videos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+
+.project-video {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  background: #ddd;
+}
+
+@media (max-width: 768px) {
+  .project-videos { grid-template-columns: 1fr; }
+}
+
 /* ══ PROJECT DESCRIPTION ══ */
 .project-layout {
   display: grid;
@@ -381,6 +401,31 @@ footer {
       <p class="section-label reveal">Work</p>
       <h2 class="section-title reveal">Projects</h2>
       <div class="projects-list">
+
+        <div class="project-item reveal">
+          <div class="project-header">
+            <div class="project-meta"><span class="project-name">Phasis</span><span class="project-year">2026</span></div>
+            <div class="project-toggle"></div>
+          </div>
+          <div class="project-body">
+            <div class="project-layout">
+              <div>
+                <div class="carousel" data-images='["tavolo_04.png","tavolo_02.png"]'></div>
+                <div class="carousel-dots-wrap"></div>
+              </div>
+              <div class="project-description">
+                <p>Two layers of reeded glass, identical in pattern and frequency, rest one upon the other. When the lower surface is rotated, the alignment shifts and, from that shift, an optical interference emerges. The table does not change, yet it appears to.</p>
+                <p>Phasis is a dining table and a pair of side tables. Its structure is simple: a cylindrical pedestal, a circular base, a top made of two overlapping glass sheets. The complexity belongs entirely to the eye.</p>
+                <p>The effect is not decorative. It is physical — a direct consequence of form, material, and the act of touching. Each rotation produces a different visual frequency, turning an ordinary gesture into something worth pausing for.</p>
+                <p>A table that earns its presence not through appearance, but through what it asks you to notice.</p>
+              </div>
+            </div>
+            <div class="project-videos">
+              <video class="project-video" src="tavolo_animato_01.mp4" autoplay loop muted playsinline></video>
+              <video class="project-video" src="tavolo_animato_02.mp4" autoplay loop muted playsinline></video>
+            </div>
+          </div>
+        </div>
 
         <div class="project-item reveal">
           <div class="project-header">
